@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
 
-  sample:
-    container_name: sample
+  academy-final-cow:
+    container_name: academy-final-cow
     build:
       context: .
       dockerfile: Dockerfile
