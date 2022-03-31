@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          cake is awesome
+          cake and chocolate are awesome
         </a>
       </header>
     </div>
