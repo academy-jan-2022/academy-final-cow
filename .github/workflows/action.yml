@@ -24,11 +24,12 @@ jobs:
         run: |
           npm install
           npm test -- --coverage --testResultsProcessor=jest-sonar-reporter
-          npm run cucumber-test
 
       - name: Build the Docker image
-        if: github.ref == 'refs/heads/main'
         run: docker build . --file Dockerfile --tag academy-final-cow:latest
+        
+      - name: Cypress.io
+        uses: cypress-io/github-action@v2.9.7
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.6
