@@ -1,26 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
-
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./pages/App";
-import reportWebVitals from './reportWebVitals';
-import SecondPage from './pages/SecondPage';
+import reportWebVitals from "./reportWebVitals";
+import SecondPage from "./pages/SecondPage";
+import * as ReactDOMClient from "react-dom/client";
 
-ReactDOM.render(
+const container = document.getElementById("root") || new DocumentFragment();
+const root = ReactDOMClient.createRoot(container);
+
+root.render(
   <BrowserRouter>
     <Routes>
-    <Route path="/second-page" element={<SecondPage />} />
+      <Route path="/second-page" element={<SecondPage />} />
       <Route path="/" element={<App />} />
     </Routes>
-  </BrowserRouter>,
-  document.getElementById("root")
+  </BrowserRouter>
 );
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
