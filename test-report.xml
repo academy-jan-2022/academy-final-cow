@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="D:\code\academy-final-cow\src\pages\tests\App.test.tsx">
+    <testCase name="renders learn react link" duration="46"/>
+  </file>
+  <file path="D:\code\academy-final-cow\src\pages\tests\SecondPage.test.tsx">
+    <testCase name="renders learn react link" duration="43"/>
+  </file>
+</testExecutions>
