@@ -1,9 +1,9 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders learn react link", () => {
   render(<App />);
-  const linkElement = screen.getByText(/cake and chocolate are awesome/i);
+  const linkElement = screen.getByText(/second page/i);
   expect(linkElement).toBeInTheDocument();
 });
