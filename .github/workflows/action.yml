@@ -26,15 +26,15 @@ jobs:
           npm test -- --coverage --testResultsProcessor=jest-sonar-reporter
           npm run cucumber-test
 
+      - name: Build the Docker image
+        if: github.ref == 'refs/heads/main'
+        run: docker build . --file Dockerfile --tag academy-final-cow:latest
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-      - name: Build the Docker image
-        if: github.ref == 'refs/heads/main'
-        run: docker build . --file Dockerfile --tag academy-final-cow:latest
 
       - name: Azure Container Registry Login
         if: github.ref == 'refs/heads/main'

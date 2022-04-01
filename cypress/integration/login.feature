@@ -2,6 +2,6 @@ Feature: Login App
 
   Scenario:
 
-    When I visit google
+    When I visit the homepage
 
-    Then the url is google.com
+    Then there should be text that says homepage
