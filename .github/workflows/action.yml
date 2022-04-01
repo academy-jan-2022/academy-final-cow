@@ -23,7 +23,7 @@ jobs:
         working-directory: .
         run: |
           npm install
-          npm test
+          npm test -- --coverage --testResultsProcessor=jest-sonar-reporter
           npm run cucumber-test
 
       - name: SonarCloud Scan
