@@ -2,8 +2,6 @@ Feature: Login App
 
   Scenario:
 
-    When I log in
+    When I visit google
 
-    Then the url is /
-
-    And I'm logged in
+    Then the url is google.com
