@@ -30,6 +30,9 @@ jobs:
         
       - name: Cypress.io
         uses: cypress-io/github-action@v2.9.7
+        with:
+          record: true
+          wait-on: 'http://localhost:3000'
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.6
