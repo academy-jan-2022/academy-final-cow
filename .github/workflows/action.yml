@@ -26,12 +26,14 @@ jobs:
           npm test -- --coverage --testResultsProcessor=jest-sonar-reporter
 
       - name: Build the Docker image
+        if: github.ref == 'refs/heads/main'
         run: docker build . --file Dockerfile --tag academy-final-cow:latest
         
       - name: Cypress.io
         uses: cypress-io/github-action@v2.9.7
         with:
           record: true
+          start: npm run start
           wait-on: 'http://localhost:3000'
 
       - name: SonarCloud Scan
