@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="D:\code\academy-final-cow\src\pages\SecondPage.test.tsx">
-    <testCase name="renders learn react link" duration="39"/>
+    <testCase name="renders learn react link" duration="46"/>
   </file>
   <file path="D:\code\academy-final-cow\src\pages\App.test.tsx">
     <testCase name="renders learn react link" duration="46"/>
