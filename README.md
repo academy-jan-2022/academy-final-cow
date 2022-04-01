@@ -4,15 +4,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Technologies
 
-| Technology      | Use |
-| ----------- | ----------- |
-| Cucumber      | BDD Testing       |
-| SonarCloud   | Code Analysis        |
-| React Router V6   | Routing       |
-| SonarCloud   | Code Analysis        |
-| Prettier   | Linting / Formatting        |
-| Github Actions   | CI        |
-| Azure  | CD        |
+| Technology      | Use                  |
+| --------------- | -------------------- |
+| Cucumber        | BDD Testing          |
+| SonarCloud      | Code Analysis        |
+| React Router V6 | Routing              |
+| Prettier        | Linting / Formatting |
+| Github Actions  | CI                   |
+| Azure           | CD                   |
 
 ## Available Scripts
 
