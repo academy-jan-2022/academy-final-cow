@@ -15,7 +15,6 @@ function Heartbeat() {
     client
       .get<HeartbeatRespose>({ url: `http://localhost:3000` })
       .then((resp: HeartbeatRespose) => {
-        console.log(resp);
         if (resp.status == 200) setBackendState(true);
       });
   }, []);
