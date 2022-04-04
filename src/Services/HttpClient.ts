@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+const axios = require("axios");
 
 export class HttpClient {
     async get<T>(request: GetRequest): Promise<T> {
