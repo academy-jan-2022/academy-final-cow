@@ -14,7 +14,7 @@ export class HttpClient {
 
 export interface GetRequest {
     url: string;
-    readonly queryParams: { [name: string]: string };
+    readonly queryParams?: { [name: string]: string };
 }
 
 const client = new HttpClient();
