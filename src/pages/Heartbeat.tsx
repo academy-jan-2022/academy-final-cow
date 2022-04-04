@@ -2,7 +2,7 @@ import React from "react";
 
 function Heartbeat() {
     return (
-        <h1>placeholder</h1>
+        <h1>Health check</h1>
     );
 }
 
