@@ -1,5 +1,6 @@
 import React from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 function Heartbeat() {
   return (
@@ -7,6 +8,9 @@ function Heartbeat() {
       <h1>Health check</h1>
       <div role="greenTick">
         <DoneOutlineIcon />
+      </div>
+      <div role="redCross">
+        <CancelIcon />
       </div>
     </>
   );
