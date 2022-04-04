@@ -1,13 +1,11 @@
-name: Teaminator Frontend
+name: Teaminator Frontend Pull Request
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,21 +35,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Azure Container Registry Login
-        if: github.ref == 'refs/heads/main'
-        uses: Azure/docker-login@v1
-        with:
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
-          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-
       - name: Build the Docker image
-        if: github.ref == 'refs/heads/main'
         run: docker build . --file Dockerfile --tag academy-final-cow:latest
-
-      - name: Build and push
-        if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v2
-        with:
-          push: ${{ github.ref == 'refs/heads/main' }}
-          tags: academyfinalproject.azurecr.io/academy-final-cow:latest
