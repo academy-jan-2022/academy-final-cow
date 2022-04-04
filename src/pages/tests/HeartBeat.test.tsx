@@ -17,6 +17,8 @@ test("Show green tick when it receives a 200 code calling to Heartbeat test endp
   await act(async () => {
     render(<Heartbeat />);
   });
+  const crossElement = screen.getByRole("redCross");
+  expect(crossElement).not.toBeInTheDocument();
   const tickElement = screen.getByRole("greenTick");
   expect(tickElement).toBeInTheDocument();
 });
@@ -26,6 +28,8 @@ test("Show red cross when it receives a 500 code calling to Heartbeat test endpo
   await act(async () => {
     render(<Heartbeat />);
   });
+  const tickElement = screen.getByRole("greenTick");
+  expect(tickElement).not.toBeInTheDocument();
   const crossElement = screen.getByRole("redCross");
   expect(crossElement).toBeInTheDocument();
 });
