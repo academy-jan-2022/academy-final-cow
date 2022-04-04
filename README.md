@@ -7,6 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 | Technology      | Use                  |
 | --------------- | -------------------- |
 | Cucumber        | BDD Testing          |
+| Cypress           | End to End Testing |
 | SonarCloud      | Code Analysis        |
 | React Router V6 | Routing              |
 | Prettier        | Linting / Formatting |
