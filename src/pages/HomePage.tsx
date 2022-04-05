@@ -1,9 +1,9 @@
 import React from "react";
-import "./App.css";
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline
 } from "react-google-login";
+import Template from "./PageTemplate";
 
 function HomePage() {
   const responseGoogle = (
@@ -15,7 +15,7 @@ function HomePage() {
   };
 
   return (
-    <div>
+    <Template>
       <header>
         <h1 aria-label={"title"}>Teaminator</h1>
         <img
@@ -31,7 +31,7 @@ function HomePage() {
         cookiePolicy={"single_host_origin"}
         isSignedIn={true}
       />
-    </div>
+    </Template>
   );
 }
 
