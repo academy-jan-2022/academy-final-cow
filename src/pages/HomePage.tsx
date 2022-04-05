@@ -24,7 +24,7 @@ function HomePage() {
         />
       </header>
       <GoogleLogin
-        clientId="671208548253-hrd5a4nvrk4ovsscfskprsbodn7ate8k.apps.googleusercontent.com"
+        clientId={`${process.env.REACT_APP_GOOGLE_CLIENTID}`}
         buttonText="Login"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}

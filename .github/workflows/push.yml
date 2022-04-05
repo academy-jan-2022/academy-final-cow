@@ -19,6 +19,11 @@ jobs:
 
       - name: Push Docker image to Azure registry
         uses: docker/build-push-action@v2
+        env:
+          CI: true
+          REACT_APP_GOOGLE_CLIENTID: ${{ secrets.REACT_APP_GOOGLE_CLIENTID }}
+          REACT_APP_GOOGLE_CLIENT_SECRET: ${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
         with:
           push: true
           tags: academyfinalproject.azurecr.io/academy-final-cow:latest
