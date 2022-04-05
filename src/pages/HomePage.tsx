@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./App.css";
 import GoogleLogin, {
   GoogleLoginResponse,
@@ -7,17 +6,22 @@ import GoogleLogin, {
 } from "react-google-login";
 
 function HomePage() {
-  let navigate = useNavigate();
   const responseGoogle = (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     if ("profileObj" in res) {
-      navigate("/teams");
+      window.location.href = "/teams";
     }
   };
 
   return (
     <div>
+      <header>
+        <img
+          aria-label={"logo"}
+          src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_large.png"
+        />
+      </header>
       <GoogleLogin
         clientId="671208548253-hrd5a4nvrk4ovsscfskprsbodn7ate8k.apps.googleusercontent.com"
         buttonText="Login"
