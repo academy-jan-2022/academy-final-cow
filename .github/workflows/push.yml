@@ -17,9 +17,6 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
 
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag academy-final-cow:latest
-
       - name: Push Docker image to Azure registry
         uses: docker/build-push-action@v2
         with:
