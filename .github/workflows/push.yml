@@ -17,12 +17,16 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: academyfinalproject.azurecr.io/academy-final-cow
 
       - name: Push Docker image to Azure registry
         uses: docker/build-push-action@v2
         with:
           push: true
-          cache-from: type=gha
-          tags: academyfinalproject.azurecr.io/academy-final-cow:latest
+          context: ./
+          file: ./Dockerfile
+          tags: ${{ steps.meta.outputs.tags }}
