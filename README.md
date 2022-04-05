@@ -2,17 +2,23 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and TypeScript.
 
+## Azure Web Page
+http://teaminator.azurewebsites.net/
+
+
 ## Technologies
 
 | Technology      | Use                  |
-| --------------- | -------------------- |
+|-----------------|----------------------|
 | Cucumber        | BDD Testing          |
-| Cypress           | End to End Testing |
+| Cypress         | End to End Testing   |
+| Jest            | Unit Testing         |
 | SonarCloud      | Code Analysis        |
 | React Router V6 | Routing              |
 | Prettier        | Linting / Formatting |
 | Github Actions  | CI                   |
 | Azure           | CD                   |
+| Docker          | Containerisation     |
 
 ## Available Scripts
 
@@ -30,9 +36,9 @@ You will also see any lint errors in the console.
 
 Launches the test runner with coverage for SonarCloud.
 
-### `npm run cucumber-test`
+### `npx cypress open`
 
-Launches the cucumber tests.
+Launches the cypress test UI
 
 ### `npm run docker-start`
 

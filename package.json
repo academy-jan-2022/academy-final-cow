@@ -20,6 +20,7 @@
     "jest-sonar-reporter": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "typescript": "^4.6.3",
@@ -31,7 +32,7 @@
     "test": "react-scripts test",
     "cucumber-test": "cucumber-js",
     "eject": "react-scripts eject",
-    "docker-start": "docker-compose up -d"
+    "docker-start": "docker-compose up -d",
   },
   "eslintConfig": {
     "extends": [

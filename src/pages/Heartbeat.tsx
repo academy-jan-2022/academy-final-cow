@@ -15,7 +15,7 @@ function Heartbeat() {
     client
       .get<HeartbeatRespose>({ url: `${process.env.REACT_APP_HEARTBEAT_URL}` })
       .then((resp: HeartbeatRespose) => {
-        if (resp.status == 200) setBackendState(true);
+        if (resp.status === 200) setBackendState(true);
       });
   }, []);
 
