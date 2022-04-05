@@ -1,7 +1,6 @@
-Feature: Login App
+Feature: Google Login
 
-  Scenario:
+  Scenario: I am a user who is not logged in
 
-    When I visit the homepage
-
-    Then there should be text that says homepage
+    When I go to the homepage
+    Then I should see a login button
