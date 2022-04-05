@@ -17,6 +17,7 @@ function HomePage() {
   return (
     <div>
       <header>
+        <h1 aria-label={"title"}>Teaminator</h1>
         <img
           aria-label={"logo"}
           src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_large.png"
