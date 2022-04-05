@@ -2,7 +2,9 @@ name: Teaminator Frontend Merge
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+    tags:
+      - 'v*'
 
 jobs:
   push:
@@ -29,4 +31,4 @@ jobs:
           push: true
           context: ./
           file: ./Dockerfile
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}, academyfinalproject.azurecr.io/academy-final-cow:latest

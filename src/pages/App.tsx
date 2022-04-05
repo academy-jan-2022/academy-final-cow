@@ -7,9 +7,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>🤠</p>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload!.
-        </p>
+        <p>Extreme Cowboys Association!</p>
         <a href="/second-page">Second page</a>
         <p>Homepage</p>
       </header>
