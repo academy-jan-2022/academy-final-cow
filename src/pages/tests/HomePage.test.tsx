@@ -7,3 +7,9 @@ test("renders logo", () => {
   const logo = screen.getByRole("img", { name: "logo" });
   expect(logo).toBeInTheDocument();
 });
+
+test("renders app name", () => {
+  render(<HomePage />);
+  const title = screen.getByRole("heading", { name: "title" });
+  expect(title).toBeInTheDocument();
+});
