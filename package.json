@@ -32,7 +32,7 @@
     "test": "react-scripts test",
     "cucumber-test": "cucumber-js",
     "eject": "react-scripts eject",
-    "docker-start": "docker-compose up -d",
+    "docker-start": "docker-compose up -d"
   },
   "eslintConfig": {
     "extends": [
