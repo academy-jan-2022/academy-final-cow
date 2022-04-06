@@ -1,9 +1,8 @@
 {
-  "video": false,
-  "env" :{
+  "video": true,
+  "env": {
     "googleRefreshToken": "",
     "googleClientSecret": "",
     "googleClientId": ""
   }
-
 }
