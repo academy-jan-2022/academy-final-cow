@@ -8,7 +8,7 @@ Then("I should see a login button", (url) => {
   cy.get("button").contains("Login");
 });
 
-When("I log in with google authentication", (url) => {
+When("I log in with google authentication again", (url) => {
   cy.loginWithGoogleApi();
 });
 
