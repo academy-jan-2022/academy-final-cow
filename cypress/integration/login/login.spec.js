@@ -9,7 +9,7 @@ Then("I should see a login button", (url) => {
 });
 
 
-When("I log in with google", (url) => {
+When("I log in with google authentication", (url) => {
   cy.loginWithGoogleApi()
 });
 
