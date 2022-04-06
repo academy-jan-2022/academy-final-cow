@@ -5,7 +5,7 @@ import GoogleLogin, {
 } from "react-google-login";
 import Template from "../components/PageTemplate";
 import { useNavigate } from "react-router-dom";
-import { googleLoginService } from "../services/googleLoginService";
+import { loginService } from "../services/loginService";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function HomePage() {
   const googleLoginHandler = (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
-    const route = googleLoginService(res);
+    const route = loginService(res);
 
     navigate(route);
   };

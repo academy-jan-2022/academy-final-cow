@@ -1,4 +1,4 @@
-import { googleLoginService } from "../googleLoginService";
+import { loginService } from "../loginService";
 import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
@@ -12,14 +12,14 @@ describe("googleLoginServiceShould", () => {
       },
     } as GoogleLoginResponse;
 
-    const returnValue = googleLoginService(successfulResponse);
+    const returnValue = loginService(successfulResponse);
     expect(returnValue).toEqual("/teams");
   });
 
   test("return '/error' when login is unsuccessful", () => {
     const unSuccessfulResponse = {} as GoogleLoginResponseOffline;
 
-    const returnValue = googleLoginService(unSuccessfulResponse);
+    const returnValue = loginService(unSuccessfulResponse);
     expect(returnValue).toEqual("/error");
   });
 });
