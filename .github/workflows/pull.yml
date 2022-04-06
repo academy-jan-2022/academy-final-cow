@@ -25,11 +25,8 @@ jobs:
 
       - name: Cypress.io
         uses: cypress-io/github-action@v2.9.7
-        env:
-          CYPRESS_googleRefreshToken: ${{secrets.GOOGLE_REFRESH_TOKEN}}
-          CYPRESS_googleClientSecret: ${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}
-          CYPRESS_googleClientId: ${{ secrets.REACT_APP_GOOGLE_CLIENTID }}
         with:
+          env: googleRefreshToken=${{secrets.GOOGLE_REFRESH_TOKEN}}, googleClientSecret=${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}, googleClientId=${{ secrets.REACT_APP_GOOGLE_CLIENTID }}
           start: npm run start
           wait-on: 'http://localhost:3000'
 
