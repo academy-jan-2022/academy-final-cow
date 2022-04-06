@@ -1,4 +1,4 @@
-Feature: Google Login
+Feature: Google Login on Homepage
 
   Scenario: I am a user who is not logged in
 
