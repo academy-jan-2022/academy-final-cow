@@ -4,7 +4,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import client from "../services/HttpClient";
 
 interface HeartbeatRespose {
-  status: number;
+  status: String;
 }
 
 function Heartbeat() {
@@ -14,7 +14,7 @@ function Heartbeat() {
     client
       .get<HeartbeatRespose>({ url: `${process.env.REACT_APP_HEARTBEAT_URL}` })
       .then((resp: HeartbeatRespose) => {
-        if (resp.status === 200) setBackendState(true);
+        if (resp.status === "UP") setBackendState(true);
       });
   }, []);
 
