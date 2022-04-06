@@ -50,9 +50,9 @@ test("renders log in button", () => {
   expect(button).toBeInTheDocument();
 });
 
-test("redirects to teams page on successful login", () => {
+test("navigates to the provided route after login", () => {
   render(<HomePage />);
   const button = screen.getByText("Login");
   button.click();
-  expect(mockedUsedNavigate).toHaveBeenCalledWith("/teams");
+  expect(mockedUsedNavigate).toHaveBeenCalled();
 });
