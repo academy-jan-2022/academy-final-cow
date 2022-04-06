@@ -1,5 +1,10 @@
-import {GoogleLoginResponse, GoogleLoginResponseOffline} from "react-google-login";
+import {
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+} from "react-google-login";
 
-export const googleLoginService = (response: GoogleLoginResponse | GoogleLoginResponseOffline) : string =>{
-    return "/teams"
-}
+export const googleLoginService = (
+  response: GoogleLoginResponse | GoogleLoginResponseOffline
+): string => {
+  return "profileObj" in response ? "/teams" : "/error";
+};
