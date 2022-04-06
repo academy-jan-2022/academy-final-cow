@@ -28,6 +28,7 @@ jobs:
         uses: cypress-io/github-action@v2.9.7
         with:
           env: googleRefreshToken=${{secrets.GOOGLE_REFRESH_TOKEN}}, googleClientSecret=${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}, googleClientId=${{ secrets.REACT_APP_GOOGLE_CLIENTID }}
+          start: npm run start
           wait-on: 'http://localhost:3000'
 
       - name: SonarCloud Scan
