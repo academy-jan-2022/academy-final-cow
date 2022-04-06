@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { HttpClient } from "../Services/HttpClient";
+import client from "../services/HttpClient";
 
 interface HeartbeatRespose {
   status: number;
@@ -9,13 +9,12 @@ interface HeartbeatRespose {
 
 function Heartbeat() {
   const [backendStateIsHealthy, setBackendState] = useState(false);
-  const client = new HttpClient();
 
   useEffect(() => {
     client
-      .get<HeartbeatRespose>({ url: `http://localhost:3000` })
+      .get<HeartbeatRespose>({ url: `${process.env.REACT_APP_HEARTBEAT_URL}` })
       .then((resp: HeartbeatRespose) => {
-        if (resp.status == 200) setBackendState(true);
+        if (resp.status === 200) setBackendState(true);
       });
   }, []);
 
