@@ -56,10 +56,3 @@ test("redirects to teams page on successful login", () => {
   button.click();
   expect(mockedUsedNavigate).toHaveBeenCalledWith("/teams");
 });
-
-test("redirects to error page on unsuccessful login", () => {
-  render(<HomePage />);
-  const button = screen.getByText("Login");
-  button.click();
-  expect(mockedUsedNavigate).toHaveBeenCalledWith("/error");
-});
