@@ -8,15 +8,14 @@ Then("I should see a login button", (url) => {
   cy.get("button").contains("Login");
 });
 
-
-When("I log in with google authentication", (url) => {
-  cy.loginWithGoogleApi()
+When("I log in with google authentication again", (url) => {
+  cy.loginWithGoogleApi();
 });
 
 Then("I am logged in", (url) => {
-  console.log(window.localStorage.getItem('googleCypress'))
+  console.log(window.localStorage.getItem("googleCypress"));
 });
 
 Then("I am redirected to the TEAMS page", (url) => {
-  cy.url().should('include', '/teams')
+  cy.url().should("include", "/teams");
 });
