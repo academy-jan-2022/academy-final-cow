@@ -13,8 +13,7 @@ When("I log in with google authentication again", (url) => {
 });
 
 Then("I am logged in", (url) => {
-  const user = window.localStorage.getItem("googleCypress");
-  cy.should("exist", user);
+  expect(window.localStorage.getItem("googleCypress")).to.not.be.null;
 });
 
 Then("I am redirected to the TEAMS page", (url) => {
