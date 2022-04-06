@@ -1,16 +1,21 @@
 import React from "react";
 import GoogleLogin, {
   GoogleLoginResponse,
-  GoogleLoginResponseOffline
+  GoogleLoginResponseOffline,
 } from "react-google-login";
-import Template from "./PageTemplate";
+import Template from "../components/PageTemplate";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
-  const responseGoogle = (
+  const navigate = useNavigate();
+
+  const googleLoginHandler = (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     if ("profileObj" in res) {
-      window.location.href = "/teams";
+      navigate("/teams");
+    } else {
+      navigate("/error");
     }
   };
 
@@ -26,8 +31,8 @@ function HomePage() {
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_CLIENTID}`}
         buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
+        onSuccess={googleLoginHandler}
+        onFailure={googleLoginHandler}
         cookiePolicy={"single_host_origin"}
         isSignedIn={true}
       />

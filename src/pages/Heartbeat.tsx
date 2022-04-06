@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { HttpClient } from "../Services/HttpClient";
+import client from "../services/HttpClient";
 
 interface HeartbeatRespose {
   status: number;
@@ -9,7 +9,6 @@ interface HeartbeatRespose {
 
 function Heartbeat() {
   const [backendStateIsHealthy, setBackendState] = useState(false);
-  const client = new HttpClient();
 
   useEffect(() => {
     client
