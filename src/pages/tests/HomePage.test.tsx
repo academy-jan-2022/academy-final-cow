@@ -10,12 +10,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 jest.mock("react-google-login", () => {
-  const defaultMockSuccess = {
-    tokenId: "tokenId",
-    profileObj: { name: "test name" },
-  };
-
-  const GoogleLogin = ({
+  return ({
     onSuccess,
     buttonText,
   }: {
@@ -23,13 +18,13 @@ jest.mock("react-google-login", () => {
     buttonText: string;
   }) => {
     const handleClick = () => {
-      onSuccess(defaultMockSuccess);
+      onSuccess({
+        profileObj: { name: "test name" },
+      });
     };
 
     return <button onClick={handleClick}>{buttonText}</button>;
   };
-
-  return GoogleLogin;
 });
 
 test("renders logo", () => {
@@ -50,9 +45,9 @@ test("renders log in button", () => {
   expect(button).toBeInTheDocument();
 });
 
-test("redirects to teams page on successful login", () => {
+test("navigates to the provided route after login", () => {
   render(<HomePage />);
   const button = screen.getByText("Login");
   button.click();
-  expect(mockedUsedNavigate).toHaveBeenCalledWith("/teams");
+  expect(mockedUsedNavigate).toHaveBeenCalled();
 });
