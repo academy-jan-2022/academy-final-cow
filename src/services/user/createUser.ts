@@ -9,7 +9,7 @@ const createUser = (user: User) => {
   const client = new HttpClient();
 
   return client.post({
-    url: "https://www.teaminator-backend.azurewebsites.net/create-user",
+    url: process.env.REACT_APP_BASE_URL + "/create-user",
     body: user,
   });
 };
