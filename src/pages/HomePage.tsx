@@ -10,10 +10,10 @@ import { loginService } from "../services/loginService";
 function HomePage() {
   const navigate = useNavigate();
 
-  const googleLoginHandler = (
+  const googleLoginHandler = async (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
-    const route = loginService(res);
+    const route = await loginService(res);
     window.localStorage.setItem("google", JSON.stringify(res));
     navigate(route);
   };
