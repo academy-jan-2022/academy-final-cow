@@ -5,8 +5,17 @@ import Heartbeat from "../Heartbeat";
 const axios = require("axios");
 jest.mock("axios");
 
-const apiCall = async (resCode: number) => {
-  const resp = { data: { status: resCode } };
+interface HeartbeatResponse {
+  status: string;
+  components: {
+    db: {
+      status: string;
+    }
+  }
+}
+
+const apiCall = async (resCode: HeartbeatResponse) => {
+  const resp = { data: resCode };
   axios.get.mockImplementation(() => Promise.resolve(resp));
   await act(async () => {
     render(<Heartbeat />);
@@ -14,19 +23,63 @@ const apiCall = async (resCode: number) => {
 };
 
 test("Show header", async () => {
-  await apiCall(200);
+  await apiCall({
+    status: "UP",
+    components: {
+      db: {
+        status: "DOWN"
+      }
+    }});
   const tickElement = screen.getByText("Health check");
   expect(tickElement).toBeInTheDocument();
 });
 
-test("Show green tick when it receives a 200 code calling to Heartbeat test endpoint", async () => {
-  await apiCall(200);
-  const tickElement = screen.getByRole("greenTick");
+test("Show green tick for backend status when status is up", async () => {
+  await apiCall({
+    status: "UP",
+    components: {
+      db: {
+        status: "DOWN"
+      }
+    }});
+  const tickElement = screen.getByRole("backendIsUp");
   expect(tickElement).toBeInTheDocument();
 });
 
-test("Show green tick when it receives a 200 code calling to Heartbeat test endpoint", async () => {
-  await apiCall(500);
-  const crossElement = screen.getByRole("redCross");
+test("Show red tick for backend status when status is down", async () => {
+  await apiCall({
+    status: "DOWN",
+    components: {
+      db: {
+        status: "DOWN"
+      }
+    }});
+  const crossElement = screen.getByRole("backendIsDown");
   expect(crossElement).toBeInTheDocument();
 });
+
+test("Show green tick for backend and db when both backend and db status is up", async () => {
+  await apiCall({
+    status: "UP",
+    components: {
+      db: {
+        status: "UP"
+      }
+    }
+  })
+  const dbCrossElement = screen.getByRole("databaseIsUp");
+  expect(dbCrossElement).toBeInTheDocument();
+})
+
+test("Show red tick for db status when backend status is up but db status is down", async () => {
+  await apiCall({
+    status: "UP",
+    components: {
+      db: {
+        status: "DOWN"
+      }
+    }
+  })
+  const dbCrossElement = screen.getByRole("databaseIsDown");
+  expect(dbCrossElement).toBeInTheDocument();
+})
