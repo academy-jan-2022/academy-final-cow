@@ -6,8 +6,8 @@ const axios = require("axios");
 jest.mock("axios");
 
 interface HeartbeatResponse {
-  status?: String;
-  components?: {
+  status: String;
+  components: {
     db: {
       status: String;
     }
@@ -23,28 +23,42 @@ const apiCall = async (resCode: HeartbeatResponse) => {
 };
 
 test("Show header", async () => {
-  await apiCall({});
+  await apiCall({
+    status: "UP",
+    components: {
+      db: {
+        status: "DOWN"
+      }
+    }});
   const tickElement = screen.getByText("Health check");
   expect(tickElement).toBeInTheDocument();
 });
 
 test("Show green tick for backend status when status is up", async () => {
   await apiCall({
-      status:"UP",
-    });
-  const tickElement = screen.getByRole("greenTick");
+    status: "UP",
+    components: {
+      db: {
+        status: "DOWN"
+      }
+    }});
+  const tickElement = screen.getByRole("backendIsUp");
   expect(tickElement).toBeInTheDocument();
 });
 
 test("Show red tick for backend status when status is down", async () => {
   await apiCall({
-    status:"DOWN",
-  });
-  const crossElement = screen.getByRole("redCross");
+    status: "DOWN",
+    components: {
+      db: {
+        status: "DOWN"
+      }
+    }});
+  const crossElement = screen.getByRole("backendIsDown");
   expect(crossElement).toBeInTheDocument();
 });
 
-test("Show green tick for db status when both backend and db status is up", async () => {
+test("Show green tick for backend and db when both backend and db status is up", async () => {
   await apiCall({
     status: "UP",
     components: {
@@ -53,6 +67,19 @@ test("Show green tick for db status when both backend and db status is up", asyn
       }
     }
   })
-  const dbCrossElement = screen.getByRole("databaseGreenTick");
+  const dbCrossElement = screen.getByRole("databaseIsUp");
+  expect(dbCrossElement).toBeInTheDocument();
+})
+
+test("Show red tick for db status when backend status is up but db status is down", async () => {
+  await apiCall({
+    status: "UP",
+    components: {
+      db: {
+        status: "DOWN"
+      }
+    }
+  })
+  const dbCrossElement = screen.getByRole("databaseIsDown");
   expect(dbCrossElement).toBeInTheDocument();
 })

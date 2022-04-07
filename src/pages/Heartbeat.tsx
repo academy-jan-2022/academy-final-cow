@@ -5,6 +5,11 @@ import client from "../services/HttpClient";
 
 interface HeartbeatResponse {
   status: String;
+  components: {
+    db: {
+      status: String;
+    }
+  }
 }
 
 function Heartbeat() {
@@ -16,6 +21,7 @@ function Heartbeat() {
       .get<HeartbeatResponse>({ url: `${process.env.REACT_APP_HEARTBEAT_URL}` })
       .then((resp: HeartbeatResponse) => {
         if (resp.status === "UP") setBackendState(true);
+        if (resp.components.db.status === "UP") setDatabaseStatus((true));
       });
   }, []);
 
@@ -23,19 +29,25 @@ function Heartbeat() {
     <>
       <h1>Health check</h1>
       {backendStateIsHealthy ? (
-        <div role="greenTick">
+        <div role="backendIsUp">
           <p>Backend status:</p>
           <DoneOutlineIcon />
           {databaseStatus ? (
-              <div role="databaseStatus">
+              <div role="databaseIsUp">
                 <p>Database status:</p>
                 <DoneOutlineIcon />
               </div>
-          ) : null}
+          ) : (<div role="databaseIsDown">
+            <p>Database status:</p>
+            <CancelIcon />
+          </div>
+            )}
         </div>
       ) : (
-        <div role="redCross">
+        <div role="backendIsDown">
           <p>Backend status:</p>
+          <CancelIcon />
+          <p>Database status:</p>
           <CancelIcon />
         </div>
       )}
