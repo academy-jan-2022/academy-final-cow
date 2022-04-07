@@ -4,10 +4,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import client from "../services/HttpClient";
 
 interface HeartbeatResponse {
-  status: String;
+  status: string;
   components: {
     db: {
-      status: String;
+      status: string;
     }
   }
 }
@@ -21,33 +21,30 @@ function Heartbeat() {
       .get<HeartbeatResponse>({ url: `${process.env.REACT_APP_HEARTBEAT_URL}` })
       .then((resp: HeartbeatResponse) => {
         if (resp.status === "UP") setBackendState(true);
-        if (resp.components.db.status === "UP") setDatabaseStatus((true));
+        if (resp.components.db.status === "UP") setDatabaseStatus(true);
       });
   }, []);
 
   return (
     <>
       <h1>Health check</h1>
+      <p>Backend status:</p>
       {backendStateIsHealthy ? (
         <div role="backendIsUp">
-          <p>Backend status:</p>
           <DoneOutlineIcon />
-          {databaseStatus ? (
-              <div role="databaseIsUp">
-                <p>Database status:</p>
-                <DoneOutlineIcon />
-              </div>
-          ) : (<div role="databaseIsDown">
-            <p>Database status:</p>
-            <CancelIcon />
-          </div>
-            )}
         </div>
       ) : (
         <div role="backendIsDown">
-          <p>Backend status:</p>
           <CancelIcon />
-          <p>Database status:</p>
+        </div>
+      )}
+      <p>Database status:</p>
+      {databaseStatus ? (
+        <div role="databaseIsUp">
+          <DoneOutlineIcon />
+        </div>
+      ) : (
+        <div role="databaseIsDown">
           <CancelIcon />
         </div>
       )}

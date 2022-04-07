@@ -6,10 +6,10 @@ const axios = require("axios");
 jest.mock("axios");
 
 interface HeartbeatResponse {
-  status: String;
+  status: string;
   components: {
     db: {
-      status: String;
+      status: string;
     }
   }
 }
