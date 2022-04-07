@@ -4,7 +4,23 @@ import {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 
+import * as createUser from "../user/createUser";
+
 describe("googleLoginServiceShould", () => {
+  test("should call createUser service when google login is successful", () => {
+    const successfulResponse = {
+      profileObj: {
+        name: "testProfile",
+      },
+    } as GoogleLoginResponse;
+
+    loginService(successfulResponse);
+
+    expect(createUser).toHaveBeenCalledWith({
+      externalId: "someID",
+      fullName: "test name",
+    });
+  });
   test("return '/teams' when login is successful", () => {
     const successfulResponse = {
       profileObj: {
