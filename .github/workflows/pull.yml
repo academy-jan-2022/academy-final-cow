@@ -22,9 +22,13 @@ jobs:
         run: |
           npm install
           npm test -- --coverage --testResultsProcessor=jest-sonar-reporter
-        
+
       - name: Cypress.io
         uses: cypress-io/github-action@v2.9.7
+        env:
+          CYPRESS_googleClientId: ${{ secrets.OAUTH_CLIENT_ID }}
+          CYPRESS_googleClientSecret: ${{ secrets.OAUTH_SECRET }}
+          CYPRESS_googleRefreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
         with:
           start: npm run start
           wait-on: 'http://localhost:3000'
@@ -35,13 +39,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
       - name: Build Docker image in Azure registry
         uses: docker/build-push-action@v2
         with:
-          context: ./
-          file: ./Dockerfile
-          cache-to: type=gha,mode=max
           tags: academyfinalproject.azurecr.io/academy-final-cow:latest

@@ -20,6 +20,7 @@
     "jest-sonar-reporter": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "typescript": "^4.6.3",
@@ -30,6 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cucumber-test": "cucumber-js",
+    "sonar-test": "npm test -- --coverage --testResultsProcessor=jest-sonar-reporter",
     "eject": "react-scripts eject",
     "docker-start": "docker-compose up -d"
   },
@@ -53,12 +55,14 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.3.2",
+    "dotenv": "^16.0.0",
     "jest": "^27.5.1",
     "prettier": "^2.6.1"
   },
   "jest": {
     "collectCoverageFrom": [
       "src/pages/*.{js,jsx,ts,tsx}",
+      "src/services/*.{js,jsx,ts,tsx}",
       "src/components/*.{js,jsx,ts,tsx}"
     ]
   },
