@@ -3,17 +3,20 @@ import {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 import createUser from "./user/createUser";
+import { ROUTES } from "../index";
 
 export const loginService = async (
   response: GoogleLoginResponse | GoogleLoginResponseOffline
-): Promise<string> => {
-  if ("profileObj" in response) {
+): Promise<ROUTES> => {
+  const userExists = "profileObj" in response;
+
+  if (userExists) {
     await createUser({
       externalId: "someID",
       fullName: "test name",
     });
 
-    return "/teams";
+    return ROUTES.teams;
   }
-  return "/error";
+  return ROUTES.error;
 };
