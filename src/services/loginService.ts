@@ -4,11 +4,11 @@ import {
 } from "react-google-login";
 import createUser from "./user/createUser";
 
-export const loginService = (
+export const loginService = async (
   response: GoogleLoginResponse | GoogleLoginResponseOffline
-): string => {
+): Promise<string> => {
   if ("profileObj" in response) {
-    createUser({
+    await createUser({
       externalId: "someID",
       fullName: "test name",
     });

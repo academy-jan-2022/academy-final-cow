@@ -9,42 +9,42 @@ jest.mock("../user/createUser");
 const mockedCreateUser = createUser as jest.Mocked<typeof createUser>;
 
 describe("googleLoginServiceShould", () => {
-  test("should call createUser service when google login is successful", () => {
+  test("should call createUser service when google login is successful", async () => {
     const successfulResponse = {
       profileObj: {
         name: "testProfile",
       },
     } as GoogleLoginResponse;
 
-    loginService(successfulResponse);
+    await loginService(successfulResponse);
     expect(mockedCreateUser).toHaveBeenCalledWith({
       externalId: "someID",
       fullName: "test name",
     });
   });
 
-  test("should not call createUser service when google login is unsuccessful", () => {
+  test("should not call createUser service when google login is unsuccessful", async () => {
     const unSuccessfulResponse = {} as GoogleLoginResponseOffline;
 
-    loginService(unSuccessfulResponse);
+    await loginService(unSuccessfulResponse);
     expect(mockedCreateUser).not.toHaveBeenCalled();
   });
 
-  test("return '/teams' when login is successful", () => {
+  test("return '/teams' when login is successful", async () => {
     const successfulResponse = {
       profileObj: {
         name: "testProfile",
       },
     } as GoogleLoginResponse;
 
-    const returnValue = loginService(successfulResponse);
+    const returnValue = await loginService(successfulResponse);
     expect(returnValue).toEqual("/teams");
   });
 
-  test("return '/error' when login is unsuccessful", () => {
+  test("return '/error' when login is unsuccessful", async () => {
     const unSuccessfulResponse = {} as GoogleLoginResponseOffline;
 
-    const returnValue = loginService(unSuccessfulResponse);
+    const returnValue = await loginService(unSuccessfulResponse);
     expect(returnValue).toEqual("/error");
   });
 });
