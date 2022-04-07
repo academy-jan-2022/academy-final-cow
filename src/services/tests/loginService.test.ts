@@ -23,6 +23,13 @@ describe("googleLoginServiceShould", () => {
     });
   });
 
+  test("should not call createUser service when google login is unsuccessful", () => {
+    const unSuccessfulResponse = {} as GoogleLoginResponseOffline;
+
+    loginService(unSuccessfulResponse);
+    expect(mockedCreateUser).not.toHaveBeenCalled();
+  });
+
   test("return '/teams' when login is successful", () => {
     const successfulResponse = {
       profileObj: {
