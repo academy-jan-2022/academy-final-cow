@@ -3,8 +3,10 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
+import createUser from "../user/createUser";
 
-import * as createUser from "../user/createUser";
+jest.mock("../user/createUser");
+const mockedCreateUser = createUser as jest.Mocked<typeof createUser>;
 
 describe("googleLoginServiceShould", () => {
   test("should call createUser service when google login is successful", () => {
@@ -15,12 +17,12 @@ describe("googleLoginServiceShould", () => {
     } as GoogleLoginResponse;
 
     loginService(successfulResponse);
-
-    expect(createUser).toHaveBeenCalledWith({
+    expect(mockedCreateUser).toHaveBeenCalledWith({
       externalId: "someID",
       fullName: "test name",
     });
   });
+
   test("return '/teams' when login is successful", () => {
     const successfulResponse = {
       profileObj: {
