@@ -1,7 +1,6 @@
 
 class StorageHandler {
     setJSONItem(key: string, value: Object): void {
-        console.log("set storage method");
         window.localStorage.setItem(key, JSON.stringify(value));
     } 
     getJSONItem(key: string): Object | null {
@@ -10,6 +9,9 @@ class StorageHandler {
             return JSON.parse(value);
         } 
         return null;
+    }
+    removeItem(key: string): void {
+        window.localStorage.removeItem(key);
     }
 };
 

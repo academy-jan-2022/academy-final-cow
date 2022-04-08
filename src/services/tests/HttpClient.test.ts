@@ -1,4 +1,4 @@
-import { HttpClient } from '../HttpClient';
+import client from '../HttpClient';
 const axios = require('axios');
 
 jest.mock("axios");
@@ -6,7 +6,6 @@ jest.mock("axios");
 const url = 'https://some.url.com'
 let matcher = `${url}/?foo=bar&baz=meh`;
 let postMatcher = `${url}/get-apple`
-const httpClient = new HttpClient();
 
 beforeEach(async () => {
     const getList = { data: { name: "banana" }};
@@ -20,7 +19,7 @@ interface MyResult {
 }
 
 test('url is called', async () => {
-    const result = await httpClient.get<MyResult>(
+    const result = await client.get<MyResult>(
         {
             url: url,
             queryParams: {
@@ -37,10 +36,13 @@ test('url is called', async () => {
 test('post is called', async () => {
     const body = {token: "fake token"};
 
-    const result = await httpClient.post<MyResult>(
+    const result = await client.post<MyResult>(
         {
             url: postMatcher,
-            body
+            body,
+            headers: {
+                token: "token"
+            }
         }
     );
 

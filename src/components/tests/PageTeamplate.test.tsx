@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 
 import PageTemplate from "../PageTemplate";
 import { storageHandler } from "../../services/StorageHandler";
+import { BrowserRouter } from "react-router-dom";
 
 jest.mock("../../services/StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<
@@ -31,13 +32,13 @@ describe("page template should", () => {
       mockedStorageHandler.getJSONItem = jest
         .fn()
         .mockReturnValueOnce({ token: "token" });
-
       render(
-        <PageTemplate>
-          <p>Child</p>
-        </PageTemplate>
+        <BrowserRouter>
+          <PageTemplate>
+            <p>Child</p>
+          </PageTemplate>
+        </BrowserRouter>
       );
-
       const appBar = screen.queryAllByTestId("app-bar");
       expect(appBar.length).toBe(1);
     });

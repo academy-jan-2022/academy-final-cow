@@ -16,6 +16,7 @@ export const loginService = async (
       await createUser({
         externalId: "someID",
         fullName: "test name",
+        idToken: response.tokenObj.id_token
       })
 
       return "/teams";

@@ -11,8 +11,7 @@ import {
   Container,
 } from "@mui/material";
 import { AppBar as Bar } from "@mui/material";
-
-const settings = ["Logout"];
+import LogoutButton from "./LogoutButton";
 
 const AppBar = () => {
   const [anchorElUser, setAnchorElUser] =
@@ -41,7 +40,6 @@ const AppBar = () => {
           >
             LOGO
           </Typography>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton
@@ -69,11 +67,7 @@ const AppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <LogoutButton />
             </Menu>
           </Box>
         </Toolbar>

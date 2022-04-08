@@ -1,20 +1,32 @@
 import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 import AppBar from "../AppBar";
 
+const mockedUsedNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+  ...(jest.requireActual("react-router-dom") as any),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
+beforeEach(() => {
+  render(
+    <BrowserRouter>
+      <AppBar />
+    </BrowserRouter>
+  );
+});
+
 test("renders avatar", () => {
-  render(<AppBar />);
   const avatar = screen.getByTestId("avatar");
   expect(avatar).toBeInTheDocument();
 });
 
 test("renders logo", () => {
-  render(<AppBar />);
   const logo = screen.getByTestId("logo");
   expect(logo).toBeInTheDocument();
 });
 
 test("see logout button when you click avatar", () => {
-  render(<AppBar />);
   const avatar = screen.getByTestId("avatar");
   avatar.click();
   const logoutButton = screen.getByText("Logout");

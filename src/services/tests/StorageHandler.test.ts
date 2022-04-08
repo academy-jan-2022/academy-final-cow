@@ -29,3 +29,8 @@ test("get item in localstorage", async () => {
     storageHandler.getJSONItem("apple");
     expect(localStorageMock.getItem).toBeCalledWith("apple");
 });
+
+test("remove item in localstorage", async () => {
+  storageHandler.removeItem("apple");
+  expect(localStorageMock.removeItem).toBeCalledWith("apple");
+});

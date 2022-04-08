@@ -14,7 +14,7 @@ function HomePage() {
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     const route = await loginService(res);
-    // navigate(route);
+    navigate(route);
   };
 
   return (
