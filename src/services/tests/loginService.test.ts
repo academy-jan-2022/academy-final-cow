@@ -4,9 +4,12 @@ import {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 import createUser from "../user/createUser";
+import { storageHandler } from "../StorageHandler";
 
 jest.mock("../user/createUser");
 const mockedCreateUser = createUser as jest.Mocked<typeof createUser>;
+
+jest.mock("../StorageHandler");
 
 describe("googleLoginServiceShould", () => {
   const successfulResponse = {
@@ -38,4 +41,11 @@ describe("googleLoginServiceShould", () => {
     const returnValue = await loginService(unSuccessfulResponse);
     expect(returnValue).toEqual("/error");
   });
+
+  test("should set token object using storage handler", async () => {
+    await loginService(successfulResponse);
+    expect(storageHandler.setJSONItem).toHaveBeenCalled();
+  })
 });
+
+

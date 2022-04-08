@@ -29,7 +29,7 @@ const AppBar = () => {
   };
 
   return (
-    <Bar data-testid="app-bar">
+    <Bar data-testid="app-bar" position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
           <Typography

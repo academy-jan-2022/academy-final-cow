@@ -1,6 +1,7 @@
 
 class StorageHandler {
     setJSONItem(key: string, value: Object): void {
+        console.log("set storage method");
         window.localStorage.setItem(key, JSON.stringify(value));
     } 
     getJSONItem(key: string): Object | null {

@@ -2,6 +2,7 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
+import { storageHandler } from "./StorageHandler";
 import createUser from "./user/createUser";
 
 export const loginService = async (
@@ -11,10 +12,11 @@ export const loginService = async (
 
   if (googleUserExists) {
     try {
+      storageHandler.setJSONItem("tokenObject",response.tokenObj);
       await createUser({
         externalId: "someID",
         fullName: "test name",
-      });
+      })
 
       return "/teams";
     } catch (e) {

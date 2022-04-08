@@ -28,3 +28,5 @@ yarn-error.log*
 
 .env.secrets
 /cypress.env.json
+
+.vscode/
