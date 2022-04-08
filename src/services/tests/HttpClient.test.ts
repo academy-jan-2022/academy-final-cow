@@ -47,5 +47,5 @@ test('post is called', async () => {
     );
 
     expect(result).toEqual({ name: "apple" });
-    expect(axios.post).toHaveBeenCalledWith(postMatcher, body);
+    expect(axios.post).toHaveBeenCalledWith(postMatcher, body, {headers: {Authorization: "Bearer token"}});
 });

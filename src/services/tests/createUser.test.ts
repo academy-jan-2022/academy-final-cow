@@ -9,7 +9,8 @@ describe("create user should", () => {
     const user = { externalId: "someID", fullName: "test name", idToken: "weokwof" };
     const request = {
       url: "https://teaminator-backend.azurewebsites.net/login",
-      body: user,
+      body: {fullName: "test name", externalId: "someID"},
+      headers: {token: "weokwof"}
     };
     createUser(user);
     expect(mockedHttpClient.post).toHaveBeenCalledWith(request);

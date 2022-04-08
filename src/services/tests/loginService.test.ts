@@ -16,6 +16,7 @@ describe("googleLoginServiceShould", () => {
     profileObj: {
       name: "testProfile",
     },
+    tokenObj: {id_token: "token"}
   } as GoogleLoginResponse;
 
   const unSuccessfulResponse = {} as GoogleLoginResponseOffline;
@@ -24,6 +25,7 @@ describe("googleLoginServiceShould", () => {
     expect(mockedCreateUser).toHaveBeenCalledWith({
       externalId: "someID",
       fullName: "test name",
+      idToken: "token"
     });
   });
 
