@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import HomePage from "../HomePage";
 import { loginService } from "../../services/loginService";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const mockedUsedNavigate = jest.fn();
 
@@ -29,33 +30,36 @@ jest.mock("react-google-login", () => {
   };
 });
 
+beforeEach(() => {
+  render(
+    <BrowserRouter>
+      <HomePage />
+    </BrowserRouter>
+  );
+});
+
 test("renders logo", () => {
-  render(<HomePage />);
   const logo = screen.getByRole("img", { name: "logo" });
   expect(logo).toBeInTheDocument();
 });
 
 test("renders app name", () => {
-  render(<HomePage />);
   const title = screen.getByRole("heading", { name: "title" });
   expect(title).toBeInTheDocument();
 });
 
 test("renders log in button", () => {
-  render(<HomePage />);
   const button = screen.getByText("Login");
   expect(button).toBeInTheDocument();
 });
 
 test("calls login service after clicking login button", () => {
-  render(<HomePage />);
   const button = screen.getByText("Login");
   button.click();
   expect(loginService).toHaveBeenCalled();
 });
 
 test("navigates to the provided route after login", async () => {
-  render(<HomePage />);
   const button = screen.getByText("Login");
   button.click();
   await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalled());

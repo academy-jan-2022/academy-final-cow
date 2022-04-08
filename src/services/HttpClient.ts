@@ -13,7 +13,7 @@ export class HttpClient {
 
     async post<T>(request: PostRequest): Promise<T> {
         let url = new URL(request.url);
-        const response: AxiosResponse<T> = await axios.post(url.toString(), request.body);
+        const response: AxiosResponse<T> = await axios.post(url.toString(), request.body, {headers: {Authorization: `Bearer ${request.headers.token}`}});
         return response.data;
     }
 }
@@ -26,6 +26,9 @@ export interface GetRequest {
 export interface PostRequest {
     url: string;
     body: Object;
+    headers: {
+        token: string;
+    }
 }
 
 const client = new HttpClient();

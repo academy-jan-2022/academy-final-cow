@@ -14,7 +14,6 @@ function HomePage() {
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     const route = await loginService(res);
-    window.localStorage.setItem("google", JSON.stringify(res));
     navigate(route);
   };
 
