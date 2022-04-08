@@ -1,9 +1,11 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import HomePage from "../HomePage";
+import { loginService } from "../../services/loginService";
 
 const mockedUsedNavigate = jest.fn();
 
+jest.mock("../../services/loginService");
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
   useNavigate: () => mockedUsedNavigate,
@@ -45,9 +47,16 @@ test("renders log in button", () => {
   expect(button).toBeInTheDocument();
 });
 
-test("navigates to the provided route after login", () => {
+test("calls login service after clicking login button", () => {
   render(<HomePage />);
   const button = screen.getByText("Login");
   button.click();
-  expect(mockedUsedNavigate).toHaveBeenCalled();
+  expect(loginService).toHaveBeenCalled();
+});
+
+test("navigates to the provided route after login", async () => {
+  render(<HomePage />);
+  const button = screen.getByText("Login");
+  button.click();
+  await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalled());
 });

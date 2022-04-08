@@ -3,30 +3,48 @@ import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import client from "../services/HttpClient";
 
-interface HeartbeatRespose {
-  status: number;
+interface HeartbeatResponse {
+  status: string;
+  components: {
+    db: {
+      status: string;
+    }
+  }
 }
 
 function Heartbeat() {
   const [backendStateIsHealthy, setBackendState] = useState(false);
+  const [databaseStatus, setDatabaseStatus] = useState(false);
 
   useEffect(() => {
     client
-      .get<HeartbeatRespose>({ url: `${process.env.REACT_APP_HEARTBEAT_URL}` })
-      .then((resp: HeartbeatRespose) => {
-        if (resp.status === 200) setBackendState(true);
+      .get<HeartbeatResponse>({ url: `${process.env.REACT_APP_HEARTBEAT_URL}` })
+      .then((resp: HeartbeatResponse) => {
+        if (resp.status === "UP") setBackendState(true);
+        if (resp.components.db.status === "UP") setDatabaseStatus(true);
       });
   }, []);
 
   return (
     <>
       <h1>Health check</h1>
+      <p>Backend status:</p>
       {backendStateIsHealthy ? (
-        <div role="greenTick">
+        <div role="backendIsUp">
           <DoneOutlineIcon />
         </div>
       ) : (
-        <div role="redCross">
+        <div role="backendIsDown">
+          <CancelIcon />
+        </div>
+      )}
+      <p>Database status:</p>
+      {databaseStatus ? (
+        <div role="databaseIsUp">
+          <DoneOutlineIcon />
+        </div>
+      ) : (
+        <div role="databaseIsDown">
           <CancelIcon />
         </div>
       )}

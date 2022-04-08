@@ -5,11 +5,14 @@ jest.mock("axios");
 
 const url = 'https://some.url.com'
 let matcher = `${url}/?foo=bar&baz=meh`;
+let postMatcher = `${url}/get-apple`
 const httpClient = new HttpClient();
 
 beforeEach(async () => {
-    const list = { data: { name: "banana" }};
-    axios.get.mockImplementation(() => Promise.resolve(list));
+    const getList = { data: { name: "banana" }};
+    const postList = { data: { name: "apple"} }
+    axios.get.mockImplementation(() => Promise.resolve(getList));
+    axios.post.mockImplementation(() => Promise.resolve(postList));
 })
 
 interface MyResult {
@@ -29,4 +32,18 @@ test('url is called', async () => {
 
     expect(result).toEqual({ name: "banana" });
     expect(axios.get).toHaveBeenCalledWith(matcher);
+});
+
+test('post is called', async () => {
+    const body = {token: "fake token"};
+
+    const result = await httpClient.post<MyResult>(
+        {
+            url: postMatcher,
+            body
+        }
+    );
+
+    expect(result).toEqual({ name: "apple" });
+    expect(axios.post).toHaveBeenCalledWith(postMatcher, body);
 });
