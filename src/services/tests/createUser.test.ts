@@ -8,7 +8,7 @@ describe("create user should", () => {
   test("call http client post method", () => {
     const user = { externalId: "someID", fullName: "test name", idToken: "weokwof" };
     const request = {
-      url: "https://teaminator-backend.azurewebsites.net/login",
+      url: "htts://teaminator-backend.azurewebsites.net/login",
       body: {fullName: "test name", externalId: "someID"},
       headers: {token: "weokwof"}
     };
