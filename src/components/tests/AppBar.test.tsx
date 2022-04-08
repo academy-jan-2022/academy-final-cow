@@ -12,3 +12,11 @@ test("renders logo", () => {
   const logo = screen.getByTestId("logo");
   expect(logo).toBeInTheDocument();
 });
+
+test("see logout button when you click avatar", () => {
+  render(<AppBar />);
+  const avatar = screen.getByTestId("avatar");
+  avatar.click();
+  const logoutButton = screen.getByText("Logout");
+  expect(logoutButton).toBeInTheDocument();
+});
