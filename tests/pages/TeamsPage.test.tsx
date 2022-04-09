@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import TeamsPage from "../TeamsPage";
+import TeamsPage from "../../src/pages/TeamsPage";
 
 test("renders the heading", () => {
   render(<TeamsPage />);

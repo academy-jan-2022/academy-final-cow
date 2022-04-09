@@ -1,4 +1,4 @@
-import { HttpClient } from "../HttpClient";
+import { HttpClient } from "../infrastructure/HttpClient";
 
 type User = {
   externalId: string;

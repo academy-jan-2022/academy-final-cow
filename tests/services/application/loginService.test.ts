@@ -1,10 +1,10 @@
-import { loginService } from "../loginService";
+import { loginService } from "../../../src/services/application/loginService";
 import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import createUser from "../user/createUser";
-import { storageHandler } from "../StorageHandler";
+import createUser from "../../../src/services/application/createUser";
+import { storageHandler } from "../../../src/services/infrastructure/StorageHandler";
 
 jest.mock("../user/createUser");
 const mockedCreateUser = createUser as jest.Mocked<typeof createUser>;
@@ -16,7 +16,7 @@ describe("googleLoginServiceShould", () => {
     profileObj: {
       name: "testProfile",
     },
-    tokenObj: {id_token: "token"}
+    tokenObj: { id_token: "token" },
   } as GoogleLoginResponse;
 
   const unSuccessfulResponse = {} as GoogleLoginResponseOffline;
@@ -25,7 +25,7 @@ describe("googleLoginServiceShould", () => {
     expect(mockedCreateUser).toHaveBeenCalledWith({
       externalId: "someID",
       fullName: "test name",
-      idToken: "token"
+      idToken: "token",
     });
   });
 
@@ -47,7 +47,5 @@ describe("googleLoginServiceShould", () => {
   test("should set token object using storage handler", async () => {
     await loginService(successfulResponse);
     expect(storageHandler.setJSONItem).toHaveBeenCalled();
-  })
+  });
 });
-
-

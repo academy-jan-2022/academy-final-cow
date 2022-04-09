@@ -1,10 +1,10 @@
 import React from "react";
 import Container from "@mui/material/Container";
-import "./styles/template.css";
-import AppBar from "./AppBar";
-import { storageHandler } from "../services/StorageHandler";
+import "./template.css";
+import AppBar from "../components/AppBar";
+import { storageHandler } from "../services/infrastructure/StorageHandler";
 
-const Template: React.FC = ({ children }) => {
+const PageTemplate: React.FC = ({ children }) => {
   const userIsLoggedIn = () => {
     const tokenObject = storageHandler.getJSONItem("tokenObject");
     return tokenObject ? true : false;
@@ -20,4 +20,4 @@ const Template: React.FC = ({ children }) => {
   );
 };
 
-export default Template;
+export default PageTemplate;

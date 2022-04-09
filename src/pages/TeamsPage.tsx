@@ -1,7 +1,7 @@
 import React from "react";
-import PageTemplate from "../components/PageTemplate";
+import PageTemplate from "./PageTemplate";
 
-const Teams = () => {
+const TeamsPage = () => {
   return (
     <PageTemplate>
       <h1 aria-label="title">Teams</h1>
@@ -9,4 +9,4 @@ const Teams = () => {
   );
 };
 
-export default Teams;
+export default TeamsPage;

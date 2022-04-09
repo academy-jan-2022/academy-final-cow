@@ -3,9 +3,9 @@ import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import Template from "../components/PageTemplate";
+import PageTemplate from "./PageTemplate";
 import { useNavigate } from "react-router-dom";
-import { loginService } from "../services/loginService";
+import { loginService } from "../services/application/loginService";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function HomePage() {
   };
 
   return (
-    <Template>
+    <PageTemplate>
       <header>
         <h1 aria-label={"title"}>Teaminator</h1>
         <img
@@ -34,7 +34,7 @@ function HomePage() {
         cookiePolicy={"single_host_origin"}
         isSignedIn={true}
       />
-    </Template>
+    </PageTemplate>
   );
 }
 

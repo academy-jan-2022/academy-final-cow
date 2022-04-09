@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom";
-import Heartbeat from "./pages/Heartbeat";
+import HeartbeatPage from "./pages/HeartbeatPage";
 import TeamsPage from "./pages/TeamsPage";
 
 ReactDOM.render(
@@ -12,7 +12,7 @@ ReactDOM.render(
     <Router>
       <Routes>
         <Route path="/teams" element={<TeamsPage />} />
-        <Route path="/heartbeat" element={<Heartbeat />} />
+        <Route path="/heartbeat" element={<HeartbeatPage />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </Router>

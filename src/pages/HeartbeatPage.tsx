@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
-import client from "../services/HttpClient";
+import client from "../services/infrastructure/HttpClient";
 
 interface HeartbeatResponse {
   status: string;
   components: {
     db: {
       status: string;
-    }
-  }
+    };
+  };
 }
 
-function Heartbeat() {
+function HeartbeatPage() {
   const [backendStateIsHealthy, setBackendState] = useState(false);
   const [databaseStatus, setDatabaseStatus] = useState(false);
 
@@ -24,7 +24,6 @@ function Heartbeat() {
         if (resp.components.db.status === "UP") setDatabaseStatus(true);
       });
   }, []);
-
   return (
     <>
       <h1>Health check</h1>
@@ -52,4 +51,4 @@ function Heartbeat() {
   );
 }
 
-export default Heartbeat;
+export default HeartbeatPage;

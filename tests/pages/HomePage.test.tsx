@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import HomePage from "../HomePage";
-import { loginService } from "../../services/loginService";
+import HomePage from "../../src/pages/HomePage";
+import { loginService } from "../../src/services/application/loginService";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const mockedUsedNavigate = jest.fn();

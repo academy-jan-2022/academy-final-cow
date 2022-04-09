@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
-import PageTemplate from "../PageTemplate";
-import { storageHandler } from "../../services/StorageHandler";
+import PageTemplate from "../../src/pages/PageTemplate";
+import { storageHandler } from "../../src/services/infrastructure/StorageHandler";
 import { BrowserRouter } from "react-router-dom";
 
 jest.mock("../../services/StorageHandler");
