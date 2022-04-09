@@ -3,7 +3,7 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import createUser from "../../../src/services/application/createUser";
+import createUser from "../../../src/services/domain/createUser";
 import { storageHandler } from "../../../src/services/infrastructure/StorageHandler";
 
 jest.mock("../user/createUser");

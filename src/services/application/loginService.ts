@@ -3,7 +3,7 @@ import {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 import { storageHandler } from "../infrastructure/StorageHandler";
-import createUser from "./createUser";
+import createUser from "../domain/createUser";
 
 export const loginService = async (
   response: GoogleLoginResponse | GoogleLoginResponseOffline

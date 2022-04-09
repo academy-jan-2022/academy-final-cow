@@ -1,4 +1,4 @@
-import createUser from "../../../src/services/application/createUser";
+import createUser from "../../../src/services/domain/createUser";
 import client from "../../../src/services/infrastructure/HttpClient";
 
 jest.mock("../HttpClient");
