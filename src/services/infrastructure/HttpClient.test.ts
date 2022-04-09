@@ -3,47 +3,56 @@ const axios = require("axios");
 
 jest.mock("axios");
 
-const url = "https://some.url.com";
-let matcher = `${url}/?foo=bar&baz=meh`;
-let postMatcher = `${url}/get-apple`;
+const TOKEN = "token";
+const A_QUERY_PARAM = "bar";
+const ANOTHER_QUERY_PARAM = "meh";
 
-beforeEach(async () => {
-  const getList = { data: { name: "banana" } };
-  const postList = { data: { name: "apple" } };
-  axios.get.mockImplementation(() => Promise.resolve(getList));
-  axios.post.mockImplementation(() => Promise.resolve(postList));
-});
+const BASE_URL = "https://some.url.com";
+let GET_REQUEST_URL = `${BASE_URL}/?foo=${A_QUERY_PARAM}&baz=${ANOTHER_QUERY_PARAM}`;
+let POST_REQUEST_URL = `${BASE_URL}/get-apple`;
 
-interface MyResult {
-  name: string;
-}
+const GET_RESPONSE_BODY_PROP = "banana";
+const POST_RESPONSE_BODY_PROP = "apple";
 
-test("url is called", async () => {
-  const result = await client.get<MyResult>({
-    url: url,
-    queryParams: {
-      foo: "bar",
-      baz: "meh",
-    },
+describe("HttpClient should", function () {
+  beforeEach(async () => {
+    const getList = { data: { name: GET_RESPONSE_BODY_PROP } };
+    const postList = { data: { name: POST_RESPONSE_BODY_PROP } };
+    axios.get.mockImplementation(() => Promise.resolve(getList));
+    axios.post.mockImplementation(() => Promise.resolve(postList));
   });
 
-  expect(result).toEqual({ name: "banana" });
-  expect(axios.get).toHaveBeenCalledWith(matcher);
-});
+  type RequestResponseType = {
+    name: string;
+  };
 
-test("post is called", async () => {
-  const body = { token: "fake token" };
+  test("url is called", async () => {
+    const result = await client.get<RequestResponseType>({
+      url: BASE_URL,
+      queryParams: {
+        foo: A_QUERY_PARAM,
+        baz: ANOTHER_QUERY_PARAM,
+      },
+    });
 
-  const result = await client.post<MyResult>({
-    url: postMatcher,
-    body,
-    headers: {
-      token: "token",
-    },
+    expect(result).toEqual({ name: GET_RESPONSE_BODY_PROP });
+    expect(axios.get).toHaveBeenCalledWith(GET_REQUEST_URL);
   });
 
-  expect(result).toEqual({ name: "apple" });
-  expect(axios.post).toHaveBeenCalledWith(postMatcher, body, {
-    headers: { Authorization: "token" },
+  test("post is called", async () => {
+    const body = { bodyProp: "aBodyProp" };
+
+    const result = await client.post<RequestResponseType>({
+      url: POST_REQUEST_URL,
+      body,
+      headers: {
+        token: TOKEN,
+      },
+    });
+
+    expect(result.name).toEqual(POST_RESPONSE_BODY_PROP);
+    expect(axios.post).toHaveBeenCalledWith(POST_REQUEST_URL, body, {
+      headers: { Authorization: TOKEN },
+    });
   });
 });

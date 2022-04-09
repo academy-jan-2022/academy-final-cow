@@ -15,22 +15,26 @@ const localStorageMock = (function () {
 })();
 Object.defineProperty(window, "localStorage", { value: localStorageMock });
 
-test("set item in localstorage", async () => {
-  const appleObject = { fruit: "apple" };
+const APPLE_ITEM = "apple";
 
-  storageHandler.setJSONItem("apple", appleObject);
-  expect(localStorageMock.setItem).toBeCalledWith(
-    "apple",
-    JSON.stringify(appleObject)
-  );
-});
+describe("StorageHandler should", () => {
+  test("set item in localstorage", async () => {
+    const appleObject = { fruit: APPLE_ITEM };
 
-test("get item in localstorage", async () => {
-  storageHandler.getJSONItem("apple");
-  expect(localStorageMock.getItem).toBeCalledWith("apple");
-});
+    storageHandler.setJSONItem(APPLE_ITEM, appleObject);
+    expect(localStorageMock.setItem).toBeCalledWith(
+      APPLE_ITEM,
+      JSON.stringify(appleObject)
+    );
+  });
 
-test("remove item in localstorage", async () => {
-  storageHandler.removeItem("apple");
-  expect(localStorageMock.removeItem).toBeCalledWith("apple");
+  test("get item from localstorage", async () => {
+    storageHandler.getJSONItem(APPLE_ITEM);
+    expect(localStorageMock.getItem).toBeCalledWith(APPLE_ITEM);
+  });
+
+  test("remove item from localstorage", async () => {
+    storageHandler.removeItem(APPLE_ITEM);
+    expect(localStorageMock.removeItem).toBeCalledWith(APPLE_ITEM);
+  });
 });

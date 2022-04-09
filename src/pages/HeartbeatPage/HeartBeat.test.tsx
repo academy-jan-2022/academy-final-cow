@@ -22,12 +22,15 @@ const apiCall = async (resCode: HeartbeatResponse) => {
   });
 };
 
+const UP_STATUS = "UP";
+const DOWN_STATUS = "DOWN";
+
 test("Show header", async () => {
   await apiCall({
-    status: "UP",
+    status: UP_STATUS,
     components: {
       db: {
-        status: "DOWN",
+        status: DOWN_STATUS,
       },
     },
   });
@@ -37,10 +40,10 @@ test("Show header", async () => {
 
 test("Show green tick for backend status when status is up", async () => {
   await apiCall({
-    status: "UP",
+    status: UP_STATUS,
     components: {
       db: {
-        status: "DOWN",
+        status: DOWN_STATUS,
       },
     },
   });
@@ -50,10 +53,10 @@ test("Show green tick for backend status when status is up", async () => {
 
 test("Show red tick for backend status when status is down", async () => {
   await apiCall({
-    status: "DOWN",
+    status: DOWN_STATUS,
     components: {
       db: {
-        status: "DOWN",
+        status: DOWN_STATUS,
       },
     },
   });
@@ -63,10 +66,10 @@ test("Show red tick for backend status when status is down", async () => {
 
 test("Show green tick for backend and db when both backend and db status is up", async () => {
   await apiCall({
-    status: "UP",
+    status: UP_STATUS,
     components: {
       db: {
-        status: "UP",
+        status: UP_STATUS,
       },
     },
   });
@@ -76,10 +79,10 @@ test("Show green tick for backend and db when both backend and db status is up",
 
 test("Show red tick for db status when backend status is up but db status is down", async () => {
   await apiCall({
-    status: "UP",
+    status: UP_STATUS,
     components: {
       db: {
-        status: "DOWN",
+        status: DOWN_STATUS,
       },
     },
   });

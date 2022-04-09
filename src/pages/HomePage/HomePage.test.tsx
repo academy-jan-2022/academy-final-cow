@@ -30,37 +30,41 @@ jest.mock("react-google-login", () => {
   };
 });
 
-beforeEach(() => {
-  render(
-    <BrowserRouter>
-      <HomePage />
-    </BrowserRouter>
-  );
-});
+const LOGIN_BUTTON_TEXT = "Login";
 
-test("renders logo", () => {
-  const logo = screen.getByRole("img", { name: "logo" });
-  expect(logo).toBeInTheDocument();
-});
+describe("HomePage test should", () => {
+  beforeEach(() => {
+    render(
+      <BrowserRouter>
+        <HomePage />
+      </BrowserRouter>
+    );
+  });
 
-test("renders app name", () => {
-  const title = screen.getByRole("heading", { name: "title" });
-  expect(title).toBeInTheDocument();
-});
+  test("renders logo", () => {
+    const logo = screen.getByRole("img", { name: "logo" });
+    expect(logo).toBeInTheDocument();
+  });
 
-test("renders log in button", () => {
-  const button = screen.getByText("Login");
-  expect(button).toBeInTheDocument();
-});
+  test("renders app name", () => {
+    const title = screen.getByRole("heading", { name: "title" });
+    expect(title).toBeInTheDocument();
+  });
 
-test("calls login service after clicking login button", () => {
-  const button = screen.getByText("Login");
-  button.click();
-  expect(loginService).toHaveBeenCalled();
-});
+  test("renders log in button", () => {
+    const button = screen.getByText(LOGIN_BUTTON_TEXT);
+    expect(button).toBeInTheDocument();
+  });
 
-test("navigates to the provided route after login", async () => {
-  const button = screen.getByText("Login");
-  button.click();
-  await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalled());
+  test("calls login service after clicking login button", () => {
+    const button = screen.getByText(LOGIN_BUTTON_TEXT);
+    button.click();
+    expect(loginService).toHaveBeenCalled();
+  });
+
+  test("navigates to the provided route after login", async () => {
+    const button = screen.getByText(LOGIN_BUTTON_TEXT);
+    button.click();
+    await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalled());
+  });
 });
