@@ -1,7 +1,7 @@
-import createUser from "../../../src/services/domain/createUser";
-import client from "../../../src/services/infrastructure/HttpClient";
+import createUser from "./createUser";
+import client from "../infrastructure/HttpClient";
 
-jest.mock("../HttpClient");
+jest.mock("../infrastructure/HttpClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
 
 describe("create user should", () => {
@@ -12,7 +12,7 @@ describe("create user should", () => {
       idToken: "weokwof",
     };
     const request = {
-      url: "htts://teaminator-backend.azurewebsites.net/login",
+      url: process.env.REACT_APP_BASE_URL + "/login",
       body: { fullName: "test name", externalId: "someID" },
       headers: { token: "weokwof" },
     };

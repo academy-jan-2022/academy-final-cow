@@ -1,4 +1,4 @@
-import client from "../../../src/services/infrastructure/HttpClient";
+import client from "./HttpClient";
 const axios = require("axios");
 
 jest.mock("axios");
@@ -44,6 +44,6 @@ test("post is called", async () => {
 
   expect(result).toEqual({ name: "apple" });
   expect(axios.post).toHaveBeenCalledWith(postMatcher, body, {
-    headers: { Authorization: "Bearer token" },
+    headers: { Authorization: "token" },
   });
 });

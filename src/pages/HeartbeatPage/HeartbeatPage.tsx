@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
-import client from "../services/infrastructure/HttpClient";
+import client from "../../services/infrastructure/HttpClient";
 
 interface HeartbeatResponse {
   status: string;

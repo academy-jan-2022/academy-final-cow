@@ -1,31 +1,36 @@
-import { loginService } from "../../../src/services/application/loginService";
+import { loginService } from "./loginService";
 import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import createUser from "../../../src/services/domain/createUser";
-import { storageHandler } from "../../../src/services/infrastructure/StorageHandler";
+import createUser from "../domain/createUser";
+import { storageHandler } from "../infrastructure/StorageHandler";
 
-jest.mock("../user/createUser");
+jest.mock("../domain/createUser");
 const mockedCreateUser = createUser as jest.Mocked<typeof createUser>;
 
-jest.mock("../StorageHandler");
+jest.mock("../infrastructure/StorageHandler");
+
+const EXTERNAL_ID = "externalTestID";
+const FULL_NAME = "Test Name";
+const TOKEN = "token";
 
 describe("googleLoginServiceShould", () => {
   const successfulResponse = {
     profileObj: {
-      name: "testProfile",
+      name: FULL_NAME,
+      googleId: EXTERNAL_ID,
     },
-    tokenObj: { id_token: "token" },
+    tokenObj: { id_token: TOKEN },
   } as GoogleLoginResponse;
 
   const unSuccessfulResponse = {} as GoogleLoginResponseOffline;
   test("should call createUser service when google login is successful", async () => {
     await loginService(successfulResponse);
     expect(mockedCreateUser).toHaveBeenCalledWith({
-      externalId: "someID",
-      fullName: "test name",
-      idToken: "token",
+      externalId: EXTERNAL_ID,
+      fullName: FULL_NAME,
+      idToken: TOKEN,
     });
   });
 

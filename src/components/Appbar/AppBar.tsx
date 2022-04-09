@@ -7,11 +7,10 @@ import {
   Tooltip,
   Box,
   Menu,
-  MenuItem,
   Container,
 } from "@mui/material";
 import { AppBar as Bar } from "@mui/material";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "../LogoutButton/LogoutButton";
 
 const AppBar = () => {
   const [anchorElUser, setAnchorElUser] =

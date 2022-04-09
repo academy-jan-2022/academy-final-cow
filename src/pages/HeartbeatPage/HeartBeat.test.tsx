@@ -1,6 +1,6 @@
 import React from "react";
 import { act, render, screen } from "@testing-library/react";
-import HeartbeatPage from "../../src/pages/HeartbeatPage";
+import HeartbeatPage from "./HeartbeatPage";
 
 const axios = require("axios");
 jest.mock("axios");

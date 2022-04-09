@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import AppBar from "../../src/components/AppBar";
+import AppBar from "./AppBar";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({

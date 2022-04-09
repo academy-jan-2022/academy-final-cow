@@ -9,10 +9,9 @@ type User = {
 const createUser = (user: User) => {
   const client = new HttpClient();
   const { idToken, fullName, externalId } = user;
-  console.log(user);
 
   return client.post({
-    url: "http:localhost:8080/login",
+    url: process.env.REACT_APP_BASE_URL + "/login",
     body: { externalId, fullName },
     headers: { token: idToken },
   });

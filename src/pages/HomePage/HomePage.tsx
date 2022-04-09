@@ -3,9 +3,9 @@ import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import PageTemplate from "./PageTemplate";
+import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate } from "react-router-dom";
-import { loginService } from "../services/application/loginService";
+import { loginService } from "../../services/application/loginService";
 
 function HomePage() {
   const navigate = useNavigate();

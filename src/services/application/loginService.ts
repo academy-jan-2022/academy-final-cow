@@ -9,7 +9,6 @@ export const loginService = async (
   response: GoogleLoginResponse | GoogleLoginResponseOffline
 ): Promise<string> => {
   const googleUserExists = "profileObj" in response;
-  console.log(response);
 
   if (googleUserExists) {
     try {
