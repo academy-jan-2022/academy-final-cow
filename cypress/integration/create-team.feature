@@ -9,13 +9,13 @@ Feature: Create a team
     Scenario: Create the team
         Given I am logged in
         And I am on the Teams View
-        When I complete the required data
+        When I click on create new team
+        And I complete the required data
         And I click on Save Team button
-        Then A new team has been created
-        And I get redirected into the Team View
+        Then I get redirected into the Team View
 
     Scenario: Cancel creating the team
         Given I am logged in
         And I am on the Teams View
-        And I click on Cancel button
-        And I get redirected into Teams View
+        When I click on Cancel button
+        Then I get redirected into Teams View
