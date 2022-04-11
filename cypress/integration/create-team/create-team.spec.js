@@ -27,6 +27,10 @@ When("I click on Cancel button", (url) => {
   cy.get(".cancel-team-btn").click();
 });
 
+Then("I get redirected into New Team View", (url) => {
+  cy.url().should("include", "/create-team");
+});
+
 Then("I get redirected into Teams View", (url) => {
   cy.url().should("include", "/teams");
 });

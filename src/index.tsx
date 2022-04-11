@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom";
 import HeartbeatPage from "./pages/HeartbeatPage/HeartbeatPage";
 import TeamsPage from "./pages/TeamsPage/TeamsPage";
+import CreateTeamPage from "./pages/CreateTeamPage/CreateTeamPage";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,6 +14,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/teams" element={<TeamsPage />} />
         <Route path="/heartbeat" element={<HeartbeatPage />} />
+        <Route path="/create-team" element={<CreateTeamPage />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </Router>
