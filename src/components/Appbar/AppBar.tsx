@@ -7,11 +7,11 @@ import {
   Tooltip,
   Box,
   Menu,
-  MenuItem,
   Container,
 } from "@mui/material";
 import { AppBar as Bar } from "@mui/material";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "../LogoutButton/LogoutButton";
+import logo from "../../images/teaminator_logo.png";
 
 const AppBar = () => {
   const [anchorElUser, setAnchorElUser] =
@@ -31,15 +31,12 @@ const AppBar = () => {
     <Bar data-testid="app-bar" position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+          <img
+            className="app-bar-logo"
+            src={logo}
+            alt="logo"
             data-testid="logo"
-          >
-            LOGO
-          </Typography>
+          />
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton

@@ -3,9 +3,10 @@ import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import Template from "../components/PageTemplate";
+import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate } from "react-router-dom";
-import { loginService } from "../services/loginService";
+import { loginService } from "../../services/application/loginService";
+import logo from "../../images/teaminator_logo.png";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -18,13 +19,9 @@ function HomePage() {
   };
 
   return (
-    <Template>
+    <PageTemplate>
       <header>
-        <h1 aria-label={"title"}>Teaminator</h1>
-        <img
-          aria-label={"logo"}
-          src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_large.png"
-        />
+        <img aria-label={"logo"} src={logo} data-testid="logo" />
       </header>
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_CLIENTID}`}
@@ -34,7 +31,7 @@ function HomePage() {
         cookiePolicy={"single_host_origin"}
         isSignedIn={true}
       />
-    </Template>
+    </PageTemplate>
   );
 }
 

@@ -1,18 +1,18 @@
 import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom";
-import Heartbeat from "./pages/Heartbeat";
-import TeamsPage from "./pages/TeamsPage";
+import HeartbeatPage from "./pages/HeartbeatPage/HeartbeatPage";
+import TeamsPage from "./pages/TeamsPage/TeamsPage";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Routes>
         <Route path="/teams" element={<TeamsPage />} />
-        <Route path="/heartbeat" element={<Heartbeat />} />
+        <Route path="/heartbeat" element={<HeartbeatPage />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </Router>

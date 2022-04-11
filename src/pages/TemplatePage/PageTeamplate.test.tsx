@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 
-import PageTemplate from "../PageTemplate";
-import { storageHandler } from "../../services/StorageHandler";
+import PageTemplate from "./PageTemplate";
+import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import { BrowserRouter } from "react-router-dom";
 
-jest.mock("../../services/StorageHandler");
+jest.mock("../../services/infrastructure/StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<
   typeof storageHandler
 >;
