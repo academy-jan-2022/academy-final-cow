@@ -1,6 +1,8 @@
 import React from "react";
 import { act, render, screen } from "@testing-library/react";
+
 import Heartbeat from "./Heartbeat";
+
 
 const axios = require("axios");
 jest.mock("axios");
@@ -18,7 +20,9 @@ const apiCall = async (resCode: HeartbeatResponse) => {
   const resp = { data: resCode };
   axios.get.mockImplementation(() => Promise.resolve(resp));
   await act(async () => {
+
     render(<Heartbeat />);
+
   });
 };
 
