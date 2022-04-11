@@ -12,7 +12,7 @@ interface HeartbeatResponse {
   };
 }
 
-function HeartbeatPage() {
+function Heartbeat() {
   const [backendStateIsHealthy, setBackendState] = useState(false);
   const [databaseStatus, setDatabaseStatus] = useState(false);
 
@@ -51,4 +51,4 @@ function HeartbeatPage() {
   );
 }
 
-export default HeartbeatPage;
+export default Heartbeat;

@@ -3,12 +3,12 @@ import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import PageTemplate from "../TemplatePage/PageTemplate";
+import Template from "../TemplatePage/Template";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../../services/application/loginService";
 import logo from "../../images/teaminator_logo.png";
 
-function HomePage() {
+function Home() {
   const navigate = useNavigate();
 
   const googleLoginHandler = async (
@@ -19,7 +19,7 @@ function HomePage() {
   };
 
   return (
-    <PageTemplate>
+    <Template>
       <header>
         <img aria-label={"logo"} src={logo} data-testid="logo" />
       </header>
@@ -31,8 +31,8 @@ function HomePage() {
         cookiePolicy={"single_host_origin"}
         isSignedIn={true}
       />
-    </PageTemplate>
+    </Template>
   );
 }
 
-export default HomePage;
+export default Home;

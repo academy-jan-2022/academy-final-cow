@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import PageTemplate from "./PageTemplate";
+import Template from "./Template";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import { BrowserRouter } from "react-router-dom";
 
@@ -11,9 +11,9 @@ const mockedStorageHandler = storageHandler as jest.Mocked<
 describe("page template should", () => {
   beforeEach(() => {
     render(
-      <PageTemplate>
+      <Template>
         <p>Child</p>
-      </PageTemplate>
+      </Template>
     );
   });
 
@@ -34,9 +34,9 @@ describe("page template should", () => {
         .mockReturnValueOnce({ token: "token" });
       render(
         <BrowserRouter>
-          <PageTemplate>
+          <Template>
             <p>Child</p>
-          </PageTemplate>
+          </Template>
         </BrowserRouter>
       );
       const appBar = screen.queryAllByTestId("app-bar");

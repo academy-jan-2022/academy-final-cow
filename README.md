@@ -1,6 +1,6 @@
 # 🐄
 
-This project was bootstrapped with [Create React HomePage](https://github.com/facebook/create-react-app) and TypeScript.
+This project was bootstrapped with [Create React Home](https://github.com/facebook/create-react-app) and TypeScript.
 
 ## Azure Web Page
 

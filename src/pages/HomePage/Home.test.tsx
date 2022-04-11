@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import HomePage from "./HomePage";
+import Home from "./Home";
 import { loginService } from "../../services/application/loginService";
 import { BrowserRouter } from "react-router-dom";
 
@@ -32,11 +32,11 @@ jest.mock("react-google-login", () => {
 
 const LOGIN_BUTTON_TEXT = "Login";
 
-describe("HomePage test should", () => {
+describe("Home test should", () => {
   beforeEach(() => {
     render(
       <BrowserRouter>
-        <HomePage />
+        <Home />
       </BrowserRouter>
     );
   });

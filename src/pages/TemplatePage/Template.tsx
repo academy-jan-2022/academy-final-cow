@@ -4,7 +4,7 @@ import "./template.css";
 import AppBar from "../../components/Appbar/AppBar";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 
-const PageTemplate: React.FC = ({ children }) => {
+const Template: React.FC = ({ children }) => {
   const userIsLoggedIn = () => {
     const tokenObject = storageHandler.getJSONItem("tokenObject");
 
@@ -21,4 +21,4 @@ const PageTemplate: React.FC = ({ children }) => {
   );
 };
 
-export default PageTemplate;
+export default Template;
