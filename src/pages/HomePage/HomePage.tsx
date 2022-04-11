@@ -21,8 +21,7 @@ function HomePage() {
   return (
     <PageTemplate>
       <header>
-        <h1 aria-label={"title"}>Teaminator</h1>
-        <img aria-label={"logo"} src={logo} />
+        <img aria-label={"logo"} src={logo} data-testid="logo" />
       </header>
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_CLIENTID}`}

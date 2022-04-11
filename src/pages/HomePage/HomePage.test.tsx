@@ -46,11 +46,6 @@ describe("HomePage test should", () => {
     expect(logo).toBeInTheDocument();
   });
 
-  test("renders app name", () => {
-    const title = screen.getByRole("heading", { name: "title" });
-    expect(title).toBeInTheDocument();
-  });
-
   test("renders log in button", () => {
     const button = screen.getByText(LOGIN_BUTTON_TEXT);
     expect(button).toBeInTheDocument();
