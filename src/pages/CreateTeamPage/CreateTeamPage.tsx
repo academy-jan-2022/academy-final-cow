@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import "./create-page.css";
-import { teamService } from "../../services/application/teamService";
+import teamService from "../../services/application/teamService";
 
 export type Team = {
   name: string;
@@ -16,12 +16,16 @@ const CreateTeamPage = () => {
   const [teamDescription, setTeamDescription] = useState("");
 
   function handleOnClick() {
-    const team: Team = {
-      name: teamName,
-      description: teamDescription,
-    };
+    if (teamDescription && teamName) {
+      const team: Team = {
+        name: teamName,
+        description: teamDescription,
+      };
 
-    teamService(team);
+      const route = teamService(team);
+
+      navigate(route);
+    }
   }
 
   return (
@@ -31,6 +35,7 @@ const CreateTeamPage = () => {
         <TextField
           id="team-name"
           label="Team name"
+          required
           inputProps={{ "data-testid": "team-name" }}
           variant="outlined"
           onChange={(e) => setTeamName(e.target.value)}
@@ -39,6 +44,7 @@ const CreateTeamPage = () => {
           id="team-description"
           inputProps={{ "data-testid": "team-description" }}
           label="Team description"
+          required
           variant="outlined"
           onChange={(e) => setTeamDescription(e.target.value)}
         />
