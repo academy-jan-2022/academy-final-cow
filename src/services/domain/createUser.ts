@@ -1,6 +1,6 @@
 import { HttpClient } from "../infrastructure/HttpClient";
 
-type User = {
+export type User = {
   externalId: string;
   fullName: string;
   idToken: string;

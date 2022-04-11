@@ -20,7 +20,7 @@ When("I click on create new team", (url) => {
 });
 
 And("I click on Save Team button", (url) => {
-  cy.get(".save-team-btn").click();
+  cy.get("#save-team-btn").click();
 });
 
 When("I click on Cancel button", (url) => {
