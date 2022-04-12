@@ -22,7 +22,7 @@ const CreateTeamPage = () => {
         description: teamDescription,
       };
 
-      const route = teamService(team);
+      const route = teamService.execute(team);
 
       navigate(route);
     }

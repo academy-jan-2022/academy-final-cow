@@ -7,15 +7,20 @@ type User = {
   idToken: string;
 };
 
-const teamService = (team: Team): string => {
-  const user: User | null = storageHandler.getJSONItem<User>("user");
+class teamService {
+   static execute(team: Team) : string {
+    const user: User | null = storageHandler.getJSONItem<User>("user");
 
-  if (user) {
-    const { userId, idToken } = user;
-    const teamId = DomainService.createTeam(team, userId, idToken);
-    return `/team/${teamId}`;
-  }
-  return "/error";
-};
+    if (user) {
+      const { userId, idToken } = user;
+      const teamId = DomainService.createTeam(team, userId, idToken);
+      return `/team/${teamId}`;
+    }
+    return "/error";
+  };
+
+
+}
+
 
 export default teamService;

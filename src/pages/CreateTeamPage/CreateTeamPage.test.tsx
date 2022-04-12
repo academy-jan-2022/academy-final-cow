@@ -60,7 +60,7 @@ describe("create team page should", () => {
 
     saveTeamBtn.click();
 
-    expect(teamService).toBeCalledWith(team);
+    expect(teamService.execute).toBeCalledWith(team);
   });
 
   test("dont call team service if the description is not filled", () => {
@@ -68,7 +68,7 @@ describe("create team page should", () => {
 
     saveTeamBtn.click();
 
-    expect(teamService).not.toBeCalled();
+    expect(teamService.execute).not.toBeCalled();
   });
 
   test("dont call team service if the name is not filled", () => {
@@ -78,7 +78,7 @@ describe("create team page should", () => {
 
     saveTeamBtn.click();
 
-    expect(teamService).not.toBeCalled();
+    expect(teamService.execute).not.toBeCalled();
   });
   test("redirect to the team page", () => {
     fireEvent.change(teamNameField, { target: { value: team.name } });

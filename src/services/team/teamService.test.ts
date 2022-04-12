@@ -22,7 +22,7 @@ describe("team service should", () => {
 
   beforeEach(() => {
     mockedStorageHandler.getJSONItem = jest.fn().mockReturnValue(user);
-    teamService(team);
+    teamService.execute(team);
   });
 
   test("get the user", () => {
@@ -36,7 +36,7 @@ describe("team service should", () => {
   test("return correct route", () => {
     mockedDomainService.createTeam.mockReturnValue("1")
 
-      expect(teamService(team)).toEqual("/team/1")
+      expect(teamService.execute(team)).toEqual("/team/1")
   });
 
 });
