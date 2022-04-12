@@ -2,14 +2,14 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import CreateTeamPage, { Team } from "./CreateTeamPage";
 import { BrowserRouter } from "react-router-dom";
-import teamService from "../../services/application/teamService";
+import teamService from "../../services/team/teamService";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
   useNavigate: () => mockedUsedNavigate,
 }));
-jest.mock("../../services/application/teamService");
+jest.mock("../../services/team/teamService");
 
 describe("create team page should", () => {
   const team: Team = {

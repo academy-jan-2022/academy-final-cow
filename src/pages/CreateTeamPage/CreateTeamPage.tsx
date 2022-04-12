@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import "./create-page.css";
-import teamService from "../../services/application/teamService";
+import teamService from "../../services/team/teamService";
 
 export type Team = {
   name: string;
