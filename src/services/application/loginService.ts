@@ -11,18 +11,14 @@ export const loginService = async (
   const googleUserExists = "profileObj" in response;
 
   if (googleUserExists) {
-    try {
-      storageHandler.setJSONItem("tokenObject", response.tokenObj);
-      await createUser({
-        externalId: response.profileObj.googleId,
-        fullName: response.profileObj.name,
-        idToken: response.tokenObj.id_token,
-      });
+    storageHandler.setJSONItem("tokenObject", response.tokenObj);
+    await createUser({
+      externalId: response.profileObj.googleId,
+      fullName: response.profileObj.name,
+      idToken: response.tokenObj.id_token,
+    });
 
-      return "/teams";
-    } catch (e) {
-      return "/error";
-    }
+    return "/teams";
   }
   return "/error";
 };
