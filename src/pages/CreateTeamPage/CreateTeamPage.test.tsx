@@ -3,7 +3,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import CreateTeamPage, { Team } from "./CreateTeamPage";
 import { BrowserRouter } from "react-router-dom";
 import teamService from "../../services/application/teamService";
-import createUser from "../../services/domain/createUser";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -13,12 +12,24 @@ jest.mock("react-router-dom", () => ({
 jest.mock("../../services/application/teamService");
 
 describe("create team page should", () => {
+  const team: Team = {
+    name: "team name",
+    description: "team description",
+  };
+  let saveTeamBtn: HTMLElement;
+  let teamNameField: HTMLElement;
+  let teamDescriptionField: HTMLElement;
+
   beforeEach(() => {
     render(
       <BrowserRouter>
         <CreateTeamPage />
       </BrowserRouter>
     );
+
+    saveTeamBtn = screen.getByTestId("save-team-btn");
+    teamNameField = screen.getByTestId("team-name");
+    teamDescriptionField = screen.getByTestId("team-description");
   });
 
   test("render the heading", () => {
@@ -42,14 +53,6 @@ describe("create team page should", () => {
   });
 
   test("call team service when button is clicked", () => {
-    const saveTeamBtn = screen.getByTestId("save-team-btn");
-
-    const teamNameField = screen.getByTestId("team-name");
-    const teamDescriptionField = screen.getByTestId("team-description");
-    const team: Team = {
-      name: "team name",
-      description: "team description",
-    };
     fireEvent.change(teamNameField, { target: { value: team.name } });
     fireEvent.change(teamDescriptionField, {
       target: { value: team.description },
@@ -61,13 +64,6 @@ describe("create team page should", () => {
   });
 
   test("dont call team service if the description is not filled", () => {
-    const saveTeamBtn = screen.getByTestId("save-team-btn");
-
-    const teamNameField = screen.getByTestId("team-name");
-    const team: Team = {
-      name: "team name",
-      description: "team description",
-    };
     fireEvent.change(teamNameField, { target: { value: team.name } });
 
     saveTeamBtn.click();
@@ -76,9 +72,6 @@ describe("create team page should", () => {
   });
 
   test("dont call team service if the name is not filled", () => {
-    const saveTeamBtn = screen.getByTestId("save-team-btn");
-
-    const teamDescriptionField = screen.getByTestId("team-description");
     fireEvent.change(teamDescriptionField, {
       target: { value: "team description" },
     });
@@ -87,16 +80,7 @@ describe("create team page should", () => {
 
     expect(teamService).not.toBeCalled();
   });
-
   test("redirect to the team page", () => {
-    const saveTeamBtn = screen.getByTestId("save-team-btn");
-
-    const teamNameField = screen.getByTestId("team-name");
-    const teamDescriptionField = screen.getByTestId("team-description");
-    const team: Team = {
-      name: "team name",
-      description: "team description",
-    };
     fireEvent.change(teamNameField, { target: { value: team.name } });
     fireEvent.change(teamDescriptionField, {
       target: { value: team.description },
@@ -107,3 +91,4 @@ describe("create team page should", () => {
     expect(mockedUsedNavigate).toBeCalled();
   });
 });
+

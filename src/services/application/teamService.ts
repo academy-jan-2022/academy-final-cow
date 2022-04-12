@@ -19,4 +19,3 @@ const teamService = (team: Team): string => {
 };
 
 export default teamService;
-
