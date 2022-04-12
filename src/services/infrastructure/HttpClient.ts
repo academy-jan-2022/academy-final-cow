@@ -56,7 +56,7 @@ export interface GetRequest {
 export interface PostRequest {
   url: string;
   body: Object;
-  headers: {
+  headers?: {
     token: string;
   };
 }

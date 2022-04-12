@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 import CreateTeamPage, { Team } from "./CreateTeamPage";
 import { BrowserRouter } from "react-router-dom";
 import teamService from "../../services/team/teamService";
@@ -9,7 +9,10 @@ jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
   useNavigate: () => mockedUsedNavigate,
 }));
+
 jest.mock("../../services/team/teamService");
+const mockedTeamService = teamService as jest.Mocked<typeof teamService>;
+mockedTeamService.createTeam.mockImplementation(() => Promise.resolve("/team/1"));
 
 describe("create team page should", () => {
   const team: Team = {
@@ -60,7 +63,7 @@ describe("create team page should", () => {
 
     saveTeamBtn.click();
 
-    expect(teamService.execute).toBeCalledWith(team);
+    expect(mockedTeamService.createTeam).toBeCalledWith(team);
   });
 
   test("dont call team service if the description is not filled", () => {
@@ -68,7 +71,7 @@ describe("create team page should", () => {
 
     saveTeamBtn.click();
 
-    expect(teamService.execute).not.toBeCalled();
+    expect(mockedTeamService.createTeam).not.toBeCalled();
   });
 
   test("dont call team service if the name is not filled", () => {
@@ -78,9 +81,9 @@ describe("create team page should", () => {
 
     saveTeamBtn.click();
 
-    expect(teamService.execute).not.toBeCalled();
+    expect(mockedTeamService.createTeam).not.toBeCalled();
   });
-  test("redirect to the team page", () => {
+  test("redirect to the team page",  async() => {
     fireEvent.change(teamNameField, { target: { value: team.name } });
     fireEvent.change(teamDescriptionField, {
       target: { value: team.description },
@@ -88,7 +91,7 @@ describe("create team page should", () => {
 
     saveTeamBtn.click();
 
-    expect(mockedUsedNavigate).toBeCalled();
+    await waitFor(() => expect(mockedUsedNavigate).toBeCalled());
   });
 });
 
