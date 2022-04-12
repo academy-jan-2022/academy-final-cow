@@ -1,12 +1,12 @@
-import getAllTeams from "../team/getAllTeams";
+import getAllTeams from "./getAllTeams";
 
-import client from "../HttpClient";
-import {storageHandler} from "../StorageHandler";
+import client from "../infrastructure/HttpClient";
+import {storageHandler} from "../infrastructure/StorageHandler";
 
-jest.mock("../HttpClient");
+jest.mock("../infrastructure/HttpClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
 
-jest.mock("../StorageHandler")
+jest.mock("../infrastructure/StorageHandler")
 const mockedStorageHandler = storageHandler as jest.Mocked<typeof storageHandler>;
 
 describe("get list of teams that the user is part of", () => {

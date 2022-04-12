@@ -25,6 +25,9 @@ export class HttpClient {
 export interface GetRequest {
   url: string;
   readonly queryParams?: { [name: string]: string };
+  headers: {
+    token: string;
+  };
 }
 
 export interface PostRequest {

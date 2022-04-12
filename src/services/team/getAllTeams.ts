@@ -1,6 +1,6 @@
-import httpClient from "../HttpClient";
+import httpClient from "../infrastructure/HttpClient";
 import { Team } from "./Team";
-import {storageHandler} from "../StorageHandler";
+import {storageHandler} from "../infrastructure/StorageHandler";
 
 export default function getAllTeams() : Promise<Team> {
 
