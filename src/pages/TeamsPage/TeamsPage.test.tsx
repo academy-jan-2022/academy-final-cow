@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import {act, render, screen} from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
 import TeamsPage from "./TeamsPage";
-import teamService from "../../services/team/teamService";
 import TeamService from "../../services/team/teamService";
+
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -11,17 +11,28 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-beforeEach(() => {
-  render(
-    <BrowserRouter>
-      <TeamsPage />
-    </BrowserRouter>
-  );
-});
+jest.mock("../../services/team/teamService");
+const mockedGetTeamsService = TeamService as jest.Mocked<
+    typeof TeamService
+    >;
+
 
 describe("Teams page should", () => {
-  test("renders the heading", () => {
-    const title = screen.getByRole("heading", { name: "title" });
+
+  beforeEach(async () => {
+    mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([]);
+
+    await act(async () => {
+      render(
+          <BrowserRouter>
+            <TeamsPage />
+          </BrowserRouter>
+      );
+    });
+  });
+
+  test("renders the heading",  () => {
+    const title = screen.getByRole("heading", {name: "title"});
     expect(title).toBeInTheDocument();
   });
 
@@ -35,8 +46,10 @@ describe("Teams page should", () => {
     createTeamBtn.click();
     expect(mockedUsedNavigate).toBeCalledWith("/create-team");
   });
+});
 
-  test("render a team card when I am part of one team", () => {
+describe("Teams page should 2", () => {
+  test("render a team card when I am part of one team", async() => {
     const team = {
       id: "1",
       name: "Team 1",
@@ -44,27 +57,32 @@ describe("Teams page should", () => {
       members: [{ id: "1", name: "John Doe" }],
     };
 
-    jest.mock("../../services/team/teamService");
-    const mockedGetTeamsService = teamService as jest.Mocked<
-      typeof TeamService
-    >;
-
     mockedGetTeamsService.getAllTeams = jest.fn().mockReturnValue([team]);
+
+    await act(async () => {
+      render(
+          <BrowserRouter>
+            <TeamsPage />
+          </BrowserRouter>
+      );
+    });
 
     const cardElement = screen.getAllByRole("teamCard");
     expect(cardElement).toHaveLength(1);
   });
 
-  test("not render a team card when I am not part of at least one team", () => {
-    jest.mock("../../services/team/teamService");
-    const mockedGetTeamsService = teamService as jest.Mocked<
-      typeof TeamService
-    >;
+  test("not render a team card when I am not part of at least one team", async () => {
+    mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([]);
 
-    mockedGetTeamsService.getAllTeams = jest.fn().mockReturnValue([]);
+    await act(async () => {
+      render(
+          <BrowserRouter>
+            <TeamsPage />
+          </BrowserRouter>
+      );
+    });
 
-    const cardElement = screen.getByRole("teamCard");
+    const cardElement = screen.queryByRole("teamCard");
     expect(cardElement).not.toBeInTheDocument();
-    expect(cardElement).toHaveLength(0);
   });
 });
