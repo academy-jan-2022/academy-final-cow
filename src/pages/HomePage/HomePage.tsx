@@ -14,9 +14,7 @@ function HomePage() {
   const googleLoginHandler = async (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
-    console.log(res);
     const route = await loginService(res);
-    console.log({ route });
     navigate(route);
   };
 
