@@ -1,22 +1,18 @@
-import {Team} from "../../pages/CreateTeamPage/CreateTeamPage";
-import getTeamsByUser from "./getTeamsByUser";
-import client from "../infrastructure/HttpClient"
+import { Team } from "../../pages/CreateTeamPage/CreateTeamPage";
+import client from "../infrastructure/HttpClient";
 
 type CreateTeamResponse = {
-    teamId: string
-}
+  teamId: string;
+};
 
 class TeamService {
-   getAllTeams = getTeamsByUser;
-   async createTeam(team: Team): Promise<string> {
-       try {
-           const resp: CreateTeamResponse = await client.post({url: "/create-team", body: {team}});
-           return resp.teamId;
-       } catch(e) {
-           console.log(e)
-           throw new Error();
-       }
-   }
+  async createTeam(team: Team): Promise<string> {
+    const resp: CreateTeamResponse = await client.post({
+      url: "/create-team",
+      body: { team },
+    });
+    return resp.teamId;
+  }
 }
 
 const teamService = new TeamService();
