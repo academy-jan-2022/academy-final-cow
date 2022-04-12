@@ -1,9 +1,9 @@
 
 class StorageHandler {
-    setJSONItem(key: string, value: Object): void {
+    setJSONItem<T>(key: string, value: T): void {
         window.localStorage.setItem(key, JSON.stringify(value));
     } 
-    getJSONItem(key: string): Object | null {
+    getJSONItem<T>(key: string): T | null {
         const value = window.localStorage.getItem(key);
         if (value) {
             return JSON.parse(value);

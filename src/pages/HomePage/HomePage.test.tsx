@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import {logDOM, render, screen, waitFor} from "@testing-library/react";
 import HomePage from "./HomePage";
 import { loginService } from "../../services/application/loginService";
 import { BrowserRouter } from "react-router-dom";
