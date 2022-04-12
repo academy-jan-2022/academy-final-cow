@@ -14,14 +14,9 @@ describe("get list of teams that the user is part of", () => {
         const teamBanana = [{ name: "teamBanana" }];
         mockedHttpClient.get = jest.fn().mockReturnValue(teamBanana);
 
-        mockedStorageHandler.getJSONItem.mockReturnValue({token_id: "validToken"})
-
         const result = await getTeamsByUser();
         expect(mockedHttpClient.get).toBeCalledWith({
-            url: process.env.REACT_APP_BASE_URL + "/teams",
-            headers: {
-                token: "validToken"
-            }
+            url: process.env.REACT_APP_BASE_URL + "/teams"
         });
         expect(result).toEqual(teamBanana);
     });
