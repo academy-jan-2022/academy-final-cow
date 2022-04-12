@@ -33,4 +33,6 @@ describe("Teams page should", () => {
     createTeamBtn.click();
     expect(mockedUsedNavigate).toBeCalledWith("/create-team");
   });
+
+
 });

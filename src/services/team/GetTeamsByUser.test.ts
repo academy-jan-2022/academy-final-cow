@@ -1,4 +1,4 @@
-import getAllTeams from "./getAllTeams";
+import getTeamsByUser from "./getTeamsByUser";
 
 import client from "../infrastructure/HttpClient";
 import {storageHandler} from "../infrastructure/StorageHandler";
@@ -16,7 +16,7 @@ describe("get list of teams that the user is part of", () => {
 
         mockedStorageHandler.getJSONItem.mockReturnValue({token_id: "validToken"})
 
-        const result = await getAllTeams();
+        const result = await getTeamsByUser();
         expect(mockedHttpClient.get).toBeCalledWith({
             url: process.env.REACT_APP_BASE_URL + "/teams",
             headers: {

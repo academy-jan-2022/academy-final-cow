@@ -1,6 +1,7 @@
 import { Team } from "../../pages/CreateTeamPage/CreateTeamPage";
 import DomainService from "../domain/domainService";
 import { storageHandler } from "../infrastructure/StorageHandler";
+import getTeamsByUser from "./getTeamsByUser";
 
 type User = {
   userId: string;
@@ -8,7 +9,9 @@ type User = {
 };
 
 class teamService {
-   static execute(team: Team) : string {
+   getAllTeams = getTeamsByUser;
+
+    static execute(team: Team) : string {
     const user: User | null = storageHandler.getJSONItem<User>("user");
 
     if (user) {

@@ -1,18 +1,22 @@
 import client from "./HttpClient";
+import { storageHandler } from "./StorageHandler";
 const axios = require("axios");
 
 jest.mock("axios");
+jest.mock("./StorageHandler");
+const mockedStorageHandler = storageHandler as jest.Mocked<typeof storageHandler>
 
 const TOKEN = "token";
 const A_QUERY_PARAM = "bar";
 const ANOTHER_QUERY_PARAM = "meh";
 
-const BASE_URL = "https://some.url.com";
-let GET_REQUEST_URL = `${BASE_URL}/?foo=${A_QUERY_PARAM}&baz=${ANOTHER_QUERY_PARAM}`;
-let POST_REQUEST_URL = `${BASE_URL}/get-apple`;
+const BASE_URL = "https://some.url.com/";
+let GET_REQUEST_URL = `${BASE_URL}?foo=${A_QUERY_PARAM}&baz=${ANOTHER_QUERY_PARAM}`;
+let POST_REQUEST_URL = `${BASE_URL}get-apple`;
 
 const GET_RESPONSE_BODY_PROP = "banana";
 const POST_RESPONSE_BODY_PROP = "apple";
+const AUTHORIZATION_HEADER = { headers: { Authorization: `works` }};
 
 describe("HttpClient should", function () {
   beforeEach(async () => {
@@ -20,6 +24,7 @@ describe("HttpClient should", function () {
     const postList = { data: { name: POST_RESPONSE_BODY_PROP } };
     axios.get.mockImplementation(() => Promise.resolve(getList));
     axios.post.mockImplementation(() => Promise.resolve(postList));
+    mockedStorageHandler.getJSONItem.mockReturnValue({id_token: "works"});
   });
 
   type RequestResponseType = {
@@ -36,7 +41,7 @@ describe("HttpClient should", function () {
     });
 
     expect(result).toEqual({ name: GET_RESPONSE_BODY_PROP });
-    expect(axios.get).toHaveBeenCalledWith(GET_REQUEST_URL);
+    expect(axios.get).toHaveBeenCalledWith(GET_REQUEST_URL, AUTHORIZATION_HEADER);
   });
 
   test("post is called", async () => {
@@ -55,4 +60,15 @@ describe("HttpClient should", function () {
       headers: { Authorization: TOKEN },
     });
   });
+
+  test("storage handler is called to get token", async () => {
+
+    const result = await client.get<RequestResponseType>({
+      url: BASE_URL,
+    });
+
+    expect(storageHandler.getJSONItem).toHaveBeenCalledWith("tokenObject")
+    expect(axios.get).toHaveBeenCalledWith(BASE_URL, AUTHORIZATION_HEADER )
+  });
+
 });
