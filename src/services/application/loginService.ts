@@ -23,9 +23,8 @@ export const loginService = async (
     } catch (e) {
       console.log(e);
 
-      return "/teams";
+      return "/error";
     }
   }
-  console.log("User does not exist");
   return "/error";
 };
