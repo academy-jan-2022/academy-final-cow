@@ -9,9 +9,9 @@ type User = {
 };
 
 class teamService {
-   getAllTeams = getTeamsByUser;
+  getAllTeams = getTeamsByUser;
 
-    static execute(team: Team) : string {
+  static execute(team: Team): string {
     const user: User | null = storageHandler.getJSONItem<User>("user");
 
     if (user) {
@@ -20,10 +20,7 @@ class teamService {
       return `/team/${teamId}`;
     }
     return "/error";
-  };
-
-
+  }
 }
-
-
-export default teamService;
+const TeamService = new teamService();
+export default TeamService;
