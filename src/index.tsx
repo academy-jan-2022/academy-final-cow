@@ -12,6 +12,7 @@ ReactDOM.render(
     <Router>
       <Routes>
         <Route path="/teams" element={<TeamsPage />} />
+        <Route path="/team/1" element={<TeamPage />} />
         <Route path="/heartbeat" element={<HeartbeatPage />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
