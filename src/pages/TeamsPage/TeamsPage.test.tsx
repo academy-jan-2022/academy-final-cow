@@ -37,7 +37,34 @@ describe("Teams page should", () => {
   });
 
   test("render a team card when I am part of one team", () => {
+    const team = {
+      id: "1",
+      name: "Team 1",
+      description: "Team 1 description",
+      members: [{ id: "1", name: "John Doe" }],
+    };
+
+    jest.mock("../../services/team/teamService");
+    const mockedGetTeamsService = teamService as jest.Mocked<
+      typeof TeamService
+    >;
+
+    mockedGetTeamsService.getAllTeams = jest.fn().mockReturnValue([team]);
+
     const cardElement = screen.getAllByRole("teamCard");
     expect(cardElement).toHaveLength(1);
+  });
+
+  test("not render a team card when I am not part of at least one team", () => {
+    jest.mock("../../services/team/teamService");
+    const mockedGetTeamsService = teamService as jest.Mocked<
+      typeof TeamService
+    >;
+
+    mockedGetTeamsService.getAllTeams = jest.fn().mockReturnValue([]);
+
+    const cardElement = screen.getByRole("teamCard");
+    expect(cardElement).not.toBeInTheDocument();
+    expect(cardElement).toHaveLength(0);
   });
 });
