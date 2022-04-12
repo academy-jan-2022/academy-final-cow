@@ -33,7 +33,8 @@
     "cucumber-test": "cucumber-js",
     "sonar-test": "npm test -- --coverage --testResultsProcessor=jest-sonar-reporter",
     "eject": "react-scripts eject",
-    "docker-start": "docker-compose up -d"
+    "docker-start": "docker-compose up -d",
+    "cy:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [
