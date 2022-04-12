@@ -56,9 +56,7 @@ describe("HttpClient should", function () {
     });
 
     expect(result.name).toEqual(POST_RESPONSE_BODY_PROP);
-    expect(axios.post).toHaveBeenCalledWith(POST_REQUEST_URL, body, {
-      headers: { Authorization: TOKEN },
-    });
+    expect(axios.post).toHaveBeenCalledWith(POST_REQUEST_URL, body, AUTHORIZATION_HEADER);
   });
 
   test("storage handler is called to get token", async () => {

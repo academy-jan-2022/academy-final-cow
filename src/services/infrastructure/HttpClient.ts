@@ -26,10 +26,11 @@ export class HttpClient {
 
   async post<T>(request: PostRequest): Promise<T> {
     let url = new URL(request.url);
+    const token = this.getToken();
     const response: AxiosResponse<T> = await axios.post(
       url.toString(),
       request.body,
-      { headers: { Authorization: `${request.headers.token}` } }
+      { headers: { Authorization: `${token}` } }
     );
     return response.data;
   }
