@@ -19,6 +19,10 @@ jobs:
 
       - name: Install and test
         working-directory: .
+        env:
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+          REACT_APP_HEARTBEAT_URL: ${{ secrets.REACT_APP_HEARTBEAT_URL }}
+          REACT_APP_GOOGLE_CLIENTID: ${{ secrets.REACT_APP_GOOGLE_CLIENTID }}
         run: |
           npm install
           npm test -- --coverage --testResultsProcessor=jest-sonar-reporter
