@@ -93,5 +93,11 @@ describe("create team page should", () => {
 
     await waitFor(() => expect(mockedUsedNavigate).toBeCalled());
   });
+
+  test("redirect to the teams page when you click cancel",  async() => {
+    const cancelBtn = screen.getByTestId("cancel-team-btn");
+    cancelBtn.click();
+    await waitFor(() => expect(mockedUsedNavigate).toBeCalled());
+  });
 });
 

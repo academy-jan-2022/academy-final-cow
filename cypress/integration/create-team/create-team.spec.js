@@ -24,7 +24,7 @@ And("I click on Save Team button", (url) => {
 });
 
 When("I click on Cancel button", (url) => {
-  cy.get(".cancel-team-btn").click();
+  cy.get("#cancel-team-btn").click();
 });
 
 Then("I get redirected into New Team View", (url) => {

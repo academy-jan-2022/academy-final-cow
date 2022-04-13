@@ -62,6 +62,14 @@ const CreateTeamPage = () => {
         >
           Save Team
         </Button>
+        <Button
+            variant="contained"
+            id="cancel-team-btn"
+            data-testid="cancel-team-btn"
+            onClick={() => navigate("/teams")}
+        >
+          Cancel
+        </Button>
       </Stack>
     </PageTemplate>
   );
