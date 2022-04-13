@@ -1,11 +1,13 @@
 import React from "react";
 import {Team} from "../../services/team/Team";
+import {useNavigate} from "react-router-dom";
 
 const TeamCard = (props: Team) => {
-    const {name} = props
+    const navigate = useNavigate();
+    const {name, id} = props;
 
     return (
-        <div role="teamCard">
+        <div onClick={() => navigate(`/teams/${id}`)} role="teamCard">
         <h2>{name} </h2>
         </div>
     )

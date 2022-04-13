@@ -32,6 +32,6 @@ describe("HomePage test should", () => {
     test('Navigate to team page when clicking on team card', async () => {
         const card = screen.getByText("ECA");
         card.click();
-        await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith(`teams/${teamId}`));
+        await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith(`/teams/${teamId}`));
     })
 })
