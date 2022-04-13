@@ -1,21 +1,28 @@
-
-import appSettings from "../../appSettings.json"
+import appSettings from "../../appSettings.json";
 import { Settings } from "./Settings";
 
-describe("Settings should", ()=>{
-    test("returns the api url stored in app settings", ()=>{
-        const expectedUrl = appSettings.apiUrl;
+describe("Settings should", () => {
+  test("returns the api url stored in app settings", () => {
+    const expectedUrl = appSettings.apiUrl;
 
-        const result = Settings.getApiUrl()
+    const result = Settings.getApiUrl();
 
-        expect(result).toEqual(expectedUrl)
-    })
+    expect(result).toEqual(expectedUrl);
+  });
 
-    test("returns the google client id stored in app settings", ()=>{
-        const expectedUrl = appSettings.googleClientId;
+  test("returns the google client id stored in app settings", () => {
+    const expectedUrl = appSettings.googleClientId;
 
-        const result = Settings.getGoogleClientId()
+    const result = Settings.getGoogleClientId();
 
-        expect(result).toEqual(expectedUrl)
-    })
-})
+    expect(result).toEqual(expectedUrl);
+  });
+
+  test("returns the heartbeat url stored in app settings", () => {
+    const expectedUrl = appSettings.heartBeatUrl;
+
+    const result = Settings.getHeartBeatUrl();
+
+    expect(result).toEqual(expectedUrl);
+  });
+});

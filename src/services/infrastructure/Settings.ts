@@ -1,13 +1,17 @@
-import appSettings from "../../appSettings.json"
+import appSettings from "../../appSettings.json";
 
 export class Settings {
-    private static settings = appSettings
+  private static settings = appSettings;
 
-    public static getApiUrl(){
-        return this.settings.apiUrl
-    }
+  public static getApiUrl() {
+    return this.settings.apiUrl;
+  }
 
-    public static getGoogleClientId(){
-        return this.settings.googleClientId;
-    }
+  public static getGoogleClientId() {
+    return this.settings.googleClientId;
+  }
+
+  static getHeartBeatUrl() {
+    return this.settings.heartBeatUrl;
+  }
 }
