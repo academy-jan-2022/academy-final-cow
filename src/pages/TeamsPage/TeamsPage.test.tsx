@@ -68,6 +68,36 @@ describe("Teams page should 2", () => {
     expect(cardName).toBeInTheDocument();
   });
 
+  test("render 2 team cards when I am part of two teams", async () => {
+    const team = {
+      id: "1",
+      name: "Team 1",
+
+    };
+
+    const teamTwo = {
+      id: "2",
+      name: "ECA",
+    };
+
+    mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([team, teamTwo]);
+
+    await act(async () => {
+      render(
+          <BrowserRouter>
+            <TeamsPage />
+          </BrowserRouter>
+      );
+    });
+
+    const cardElement = screen.getAllByRole("teamCard");
+    expect(cardElement).toHaveLength(2);
+    const cardName = screen.getByText("Team 1");
+    expect(cardName).toBeInTheDocument();
+    const cardNameForTwo = screen.getByText("ECA");
+    expect(cardNameForTwo).toBeInTheDocument();
+  });
+
   test("not render a team card when I am not part of at least one team", async () => {
     mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([]);
 

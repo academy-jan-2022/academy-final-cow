@@ -29,7 +29,7 @@ const TeamsPage = () => {
         Create New Team
       </Button>
       {teams.map((team) => (
-        <div role="teamCard">
+        <div role="teamCard" key={team.id}>
           <h2> {team.name} </h2>
         </div>
       ))}
