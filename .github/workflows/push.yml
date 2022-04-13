@@ -16,15 +16,6 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          
-      - name: Variable Substitution
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: './src/appSettings.json'
-        env:
-          apiUrl: ${{ secrets.API_URL }}
-          googleClientId: ${{ secrets.REACT_APP_GOOGLE_CLIENTID }}
-          heartBeatUrl: ${{ secrets.API_HEARTBEAT_URL }}
 
       - name: Push Docker image to Azure registry
         uses: docker/build-push-action@v2
