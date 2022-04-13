@@ -11,7 +11,7 @@ type User = {
 class teamService {
   getAllTeams = getTeamsByUser;
 
-  static execute(team: Team): string {
+  execute(team: Team): string {
     const user: User | null = storageHandler.getJSONItem<User>("user");
 
     if (user) {
