@@ -14,5 +14,3 @@ services:
       - 3000:3000
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - BANANA=banana
-      - REACT_APP_BANANA=react-banana
