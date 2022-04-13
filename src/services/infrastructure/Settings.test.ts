@@ -10,4 +10,12 @@ describe("Settings should", ()=>{
 
         expect(result).toEqual(expectedUrl)
     })
+
+    test("returns the google client id stored in app settings", ()=>{
+        const expectedUrl = appSettings.googleClientId;
+
+        const result = Settings.getGoogleClientId()
+
+        expect(result).toEqual(expectedUrl)
+    })
 })
