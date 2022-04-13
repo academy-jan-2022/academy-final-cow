@@ -1,19 +1,22 @@
 import { Button } from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import TeamService from "../../services/team/teamService";
-import {Team} from "../../services/team/Team";
+import { Team } from "../../services/team/Team";
 
 const TeamsPage = () => {
   const navigate = useNavigate();
+  const [teams, setTeams] = useState<Team[]>([]);
 
-    const [teams, setTeams] = useState<Team[]>([]);
+  const getTeams = async () => {
+    const teams = await TeamService.getAllTeams();
+    setTeams(teams);
+  };
 
-    useEffect(async () => {
-        const myTeams = await TeamService.getAllTeams();
-        setTeams(myTeams);
-    }, []);
+  useEffect(() => {
+    getTeams();
+  }, []);
 
   return (
     <PageTemplate>
@@ -25,11 +28,11 @@ const TeamsPage = () => {
       >
         Create New Team
       </Button>
-        { teams.length > 0 &&
-            <div role="teamCard">
-            <h2>  {teams[0].name} </h2>
-            </div>
-        }
+      {teams.map((team) => (
+        <div role="teamCard">
+          <h2> {team.name} </h2>
+        </div>
+      ))}
     </PageTemplate>
   );
 };

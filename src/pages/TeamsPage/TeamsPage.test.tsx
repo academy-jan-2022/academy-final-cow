@@ -1,9 +1,8 @@
-import {act, render, screen} from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
 import TeamsPage from "./TeamsPage";
 import TeamService from "../../services/team/teamService";
-
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -12,27 +11,23 @@ jest.mock("react-router-dom", () => ({
 }));
 
 jest.mock("../../services/team/teamService");
-const mockedGetTeamsService = TeamService as jest.Mocked<
-    typeof TeamService
-    >;
-
+const mockedGetTeamsService = TeamService as jest.Mocked<typeof TeamService>;
 
 describe("Teams page should", () => {
-
   beforeEach(async () => {
     mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([]);
 
     await act(async () => {
       render(
-          <BrowserRouter>
-            <TeamsPage />
-          </BrowserRouter>
+        <BrowserRouter>
+          <TeamsPage />
+        </BrowserRouter>
       );
     });
   });
 
-  test("renders the heading",  () => {
-    const title = screen.getByRole("heading", {name: "title"});
+  test("renders the heading", () => {
+    const title = screen.getByRole("heading", { name: "title" });
     expect(title).toBeInTheDocument();
   });
 
@@ -49,7 +44,7 @@ describe("Teams page should", () => {
 });
 
 describe("Teams page should 2", () => {
-  test("render a team card when I am part of one team", async() => {
+  test("render a team card when I am part of one team", async () => {
     const team = {
       id: "1",
       name: "Team 1",
@@ -57,18 +52,20 @@ describe("Teams page should 2", () => {
       members: [{ id: "1", name: "John Doe" }],
     };
 
-    mockedGetTeamsService.getAllTeams = jest.fn().mockReturnValue([team]);
+    mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([team]);
 
     await act(async () => {
       render(
-          <BrowserRouter>
-            <TeamsPage />
-          </BrowserRouter>
+        <BrowserRouter>
+          <TeamsPage />
+        </BrowserRouter>
       );
     });
 
     const cardElement = screen.getAllByRole("teamCard");
     expect(cardElement).toHaveLength(1);
+    const cardName = screen.getByText("Team 1");
+    expect(cardName).toBeInTheDocument();
   });
 
   test("not render a team card when I am not part of at least one team", async () => {
@@ -76,9 +73,9 @@ describe("Teams page should 2", () => {
 
     await act(async () => {
       render(
-          <BrowserRouter>
-            <TeamsPage />
-          </BrowserRouter>
+        <BrowserRouter>
+          <TeamsPage />
+        </BrowserRouter>
       );
     });
 
