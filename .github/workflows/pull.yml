@@ -40,15 +40,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           
-      - name: Variable Substitution
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: './src/appSettings.json'
-        env:
-          apiUrl: ${{ secrets.API_URL }}
-          googleClientId: ${{ secrets.REACT_APP_GOOGLE_CLIENTID }}
-          heartBeatUrl: ${{ secrets.API_HEARTBEAT_URL }}
-
       - name: Build Docker image in Azure registry
         uses: docker/build-push-action@v2
         with:

@@ -3,7 +3,7 @@ import { Settings } from "./Settings";
 
 describe("Settings should", () => {
   test("returns the api url stored in app settings", () => {
-    const expectedUrl = appSettings.apiUrl;
+    const expectedUrl = appSettings.test.apiUrl;
 
     const result = Settings.getApiUrl();
 
@@ -11,7 +11,7 @@ describe("Settings should", () => {
   });
 
   test("returns the google client id stored in app settings", () => {
-    const expectedUrl = appSettings.googleClientId;
+    const expectedUrl = appSettings.test.googleClientId;
 
     const result = Settings.getGoogleClientId();
 
@@ -19,7 +19,7 @@ describe("Settings should", () => {
   });
 
   test("returns the heartbeat url stored in app settings", () => {
-    const expectedUrl = appSettings.heartBeatUrl;
+    const expectedUrl = appSettings.test.heartBeatUrl;
 
     const result = Settings.getHeartBeatUrl();
 
