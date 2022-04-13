@@ -30,6 +30,7 @@ jobs:
           CYPRESS_googleClientSecret: ${{ secrets.OAUTH_SECRET }}
           CYPRESS_googleRefreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
         with:
+          config: video=false
           start: npm run start
           wait-on: 'http://localhost:3000'
 
@@ -44,9 +45,9 @@ jobs:
         with:
           files: './src/appSettings.json'
         env:
-          apiUrl: ${{ secrets.REACT_APP_BASE_URL }}
-          googleClientId: ${{ secrets.REACT_APP_HEARTBEAT_URL }}
-          heartBeatUrl: ${{ secrets.REACT_APP_GOOGLE_CLIENTID }}
+          apiUrl: ${{ secrets.API_URL }}
+          googleClientId: ${{ secrets.REACT_APP_GOOGLE_CLIENTID }}
+          heartBeatUrl: ${{ secrets.API_HEARTBEAT_URL }}
 
       - name: Build Docker image in Azure registry
         uses: docker/build-push-action@v2
