@@ -49,7 +49,6 @@ describe("Teams page should 2", () => {
       id: "1",
       name: "Team 1",
       description: "Team 1 description",
-      members: [{ id: "1", name: "John Doe" }],
     };
 
     mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([team]);
@@ -64,6 +63,9 @@ describe("Teams page should 2", () => {
 
     const cardElement = screen.getAllByRole("teamCard");
     expect(cardElement).toHaveLength(1);
+
+    const cardDescription = screen.getByText("Team 1 description");
+    expect(cardDescription).toBeInTheDocument()
     const cardName = screen.getByText("Team 1");
     expect(cardName).toBeInTheDocument();
   });
@@ -72,12 +74,15 @@ describe("Teams page should 2", () => {
     const team = {
       id: "1",
       name: "Team 1",
+      description: "Team 1 description",
 
     };
 
     const teamTwo = {
       id: "2",
       name: "ECA",
+      description: "Team 2 description",
+
     };
 
     mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([team, teamTwo]);
@@ -92,10 +97,17 @@ describe("Teams page should 2", () => {
 
     const cardElement = screen.getAllByRole("teamCard");
     expect(cardElement).toHaveLength(2);
+
     const cardName = screen.getByText("Team 1");
     expect(cardName).toBeInTheDocument();
+    const team1DescriptionElement = screen.getByText("Team 1 description");
+    expect(team1DescriptionElement).toBeInTheDocument()
+
     const cardNameForTwo = screen.getByText("ECA");
     expect(cardNameForTwo).toBeInTheDocument();
+    const team2DescriptionElement = screen.getByText("Team 2 description");
+    expect(team2DescriptionElement).toBeInTheDocument()
+
   });
 
   test("not render a team card when I am not part of at least one team", async () => {

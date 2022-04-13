@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Card } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
@@ -15,13 +15,30 @@ const TeamsPage = () => {
     setTeams(teams);
   };
 
+  const getTeamsManualTest = async () => {
+      const teams = [
+          {
+              id: "1",
+              name: "Team 1",
+            },
+          {
+              id: "2",
+              name: "ECA",
+          },
+          {
+              id: "3",
+              name: "Cowboy"
+          }];
+      setTeams(teams);
+  };
+
   useEffect(() => {
     getTeams();
   }, []);
 
   const renderTeamCards = teams.map((team, index) => {
       return (
-          <TeamCard name={team.name} key={team.name + index} id={team.id}/>
+          <TeamCard team={team} key={team.name + index} i/>
       )
   })
 

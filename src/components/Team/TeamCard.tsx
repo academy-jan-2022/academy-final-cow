@@ -1,15 +1,18 @@
 import React from "react";
 import {Team} from "../../services/team/Team";
 import {useNavigate} from "react-router-dom";
+import { Card } from "@mui/material";
 
 const TeamCard = (props: Team) => {
     const navigate = useNavigate();
-    const {name, id} = props;
+    const {team} = props;
+    const {name, id, description} = team;
 
     return (
-        <div onClick={() => navigate(`/teams/${id}`)} role="teamCard">
+        <Card onClick={() => navigate(`/teams/${id}`)} role="teamCard">
         <h2>{name} </h2>
-        </div>
+        <p>{description}</p>
+        </Card>
     )
 }
 

@@ -11,14 +11,13 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("HomePage test should", () => {
-    const teamId = "1"
-    const teamName = "ECA"
+    const team = {id: 1, name: "ECA", description: "Amazing team description"}
 
     beforeEach(() => {
         
         render(
             <BrowserRouter>
-                    <TeamCard id={teamId} name={teamName} />
+                    <TeamCard team={team} />
             </BrowserRouter>
         );
     });
@@ -29,9 +28,14 @@ describe("HomePage test should", () => {
         expect(teamName).toBeInTheDocument();
     });
 
+    test('Check if team description is rendered', () => {
+        const teamName = screen.getByText(team.description);
+        expect(teamName).toBeInTheDocument();
+    });
+
     test('Navigate to team page when clicking on team card', async () => {
         const card = screen.getByText("ECA");
         card.click();
-        await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith(`/teams/${teamId}`));
+        await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith(`/teams/${team.id}`));
     })
 })
