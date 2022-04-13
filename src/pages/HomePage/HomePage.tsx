@@ -7,6 +7,7 @@ import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../../services/application/loginService";
 import logo from "../../images/teaminator_logo.png";
+import { Settings } from "../../services/infrastructure/Settings";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function HomePage() {
         <img aria-label={"logo"} src={logo} data-testid="logo" />
       </header>
       <GoogleLogin
-        clientId={`${process.env.REACT_APP_GOOGLE_CLIENTID}`}
+        clientId={`${Settings.getGoogleClientId()}`}
         buttonText="Login"
         onSuccess={googleLoginHandler}
         onFailure={googleLoginHandler}
