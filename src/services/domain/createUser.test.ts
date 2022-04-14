@@ -17,8 +17,7 @@ describe("create user should", () => {
     };
     const request = {
       route: ROUTES.CREATE_USER,
-      body: { fullName: USER_FULL_NAME, externalId: USER_EXTERNAL_ID },
-      headers: { token: USER_ID_TOKEN },
+      body: { fullName: USER_FULL_NAME, externalId: USER_EXTERNAL_ID }
     };
     createUser(user);
     expect(mockedHttpClient.post).toHaveBeenCalledWith(request);
