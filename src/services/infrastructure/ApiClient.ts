@@ -16,7 +16,7 @@ interface AuthResponse {
 
 class ApiClient {
     async get<T>(request: GetRequest): Promise<T> {
-        let url = new URL(Settings.getApiUrl() + request.route);
+        let url = this.buildUrl(request.route);
         const token = this.getToken();
         for (let key in request.queryParams) {
             url.searchParams.append(key, request.queryParams[key]);
@@ -26,7 +26,7 @@ class ApiClient {
     }
 
     async post<T>(request: PostRequest): Promise<T> {
-        let url = new URL(Settings.getApiUrl() + request.route);
+        let url = this.buildUrl(request.route);
         const token = this.getToken();
         const response: AxiosResponse<T> = await axios.post(
             url.toString(),
@@ -39,6 +39,10 @@ class ApiClient {
     getToken(): string | null {
         const tokenObject: AuthResponse | null = storageHandler.getJSONItem("tokenObject")
         return tokenObject ? tokenObject.id_token : null;
+    }
+
+    buildUrl(route: ROUTES): URL {
+        return new URL(Settings.getApiUrl() + route);
     }
 }
 
