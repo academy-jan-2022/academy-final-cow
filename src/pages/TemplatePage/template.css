@@ -1,0 +1,9 @@
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.app-bar-logo {
+    max-width: 150px;
+}
