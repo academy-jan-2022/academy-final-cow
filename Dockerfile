@@ -1,15 +1,17 @@
 FROM node:17.6-alpine
 
+RUN npm install -g serve # A simple webserver
+
 WORKDIR /app
 
-ENV PATH /app/node_modules/.bin:$PATH
+COPY package*.json ./
 
-COPY package.json ./
-COPY package-lock.json ./
+RUN npm install
 
-RUN npm install --silent
-RUN npm install -g react-scripts@5.0.0 --silent
+COPY . .
 
-COPY . ./
+RUN npm run build
 
-CMD ["npm", "start"]
+EXPOSE 3000
+
+CMD ["serve", "-s", "build", "-l", "3000"]
