@@ -1,24 +1,23 @@
-import client from "./HttpClient";
-import { storageHandler } from "./StorageHandler";
+import client, {ROUTES} from "./ApiClient";
+import {storageHandler} from "./StorageHandler";
+import {Settings} from "./Settings";
+
 const axios = require("axios");
 
 jest.mock("axios");
 jest.mock("./StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<typeof storageHandler>
 
-const TOKEN = "token";
 const A_QUERY_PARAM = "bar";
 const ANOTHER_QUERY_PARAM = "meh";
 
-const BASE_URL = "https://some.url.com/";
-let GET_REQUEST_URL = `${BASE_URL}?foo=${A_QUERY_PARAM}&baz=${ANOTHER_QUERY_PARAM}`;
-let POST_REQUEST_URL = `${BASE_URL}get-apple`;
+const BASE_URL = Settings.getApiUrl();
 
 const GET_RESPONSE_BODY_PROP = "banana";
 const POST_RESPONSE_BODY_PROP = "apple";
 const AUTHORIZATION_HEADER = { headers: { Authorization: `works` }};
 
-describe("HttpClient should", function () {
+describe("ApiClient should", function () {
   beforeEach(async () => {
     const getList = { data: { name: GET_RESPONSE_BODY_PROP } };
     const postList = { data: { name: POST_RESPONSE_BODY_PROP } };
@@ -33,7 +32,7 @@ describe("HttpClient should", function () {
 
   test("url is called", async () => {
     const result = await client.get<RequestResponseType>({
-      url: BASE_URL,
+      route: ROUTES.HEARTBEAT,
       queryParams: {
         foo: A_QUERY_PARAM,
         baz: ANOTHER_QUERY_PARAM,
@@ -41,32 +40,27 @@ describe("HttpClient should", function () {
     });
 
     expect(result).toEqual({ name: GET_RESPONSE_BODY_PROP });
-    expect(axios.get).toHaveBeenCalledWith(GET_REQUEST_URL, AUTHORIZATION_HEADER);
+    expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}${ROUTES.HEARTBEAT}?foo=${A_QUERY_PARAM}&baz=${ANOTHER_QUERY_PARAM}`, AUTHORIZATION_HEADER);
   });
 
   test("post is called", async () => {
     const body = { bodyProp: "aBodyProp" };
-
     const result = await client.post<RequestResponseType>({
-      url: POST_REQUEST_URL,
+      route: ROUTES.CREATE_TEAM,
       body,
-      headers: {
-        token: TOKEN,
-      },
     });
 
     expect(result.name).toEqual(POST_RESPONSE_BODY_PROP);
-    expect(axios.post).toHaveBeenCalledWith(POST_REQUEST_URL, body, AUTHORIZATION_HEADER);
+    expect(axios.post).toHaveBeenCalledWith(BASE_URL + ROUTES.CREATE_TEAM, body, AUTHORIZATION_HEADER);
   });
 
   test("storage handler is called to get token", async () => {
 
-    const result = await client.get<RequestResponseType>({
-      url: BASE_URL,
+    await client.get<RequestResponseType>({
+      route: ROUTES.HEARTBEAT,
     });
 
     expect(storageHandler.getJSONItem).toHaveBeenCalledWith("tokenObject")
-    expect(axios.get).toHaveBeenCalledWith(BASE_URL, AUTHORIZATION_HEADER )
   });
 
 });

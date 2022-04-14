@@ -1,9 +1,8 @@
 import teamService from "./teamService";
 import { Team } from "../../pages/CreateTeamPage/CreateTeamPage";
-import client from "../infrastructure/HttpClient";
-import {Settings} from "../infrastructure/Settings";
+import client, {ROUTES} from "../infrastructure/ApiClient";
 
-jest.mock("../infrastructure/HttpClient");
+jest.mock("../infrastructure/ApiClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
 
 describe("team service should", () => {
@@ -12,7 +11,7 @@ describe("team service should", () => {
   test("call post request", async () => {
     mockedHttpClient.post.mockResolvedValue({teamId: "1"});
     await teamService.createTeam(team);
-    expect(mockedHttpClient.post).toHaveBeenCalledWith({url: Settings.getApiUrl() + "/create-team", body: {team}});
+    expect(mockedHttpClient.post).toHaveBeenCalledWith({route: ROUTES.CREATE_TEAM, body: {team}});
   });
 
   test("return team id", async () => {

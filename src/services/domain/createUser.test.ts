@@ -1,9 +1,7 @@
 import createUser from "./createUser";
-import client from "../infrastructure/HttpClient";
-import { Settings } from "../infrastructure/Settings";
+import client, {ROUTES} from "../infrastructure/ApiClient";
 
-
-jest.mock("../infrastructure/HttpClient");
+jest.mock("../infrastructure/ApiClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
 
 const USER_EXTERNAL_ID = "someID";
@@ -18,9 +16,8 @@ describe("create user should", () => {
       idToken: USER_ID_TOKEN,
     };
     const request = {
-      url: Settings.getApiUrl() + "/login",
-      body: { fullName: USER_FULL_NAME, externalId: USER_EXTERNAL_ID },
-      headers: { token: USER_ID_TOKEN },
+      route: ROUTES.CREATE_USER,
+      body: { fullName: USER_FULL_NAME, externalId: USER_EXTERNAL_ID }
     };
     createUser(user);
     expect(mockedHttpClient.post).toHaveBeenCalledWith(request);
