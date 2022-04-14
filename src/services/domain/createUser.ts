@@ -7,12 +7,11 @@ export type User = {
 };
 
 const createUser = (user: User) => {
-  const { idToken, fullName, externalId } = user;
+  const { fullName, externalId } = user;
 
   return apiClient.post({
     route: ROUTES.CREATE_USER,
     body: { externalId, fullName },
-    headers: { token: idToken },
   });
 };
 
