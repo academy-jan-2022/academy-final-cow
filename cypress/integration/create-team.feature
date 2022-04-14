@@ -17,5 +17,6 @@ Feature: Create a team
     Scenario: Cancel creating the team
         Given I am logged in
         And I am on the Teams View
+        When I click on create new team
         When I click on Cancel button
         Then I get redirected into Teams View

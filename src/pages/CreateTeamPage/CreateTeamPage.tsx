@@ -27,6 +27,7 @@ const CreateTeamPage = () => {
         const route = "/team/" + teamId;
         navigate(route);
       } catch (e) {
+        console.log(e);
         navigate("/error");
       }
     }
