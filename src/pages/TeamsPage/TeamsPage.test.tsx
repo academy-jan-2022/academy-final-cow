@@ -1,11 +1,38 @@
 import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 
 import TeamsPage from "./TeamsPage";
 
+const mockedUsedNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+  ...(jest.requireActual("react-router-dom") as any),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
+beforeEach(() => {
+  render(
+    <BrowserRouter>
+      <TeamsPage />
+    </BrowserRouter>
+  );
+});
+
 describe("Teams page should", () => {
   test("renders the heading", () => {
-    render(<TeamsPage />);
     const title = screen.getByRole("heading", { name: "title" });
     expect(title).toBeInTheDocument();
   });
+
+  test("renders the create team button", () => {
+    const createTeamBtn = screen.getByText("Create New Team");
+    expect(createTeamBtn).toBeInTheDocument();
+  });
+
+  test("create team button should take you to /create-team page", () => {
+    const createTeamBtn = screen.getByText("Create New Team");
+    createTeamBtn.click();
+    expect(mockedUsedNavigate).toBeCalledWith("/create-team");
+  });
+
+
 });

@@ -1,7 +1,7 @@
 import { HttpClient } from "../infrastructure/HttpClient";
 import { Settings } from "../infrastructure/Settings";
 
-type User = {
+export type User = {
   externalId: string;
   fullName: string;
   idToken: string;
