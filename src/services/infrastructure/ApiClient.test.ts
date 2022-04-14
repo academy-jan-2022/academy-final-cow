@@ -1,5 +1,6 @@
-import client from "./HttpClient";
+import client from "./ApiClient";
 import { storageHandler } from "./StorageHandler";
+import {Settings} from "./Settings";
 const axios = require("axios");
 
 jest.mock("axios");
@@ -10,15 +11,17 @@ const TOKEN = "token";
 const A_QUERY_PARAM = "bar";
 const ANOTHER_QUERY_PARAM = "meh";
 
-const BASE_URL = "https://some.url.com/";
-let GET_REQUEST_URL = `${BASE_URL}?foo=${A_QUERY_PARAM}&baz=${ANOTHER_QUERY_PARAM}`;
-let POST_REQUEST_URL = `${BASE_URL}get-apple`;
+const BASE_URL = Settings.getApiUrl();
+const GET_REQUEST_ROUTE=`/?foo=${A_QUERY_PARAM}&baz=${ANOTHER_QUERY_PARAM}`;
+const POST_REQUEST_ROUTE=`/get-apple`;
+let GET_REQUEST_URL = BASE_URL + GET_REQUEST_ROUTE;
+let POST_REQUEST_URL = BASE_URL + POST_REQUEST_ROUTE;
 
 const GET_RESPONSE_BODY_PROP = "banana";
 const POST_RESPONSE_BODY_PROP = "apple";
 const AUTHORIZATION_HEADER = { headers: { Authorization: `works` }};
 
-describe("HttpClient should", function () {
+describe("ApiClient should", function () {
   beforeEach(async () => {
     const getList = { data: { name: GET_RESPONSE_BODY_PROP } };
     const postList = { data: { name: POST_RESPONSE_BODY_PROP } };
@@ -33,7 +36,7 @@ describe("HttpClient should", function () {
 
   test("url is called", async () => {
     const result = await client.get<RequestResponseType>({
-      url: BASE_URL,
+      route: "/",
       queryParams: {
         foo: A_QUERY_PARAM,
         baz: ANOTHER_QUERY_PARAM,
@@ -46,9 +49,8 @@ describe("HttpClient should", function () {
 
   test("post is called", async () => {
     const body = { bodyProp: "aBodyProp" };
-
     const result = await client.post<RequestResponseType>({
-      url: POST_REQUEST_URL,
+      route: POST_REQUEST_ROUTE,
       body,
       headers: {
         token: TOKEN,
@@ -61,12 +63,12 @@ describe("HttpClient should", function () {
 
   test("storage handler is called to get token", async () => {
 
-    const result = await client.get<RequestResponseType>({
-      url: BASE_URL,
+    await client.get<RequestResponseType>({
+      route: GET_REQUEST_ROUTE,
     });
 
     expect(storageHandler.getJSONItem).toHaveBeenCalledWith("tokenObject")
-    expect(axios.get).toHaveBeenCalledWith(BASE_URL, AUTHORIZATION_HEADER )
+    expect(axios.get).toHaveBeenCalledWith(GET_REQUEST_URL, AUTHORIZATION_HEADER )
   });
 
 });

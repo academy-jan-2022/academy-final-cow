@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 import {storageHandler} from "./StorageHandler";
+import {Settings} from "./Settings";
 
 const axios = require("axios");
 
@@ -13,9 +14,9 @@ interface AuthResponse {
   readonly expires_at: number;
 }
 
-export class HttpClient {
+class ApiClient {
   async get<T>(request: GetRequest): Promise<T> {
-    let url = new URL(request.url);
+    let url =  new URL(Settings.getApiUrl() + request.route);
     const token = this.getToken();
     for (let key in request.queryParams) {
       url.searchParams.append(key, request.queryParams[key]);
@@ -25,7 +26,7 @@ export class HttpClient {
   }
 
   async post<T>(request: PostRequest): Promise<T> {
-    let url = new URL(request.url);
+    let url = new URL(Settings.getApiUrl() + request.route);
     const token = this.getToken();
     const response: AxiosResponse<T> = await axios.post(
       url.toString(),
@@ -46,7 +47,7 @@ export class HttpClient {
 }
 
 export interface GetRequest {
-  url: string;
+  route: string;
   readonly queryParams?: { [name: string]: string };
   headers?: {
     token: string;
@@ -54,13 +55,19 @@ export interface GetRequest {
 }
 
 export interface PostRequest {
-  url: string;
+  route: string;
   body: Object;
   headers?: {
     token: string;
   };
 }
 
-const client = new HttpClient();
+export enum ROUTES {
+  HEARTBEAT = "/actuator/health",
+  CREATE_USER = "/login",
+  CREATE_TEAM = "/create-team"
+}
 
-export default client;
+const apiClient = new ApiClient();
+
+export default apiClient;
