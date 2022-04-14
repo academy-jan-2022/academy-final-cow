@@ -43,12 +43,12 @@ class ApiClient {
 }
 
 export interface GetRequest {
-    route: string;
+    route: ROUTES;
     readonly queryParams?: { [name: string]: string };
 }
 
 export interface PostRequest {
-    route: string;
+    route: ROUTES;
     body: Object;
 }
 

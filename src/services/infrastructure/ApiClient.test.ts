@@ -52,9 +52,6 @@ describe("ApiClient should", function () {
     const result = await client.post<RequestResponseType>({
       route: POST_REQUEST_ROUTE,
       body,
-      headers: {
-        token: TOKEN,
-      },
     });
 
     expect(result.name).toEqual(POST_RESPONSE_BODY_PROP);
