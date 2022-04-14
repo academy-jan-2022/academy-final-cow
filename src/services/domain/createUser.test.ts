@@ -1,5 +1,7 @@
 import createUser from "./createUser";
 import client from "../infrastructure/HttpClient";
+import { Settings } from "../infrastructure/Settings";
+
 
 jest.mock("../infrastructure/HttpClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
@@ -16,7 +18,7 @@ describe("create user should", () => {
       idToken: USER_ID_TOKEN,
     };
     const request = {
-      url: process.env.REACT_APP_BASE_URL + "/login",
+      url: Settings.getApiUrl() + "/login",
       body: { fullName: USER_FULL_NAME, externalId: USER_EXTERNAL_ID },
       headers: { token: USER_ID_TOKEN },
     };
