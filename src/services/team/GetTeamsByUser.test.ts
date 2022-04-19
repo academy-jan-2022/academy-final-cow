@@ -1,8 +1,8 @@
 import getTeamsByUser from "./getTeamsByUser";
 
-import client from "../infrastructure/HttpClient";
+import client from "../infrastructure/ApiClient";
 
-jest.mock("../infrastructure/HttpClient");
+jest.mock("../infrastructure/ApiClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
 
 describe("get list of teams that the user is part of", () => {
@@ -13,7 +13,7 @@ describe("get list of teams that the user is part of", () => {
     const result = await getTeamsByUser();
 
     expect(mockedHttpClient.get).toBeCalledWith({
-      url: process.env.REACT_APP_BASE_URL + "/teams",
+      route: "/teams",
     });
     expect(result).toEqual(teamBanana);
   });
