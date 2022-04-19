@@ -14,7 +14,7 @@ class TeamService {
     return resp.teamId;
   }
 
-  async getTeamById(id: number): Promise<Team> {
+  async getTeamById(id: string): Promise<Team> {
     throw new Error();
   }
 }

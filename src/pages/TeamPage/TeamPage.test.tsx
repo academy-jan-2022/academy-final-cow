@@ -46,6 +46,6 @@ describe("Team page should", () => {
   // });
 
   test("retrieve the team information", () => {
-    expect(mockedTeamService.getTeamById).toHaveBeenCalledWith(1);
+    expect(mockedTeamService.getTeamById).toHaveBeenCalledWith("1");
   });
 });
