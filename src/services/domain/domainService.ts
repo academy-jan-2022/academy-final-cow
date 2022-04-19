@@ -1,8 +1,6 @@
-import createTeam from "./createTeam";
 import createUser from "./createUser";
 
 class domainService {
-    createTeam = createTeam;
     createUser = createUser;
 }
 

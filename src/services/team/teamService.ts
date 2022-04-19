@@ -1,26 +1,23 @@
 import { Team } from "../../pages/CreateTeamPage/CreateTeamPage";
-import DomainService from "../domain/domainService";
-import { storageHandler } from "../infrastructure/StorageHandler";
+import client, {ROUTES} from "../infrastructure/ApiClient";
 import getTeamsByUser from "./getTeamsByUser";
 
-type User = {
-  userId: string;
-  idToken: string;
+type CreateTeamResponse = {
+  teamId: string;
 };
 
-class teamService {
+class TeamService {
   getAllTeams = getTeamsByUser;
 
-  execute(team: Team): string {
-    const user: User | null = storageHandler.getJSONItem<User>("user");
-
-    if (user) {
-      const { userId, idToken } = user;
-      const teamId = DomainService.createTeam(team, userId, idToken);
-      return `/team/${teamId}`;
-    }
-    return "/error";
+  async createTeam(team: Team): Promise<string> {
+    const resp: CreateTeamResponse = await client.post({
+      route: ROUTES.CREATE_TEAM,
+      body: { team },
+    });
+    return resp.teamId;
   }
 }
-const TeamService = new teamService();
-export default TeamService;
+
+const teamService = new TeamService();
+
+export default teamService;

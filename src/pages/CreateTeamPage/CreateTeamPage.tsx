@@ -15,18 +15,23 @@ const CreateTeamPage = () => {
   const [teamName, setTeamName] = useState("");
   const [teamDescription, setTeamDescription] = useState("");
 
-  function handleOnClick() {
+  const handleOnClick = async () => {
     if (teamDescription && teamName) {
       const team: Team = {
         name: teamName,
         description: teamDescription,
       };
 
-      const route = teamService.execute(team);
-
-      navigate(route);
+      try {
+        const teamId = await teamService.createTeam(team);
+        const route = "/team/" + teamId;
+        navigate(route);
+      } catch (e) {
+        console.log(e);
+        navigate("/error");
+      }
     }
-  }
+  };
 
   return (
     <PageTemplate>
@@ -36,6 +41,7 @@ const CreateTeamPage = () => {
           id="team-name"
           label="Team name"
           required
+          error = {teamName.length === 0}
           inputProps={{ "data-testid": "team-name" }}
           variant="outlined"
           onChange={(e) => setTeamName(e.target.value)}
@@ -45,6 +51,7 @@ const CreateTeamPage = () => {
           inputProps={{ "data-testid": "team-description" }}
           label="Team description"
           required
+          error = {teamDescription.length === 0}
           variant="outlined"
           onChange={(e) => setTeamDescription(e.target.value)}
         />
@@ -55,6 +62,14 @@ const CreateTeamPage = () => {
           onClick={handleOnClick}
         >
           Save Team
+        </Button>
+        <Button
+            variant="contained"
+            id="cancel-team-btn"
+            data-testid="cancel-team-btn"
+            onClick={() => navigate("/teams")}
+        >
+          Cancel
         </Button>
       </Stack>
     </PageTemplate>
