@@ -41,7 +41,7 @@ const TeamsPage = () => {
 
   const renderTeamCards = teams.map((team, index) => {
       return (
-          <TeamCard team={team} key={team.name + index} i/>
+          <TeamCard team={team} key={team.name + index} />
       )
   })
 
