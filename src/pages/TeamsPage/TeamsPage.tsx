@@ -10,30 +10,11 @@ const TeamsPage = () => {
   const navigate = useNavigate();
   const [teams, setTeams] = useState<Team[]>([]);
 
-  const getTeamsProduction = async () => {
+  const getTeams = async () => {
     const teams = await TeamService.getAllTeams();
     setTeams(teams);
   };
 
-  const getTeams = async () => {
-      const teams = [
-          {
-              id: "1",
-              name: "Team 1",
-              description: "Team 1 description blah blah blah"
-            },
-          {
-              id: "2",
-              name: "ECA",
-              description: "Team 2 description grea ibghriebngu ifrnuiwe "
-          },
-          {
-              id: "3",
-              name: "Cowboy",
-              description: "nhuivn rei gbeiurbg npir"
-          }];
-      setTeams(teams);
-  };
 
   useEffect(() => {
     getTeams();
