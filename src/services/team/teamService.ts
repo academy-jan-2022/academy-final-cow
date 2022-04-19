@@ -13,6 +13,10 @@ class TeamService {
     });
     return resp.teamId;
   }
+
+  async getTeamById(id: number): Promise<Team> {
+    throw new Error();
+  }
 }
 
 const teamService = new TeamService();
