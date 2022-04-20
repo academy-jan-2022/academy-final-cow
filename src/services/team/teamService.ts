@@ -23,8 +23,12 @@ class TeamService {
     throw new Error();
   }
 
-  async generateJoinLink(id: string): Promise<GenerateJoinLinkResponse> {
-    throw new Error();
+  async generateJoinLink(teamId: string): Promise<GenerateJoinLinkResponse> {
+    const resp: GenerateJoinLinkResponse = await client.post({
+      route: ROUTES.GENERATE_JOIN_LINK,
+      body: { teamId },
+    });
+    return {link: ""};
   }
 }
 

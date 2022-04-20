@@ -14,4 +14,9 @@ describe("generate join link should", () => {
     });
   });
 
+  test("return formed link", async () => {
+    mockedHttpClient.post.mockResolvedValue({ token: "456456456" });
+    let response = await teamService.generateJoinLink("1");
+    expect(response).toEqual("http://localhost:3000/join/456456456");
+  });
 });
