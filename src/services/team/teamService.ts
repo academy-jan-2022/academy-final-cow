@@ -1,15 +1,16 @@
-import { Team } from "../../pages/CreateTeamPage/CreateTeamPage";
 import client, { ROUTES } from "../infrastructure/ApiClient";
+import { Team } from "../../pages/TeamPage/TeamPage.test";
+import { Team as GetTeam } from "../../pages/CreateTeamPage/CreateTeamPage";
 
 type CreateTeamResponse = {
   teamId: string;
 };
 
 class TeamService {
-  async createTeam(team: Team): Promise<string> {
+  async createTeam(team: GetTeam): Promise<string> {
     const resp: CreateTeamResponse = await client.post({
       route: ROUTES.CREATE_TEAM,
-      body: { team }
+      body: { team },
     });
     return resp.teamId;
   }

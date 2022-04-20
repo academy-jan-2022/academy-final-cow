@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import TeamPage from "./TeamPage";
 import teamService from "../../services/team/teamService";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
@@ -8,7 +8,7 @@ type User = {
   fullName: string;
 };
 
-type Team = {
+export type Team = {
   id: string;
   name: string;
   description: string;
@@ -31,12 +31,11 @@ const team: Team = {
   ],
 };
 
-jest.mock("../../services/team/teamService");
-const mockedTeamService = teamService as jest.Mocked<typeof teamService>;
-mockedTeamService.getTeamById.mockImplementation(() => Promise.resolve(team));
-
 describe("Team page should", () => {
-  test("retrieve the team information", () => {
+  test("retrieve the team information", async () => {
+    const mockedTeamService = jest
+      .spyOn(teamService, "getTeamById")
+      .mockResolvedValue(team);
     render(
       <MemoryRouter initialEntries={["/team/1"]}>
         <Routes>
@@ -44,20 +43,31 @@ describe("Team page should", () => {
         </Routes>
       </MemoryRouter>
     );
-    expect(mockedTeamService.getTeamById).toHaveBeenCalledWith("1");
-  });
-  test("render the team name as a title", () => {
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
-    expect(mockedTeamService.getTeamById).toHaveBeenCalledWith("1");
 
-    const title = screen.getByRole("heading", { level: 1 });
-    expect(title).toBeInTheDocument();
-    expect(title).toHaveTextContent("Team 1");
+    await waitFor(() => expect(mockedTeamService).toHaveBeenCalledWith("1"));
+
+    mockedTeamService.mockRestore();
+  });
+
+  test("render the team name as a title", async () => {
+    const mockedTeamService = jest
+      .spyOn(teamService, "getTeamById")
+      .mockResolvedValue(team);
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() =>
+      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+        "Team 1"
+      )
+    );
+
+    mockedTeamService.mockRestore();
   });
 });
