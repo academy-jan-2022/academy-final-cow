@@ -82,4 +82,23 @@ describe("Team page should", () => {
 
     mockedTeamService.mockRestore();
   });
+
+  test("render the team description", async () => {
+    const mockedTeamService = jest
+      .spyOn(teamService, GET_TEAM_METHOD)
+      .mockResolvedValue(team);
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const teamDescription = await screen.findByText(TEAM_DESCRIPTION);
+    expect(teamDescription).toBeInTheDocument();
+
+    mockedTeamService.mockRestore();
+  });
 });
