@@ -1,9 +1,10 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import "./create-page.css";
 import teamService from "../../services/team/teamService";
+import PageHeading from "../../components/PageHeading/PageHeading";
 
 export type Team = {
   name: string;
@@ -34,13 +35,13 @@ const CreateTeamPage = () => {
 
   return (
     <PageTemplate>
-      <h1>Create Team</h1>
+      <PageHeading>Create Team</PageHeading>
       <Stack className="create-team-form" spacing={2}>
         <TextField
           id="team-name"
           label="Team name"
           required
-          error = {teamName.length === 0}
+          error={teamName.length === 0}
           inputProps={{ "data-testid": "team-name" }}
           variant="outlined"
           onChange={(e) => setTeamName(e.target.value)}
@@ -50,7 +51,7 @@ const CreateTeamPage = () => {
           inputProps={{ "data-testid": "team-description" }}
           label="Team description"
           required
-          error = {teamDescription.length === 0}
+          error={teamDescription.length === 0}
           variant="outlined"
           onChange={(e) => setTeamDescription(e.target.value)}
         />
@@ -63,10 +64,10 @@ const CreateTeamPage = () => {
           Save Team
         </Button>
         <Button
-            variant="contained"
-            id="cancel-team-btn"
-            data-testid="cancel-team-btn"
-            onClick={() => navigate("/teams")}
+          variant="contained"
+          id="cancel-team-btn"
+          data-testid="cancel-team-btn"
+          onClick={() => navigate("/teams")}
         >
           Cancel
         </Button>

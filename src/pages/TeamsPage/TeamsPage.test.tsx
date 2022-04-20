@@ -19,7 +19,7 @@ beforeEach(() => {
 
 describe("Teams page should", () => {
   test("renders the heading", () => {
-    const title = screen.getByRole("heading", { name: "title" });
+    const title = screen.getByText("Teams");
     expect(title).toBeInTheDocument();
   });
 
