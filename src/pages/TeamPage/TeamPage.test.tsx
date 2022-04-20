@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import TeamPage from "./TeamPage";
 import teamService from "../../services/team/teamService";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
@@ -45,5 +45,19 @@ describe("Team page should", () => {
       </MemoryRouter>
     );
     expect(mockedTeamService.getTeamById).toHaveBeenCalledWith("1");
+  });
+  test("render the team name as a title", () => {
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    expect(mockedTeamService.getTeamById).toHaveBeenCalledWith("1");
+
+    const title = screen.getByRole("heading", { level: 1 });
+    expect(title).toBeInTheDocument();
+    expect(title).toHaveTextContent("Team 1");
   });
 });
