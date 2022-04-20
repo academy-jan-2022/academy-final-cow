@@ -23,7 +23,7 @@ const PageTemplate: React.FC = ({children}) => {
                 light: "#ffdfaf",
             },
             background: {
-                paper: "rgba(96,175,224,0.43)",
+                paper: "#60afe06e"
             },
         },
     };

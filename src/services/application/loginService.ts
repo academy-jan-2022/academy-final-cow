@@ -13,6 +13,7 @@ export const loginService = async (
   if (googleUserExists) {
     try {
       storageHandler.setJSONItem("tokenObject", response.tokenObj);
+      storageHandler.setJSONItem("profile", response.profileObj);
       await createUser({
         externalId: response.profileObj.googleId,
         fullName: response.profileObj.name,
