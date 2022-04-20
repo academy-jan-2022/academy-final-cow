@@ -15,7 +15,7 @@ const mockedGetTeamsService = TeamService as jest.Mocked<typeof TeamService>;
 
 describe("Teams page should", () => {
   beforeEach(async () => {
-    mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([]);
+    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
 
     await act(async () => {
       render(
@@ -51,7 +51,7 @@ describe("Teams page should 2", () => {
       description: "Team 1 description",
     };
 
-    mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([team]);
+    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([team]);
 
     await act(async () => {
       render(
@@ -65,7 +65,7 @@ describe("Teams page should 2", () => {
     expect(cardElement).toHaveLength(1);
 
     const cardDescription = screen.getByText("Team 1 description");
-    expect(cardDescription).toBeInTheDocument()
+    expect(cardDescription).toBeInTheDocument();
     const cardName = screen.getByText("Team 1");
     expect(cardName).toBeInTheDocument();
   });
@@ -75,23 +75,23 @@ describe("Teams page should 2", () => {
       id: "1",
       name: "Team 1",
       description: "Team 1 description",
-
     };
 
     const teamTwo = {
       id: "2",
       name: "ECA",
       description: "Team 2 description",
-
     };
 
-    mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([team, teamTwo]);
+    mockedGetTeamsService.getTeamsByUser = jest
+      .fn()
+      .mockResolvedValue([team, teamTwo]);
 
     await act(async () => {
       render(
-          <BrowserRouter>
-            <TeamsPage />
-          </BrowserRouter>
+        <BrowserRouter>
+          <TeamsPage />
+        </BrowserRouter>
       );
     });
 
@@ -101,17 +101,16 @@ describe("Teams page should 2", () => {
     const cardName = screen.getByText("Team 1");
     expect(cardName).toBeInTheDocument();
     const team1DescriptionElement = screen.getByText("Team 1 description");
-    expect(team1DescriptionElement).toBeInTheDocument()
+    expect(team1DescriptionElement).toBeInTheDocument();
 
     const cardNameForTwo = screen.getByText("ECA");
     expect(cardNameForTwo).toBeInTheDocument();
     const team2DescriptionElement = screen.getByText("Team 2 description");
-    expect(team2DescriptionElement).toBeInTheDocument()
-
+    expect(team2DescriptionElement).toBeInTheDocument();
   });
 
   test("not render a team card when I am not part of at least one team", async () => {
-    mockedGetTeamsService.getAllTeams = jest.fn().mockResolvedValue([]);
+    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
 
     await act(async () => {
       render(
