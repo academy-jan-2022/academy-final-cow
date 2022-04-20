@@ -15,7 +15,11 @@ class TeamService {
   }
 
   async getTeamById(id: string): Promise<GetTeamResponse> {
-    throw new Error();
+    const response: GetTeamResponse = await client.get({
+      route: ROUTES.GET_TEAM,
+      queryParams: { id }
+    });
+    return response;
   }
 }
 
