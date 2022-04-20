@@ -6,9 +6,8 @@ import ReactDOM from "react-dom";
 import HeartbeatPage from "./pages/HeartbeatPage/HeartbeatPage";
 import TeamsPage from "./pages/TeamsPage/TeamsPage";
 import CreateTeamPage from "./pages/CreateTeamPage/CreateTeamPage";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
-import TeamPage from "./pages/TeamPage/TeamPage";
 import ErrorPage, { ERRORS } from "./pages/ErrorPage/ErrorPage";
+import TeamPage from "./pages/TeamPage/TeamPage";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,9 +17,15 @@ ReactDOM.render(
         <Route path="/team/:id" element={<TeamPage />} />
         <Route path="/heartbeat" element={<HeartbeatPage />} />
         <Route path="/create-team" element={<CreateTeamPage />} />
-        <Route path="/" element={<HomePage />} /><Route path="/error"
-                                                        element={<ErrorPage error={ERRORS.SOMETHING_WENT_WRONG} />} />
-        <Route path="/*" element={<ErrorPage error={ERRORS.PAGE_NOT_FOUND} />} />
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/error"
+          element={<ErrorPage error={ERRORS.SOMETHING_WENT_WRONG} />}
+        />
+        <Route
+          path="/*"
+          element={<ErrorPage error={ERRORS.PAGE_NOT_FOUND} />}
+        />
       </Routes>
     </Router>
   </React.StrictMode>,
