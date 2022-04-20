@@ -24,6 +24,7 @@ const USER_TWO_ID = "2";
 const USER_TWO_FULL_NAME = "Anna Hello";
 
 const GET_TEAM_METHOD = "getTeamById";
+const GENERATE_JOIN_LINK = "generateJoinLink";
 
 const team: Team = {
   id: TEAM_ID,
@@ -120,5 +121,43 @@ describe("Team page should", () => {
     expect(teamMembers).toHaveTextContent(USER_TWO_FULL_NAME);
 
     mockedTeamService.mockRestore();
+  });
+
+  test("render generate join team link button", async () => {
+    const mockedTeamService = jest
+      .spyOn(teamService, GET_TEAM_METHOD)
+      .mockResolvedValue(team);
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const joinButton = await screen.findByText("create join link");
+    expect(joinButton).toBeInTheDocument();
+    mockedTeamService.mockRestore();
+  });
+  test("calls generate uri on button clicked", async () => {
+    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
+
+    const mockedGenerateJoinLink = jest
+      .spyOn(teamService, GENERATE_JOIN_LINK)
+      .mockResolvedValue({ link: "mocked url" });
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const joinButton = await screen.findByText("create join link");
+    joinButton.click();
+
+    expect(mockedGenerateJoinLink).toHaveBeenCalledWith("1");
   });
 });

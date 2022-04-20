@@ -6,6 +6,10 @@ type CreateTeamResponse = {
   teamId: string;
 };
 
+type GenerateJoinLinkResponse = {
+  link: string;
+};
+
 class TeamService {
   async createTeam(team: GetTeam): Promise<string> {
     const resp: CreateTeamResponse = await client.post({
@@ -16,6 +20,10 @@ class TeamService {
   }
 
   async getTeamById(id: string): Promise<Team> {
+    throw new Error();
+  }
+
+  async generateJoinLink(id: string): Promise<GenerateJoinLinkResponse> {
     throw new Error();
   }
 }
