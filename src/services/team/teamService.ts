@@ -5,11 +5,18 @@ type CreateTeamResponse = {
   teamId: string;
 };
 
+type GetTeamResponse = {
+  teams: Team[];
+};
+
 class TeamService {
   async getTeamsByUser(): Promise<Team[]> {
-    return await client.get<Team[]>({
+
+    const response: GetTeamResponse = await client.get({
       route: ROUTES.GET_TEAMS,
     });
+
+    return response.teams;
   }
 
   async createTeam(team: Team): Promise<string> {
