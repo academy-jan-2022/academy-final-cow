@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import teamService from "../../services/team/teamService";
 import { useParams } from "react-router-dom";
-import { Team } from "./TeamPage.test";
+import { GetTeamResponse as Team } from "../../services/team/Team";
 
 const TeamPage = () => {
   const { id } = useParams();

@@ -2,18 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import TeamPage from "./TeamPage";
 import teamService from "../../services/team/teamService";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-
-type User = {
-  id: string;
-  fullName: string;
-};
-
-export type Team = {
-  id: string;
-  name: string;
-  description: string;
-  members: User[];
-};
+import { GetTeamResponse as Team } from "../../services/team/Team";
 
 const TEAM_ID = "1";
 const TEAM_NAME = "Team 1";

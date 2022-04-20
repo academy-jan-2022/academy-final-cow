@@ -5,11 +5,7 @@ import PageTemplate from "../TemplatePage/PageTemplate";
 import "./create-page.css";
 import teamService from "../../services/team/teamService";
 import PageHeading from "../../components/PageHeading/PageHeading";
-
-export type Team = {
-  name: string;
-  description: string;
-};
+import { CreateTeamRequest as Team } from "../../services/team/Team";
 
 const CreateTeamPage = () => {
   const navigate = useNavigate();
