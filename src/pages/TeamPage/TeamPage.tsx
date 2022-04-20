@@ -20,6 +20,11 @@ const TeamPage = () => {
     <PageTemplate>
       <h1>{team.name}</h1>
       <p>{team.description}</p>
+      <ul>
+        {team.members.map((member, index) => (
+          <li key={member.id + "_" + index}>{member.fullName}</li>
+        ))}
+      </ul>
     </PageTemplate>
   );
 };
