@@ -12,11 +12,11 @@ ReactDOM.render(
     <React.StrictMode>
         <Router>
             <Routes>
-                <Route path="/error/*" element={<ErrorPage error={ERRORS.SERVER_ERROR} />}/>
                 <Route path="/teams" element={<TeamsPage/>}/>
                 <Route path="/heartbeat" element={<HeartbeatPage/>}/>
                 <Route path="/create-team" element={<CreateTeamPage/>}/>
                 <Route path="/" element={<HomePage/>}/>
+                <Route path="/error" element={<ErrorPage error={ERRORS.SOMETHING_WENT_WRONG} />}/>
                 <Route path="/*" element={<ErrorPage error={ERRORS.PAGE_NOT_FOUND} />}/>
             </Routes>
         </Router>

@@ -20,26 +20,20 @@ describe("Error page should", () => {
         expect(text).toBeInTheDocument();
     });
 
-    test("display server error message", () => {
-        render(<ErrorPage error={ERRORS.SERVER_ERROR}/>);
+    test("display error message", () => {
+        render(<ErrorPage error={ERRORS.SOMETHING_WENT_WRONG}/>);
         const text = screen.getByText("Something went wrong");
         expect(text).toBeInTheDocument();
     });
 
-    test("display unauthorised", () => {
-        render(<ErrorPage error={ERRORS.UNAUTHORISED}/>);
-        const text = screen.getByText("Unauthorised");
-        expect(text).toBeInTheDocument();
-    });
-
     test("display return to homepage button", () => {
-        render(<ErrorPage error={ERRORS.UNAUTHORISED}/>);
+        render(<ErrorPage error={ERRORS.SOMETHING_WENT_WRONG}/>);
         const btn = screen.getByText("Return to homepage");
         expect(btn).toBeInTheDocument();
     });
 
     test("return to homepage when the button is clicked", () => {
-        render(<ErrorPage error={ERRORS.UNAUTHORISED}/>);
+        render(<ErrorPage error={ERRORS.SOMETHING_WENT_WRONG}/>);
         const btn = screen.getByText("Return to homepage");
         expect(btn).toBeInTheDocument();
         btn.click();

@@ -3,11 +3,11 @@ import PageTemplate from "../TemplatePage/PageTemplate";
 import sadcowboy from "../../images/sadcowboy.png"
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import "./error.css"
 
 export enum ERRORS {
     PAGE_NOT_FOUND = "Page not found",
-    SERVER_ERROR = "Something went wrong",
-    UNAUTHORISED = "Unauthorised",
+    SOMETHING_WENT_WRONG = "Something went wrong",
 }
 
 const ErrorPage = ({error}: { error: ERRORS }) => {
@@ -16,7 +16,7 @@ const ErrorPage = ({error}: { error: ERRORS }) => {
     return (
         <PageTemplate>
             <h1 aria-label="title">Error</h1>
-            <img src={sadcowboy} alt="sad cowboy"/>
+            <img className="sad-cowboy" src={sadcowboy} alt="sad cowboy"/>
             <p>{error}</p>
             <Button variant="outlined" onClick={() => navigate("/")}>Return to homepage</Button>
         </PageTemplate>
