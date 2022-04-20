@@ -19,6 +19,7 @@ const TeamPage = () => {
   return (
     <PageTemplate>
       <h1>{team.name}</h1>
+      <p>{team.description}</p>
     </PageTemplate>
   );
 };
