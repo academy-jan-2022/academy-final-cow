@@ -23,7 +23,7 @@ function HomePage() {
   return (
     <PageTemplate>
       <header>
-        <img aria-label={"logo"} src={logo} data-testid="logo" />
+        <img aria-label={"logo"} alt="Teaminator Logo" src={logo} data-testid="logo" />
       </header>
       <GoogleLogin
         clientId={`${Settings.getGoogleClientId()}`}
