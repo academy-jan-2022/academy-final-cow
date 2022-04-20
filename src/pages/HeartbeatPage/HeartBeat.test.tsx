@@ -47,7 +47,7 @@ test("Show green tick for backend status when status is up", async () => {
       },
     },
   });
-  const tickElement = screen.getByRole("backendIsUp");
+  const tickElement = screen.getByTestId("backendIsUp");
   expect(tickElement).toBeInTheDocument();
 });
 
@@ -60,7 +60,7 @@ test("Show red tick for backend status when status is down", async () => {
       },
     },
   });
-  const crossElement = screen.getByRole("backendIsDown");
+  const crossElement = screen.getByTestId("backendIsDown");
   expect(crossElement).toBeInTheDocument();
 });
 
@@ -73,7 +73,7 @@ test("Show green tick for backend and db when both backend and db status is up",
       },
     },
   });
-  const dbCrossElement = screen.getByRole("databaseIsUp");
+  const dbCrossElement = screen.getByTestId("databaseIsUp");
   expect(dbCrossElement).toBeInTheDocument();
 });
 
@@ -86,6 +86,6 @@ test("Show red tick for db status when backend status is up but db status is dow
       },
     },
   });
-  const dbCrossElement = screen.getByRole("databaseIsDown");
+  const dbCrossElement = screen.getByTestId("databaseIsDown");
   expect(dbCrossElement).toBeInTheDocument();
 });
