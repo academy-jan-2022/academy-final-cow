@@ -59,7 +59,8 @@ export interface PostRequest {
 export enum ROUTES {
   HEARTBEAT = "/actuator/health",
   CREATE_USER = "/login",
-  CREATE_TEAM = "/create-team"
+  CREATE_TEAM = "/create-team",
+  GENERATE_JOIN_LINK= "/generate-join-link",
 }
 
 const apiClient = new ApiClient();
