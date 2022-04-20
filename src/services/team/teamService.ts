@@ -24,11 +24,12 @@ class TeamService {
   }
 
   async generateJoinLink(teamId: string): Promise<GenerateJoinLinkResponse> {
-    const resp: GenerateJoinLinkResponse = await client.post({
+    const resp: { token: string } = await client.post({
       route: ROUTES.GENERATE_JOIN_LINK,
       body: { teamId },
     });
-    return {link: ""};
+
+    return { link: `${window.location.href}join/${resp.token}` };
   }
 }
 
