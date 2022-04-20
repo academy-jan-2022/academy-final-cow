@@ -101,4 +101,24 @@ describe("Team page should", () => {
 
     mockedTeamService.mockRestore();
   });
+
+  test("render team members", async () => {
+    const mockedTeamService = jest
+      .spyOn(teamService, GET_TEAM_METHOD)
+      .mockResolvedValue(team);
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const teamMembers = await screen.findByRole("list");
+    expect(teamMembers).toHaveTextContent(USER_ONE_FULL_NAME);
+    expect(teamMembers).toHaveTextContent(USER_TWO_FULL_NAME);
+
+    mockedTeamService.mockRestore();
+  });
 });
