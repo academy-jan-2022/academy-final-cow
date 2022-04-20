@@ -186,7 +186,7 @@ describe("Team page should", () => {
   test("renders modal with link inside", async () => {
     jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
 
-    const mockedGenerateJoinLink = jest
+    jest
       .spyOn(teamService, GENERATE_JOIN_LINK)
       .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
 
@@ -206,19 +206,19 @@ describe("Team page should", () => {
     expect(modal).toBeInTheDocument();
   });
 
-  test("does not render modal when button not clicked", async () => {
+  test("does not render modal when button has not been clicked", async () => {
     jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
 
-    const mockedGenerateJoinLink = jest
-        .spyOn(teamService, GENERATE_JOIN_LINK)
-        .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+    jest
+      .spyOn(teamService, GENERATE_JOIN_LINK)
+      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
 
     render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
     );
 
     const modal = await screen.queryByText("http://localhost:3000/join/123456");
