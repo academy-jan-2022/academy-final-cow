@@ -4,12 +4,11 @@ import teamService from "../../services/team/teamService";
 import { useParams } from "react-router-dom";
 
 const TeamPage = () => {
-  // const { id } = useParams();
-  const id = "1";
-  
+  const { id } = useParams();
+
   useEffect(() => {
     if (id) {
-      const team = teamService.getTeamById(id);
+      teamService.getTeamById(id);
     }
   }, []);
 
