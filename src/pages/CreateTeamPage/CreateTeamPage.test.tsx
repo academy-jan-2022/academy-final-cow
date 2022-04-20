@@ -1,6 +1,7 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import CreateTeamPage, { Team } from "./CreateTeamPage";
+import CreateTeamPage from "./CreateTeamPage";
+import { CreateTeamRequest as Team } from "../../services/team/Team";
 import { BrowserRouter } from "react-router-dom";
 import teamService from "../../services/team/teamService";
 
@@ -12,7 +13,9 @@ jest.mock("react-router-dom", () => ({
 
 jest.mock("../../services/team/teamService");
 const mockedTeamService = teamService as jest.Mocked<typeof teamService>;
-mockedTeamService.createTeam.mockImplementation(() => Promise.resolve("/team/1"));
+mockedTeamService.createTeam.mockImplementation(() =>
+  Promise.resolve("/team/1")
+);
 
 describe("create team page should", () => {
   const team: Team = {
@@ -100,4 +103,3 @@ describe("create team page should", () => {
     await waitFor(() => expect(mockedUsedNavigate).toBeCalled());
   });
 });
-
