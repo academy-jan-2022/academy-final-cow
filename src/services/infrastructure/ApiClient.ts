@@ -21,7 +21,9 @@ class ApiClient {
     for (let key in request.queryParams) {
       url.searchParams.append(key, request.queryParams[key]);
     }
-    const response: AxiosResponse<T> = await axios.get(url.toString(), { headers: { Authorization: `${token}` } });
+    const response: AxiosResponse<T> = await axios.get(url.toString(), {
+      headers: { Authorization: `${token}` }
+    });
     return response.data;
   }
 
@@ -37,7 +39,8 @@ class ApiClient {
   }
 
   getToken(): string | null {
-    const tokenObject: AuthResponse | null = storageHandler.getJSONItem("tokenObject");
+    const tokenObject: AuthResponse | null =
+      storageHandler.getJSONItem("tokenObject");
     return tokenObject ? tokenObject.id_token : null;
   }
 
@@ -59,7 +62,8 @@ export interface PostRequest {
 export enum ROUTES {
   HEARTBEAT = "/actuator/health",
   CREATE_USER = "/login",
-  CREATE_TEAM = "/create-team"
+  CREATE_TEAM = "/create-team",
+  GET_TEAM = "/get-team",
 }
 
 const apiClient = new ApiClient();
