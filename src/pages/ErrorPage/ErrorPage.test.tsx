@@ -10,7 +10,7 @@ jest.mock("react-router-dom", () => ({
 describe("Error page should", () => {
     test("render the heading", () => {
         render(<ErrorPage error={ERRORS.PAGE_NOT_FOUND}/>);
-        const title = screen.getByRole("heading", {name: "title"});
+        const title = screen.getByText("Error");
         expect(title).toBeInTheDocument();
     });
 
