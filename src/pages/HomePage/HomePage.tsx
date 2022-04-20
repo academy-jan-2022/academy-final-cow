@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { loginService } from "../../services/application/loginService";
 import logo from "../../images/teaminator_logo.png";
 import { Settings } from "../../services/infrastructure/Settings";
+import "./homepage.css";
 
 function HomePage() {
   const navigate = useNavigate();

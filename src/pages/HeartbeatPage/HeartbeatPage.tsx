@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import client, { ROUTES } from "../../services/infrastructure/ApiClient";
+import { Typography } from "@mui/material";
+import PageHeading from "../../components/PageHeading/PageHeading";
 
 interface HeartbeatResponse {
   status: string;
@@ -26,7 +28,7 @@ function HeartbeatPage() {
   }, []);
   return (
     <>
-      <h1>Health check</h1>
+      <PageHeading>Health check</PageHeading>
       <p>Backend status:</p>
       {backendStateIsHealthy ? (
         <div role="backendIsUp">

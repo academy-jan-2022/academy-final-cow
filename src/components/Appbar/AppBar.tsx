@@ -1,15 +1,14 @@
 import React from "react";
 import {
-  Toolbar,
-  Typography,
-  IconButton,
+  AppBar as Bar,
   Avatar,
-  Tooltip,
   Box,
-  Menu,
   Container,
+  IconButton,
+  Menu,
+  Toolbar,
+  Tooltip
 } from "@mui/material";
-import { AppBar as Bar } from "@mui/material";
 import LogoutButton from "../LogoutButton/LogoutButton";
 import logo from "../../images/teaminator_logo.png";
 
@@ -54,12 +53,12 @@ const AppBar = () => {
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: "top",
-                horizontal: "right",
+                horizontal: "right"
               }}
               keepMounted
               transformOrigin={{
                 vertical: "top",
-                horizontal: "right",
+                horizontal: "right"
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}

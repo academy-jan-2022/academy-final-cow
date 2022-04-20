@@ -21,8 +21,6 @@ export const loginService = async (
 
       return "/teams";
     } catch (e) {
-      console.log(e);
-
       return "/error";
     }
   }
