@@ -1,4 +1,4 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
@@ -15,8 +15,20 @@ const CreateTeamPage = () => {
   const navigate = useNavigate();
   const [teamName, setTeamName] = useState("");
   const [teamDescription, setTeamDescription] = useState("");
+  const [nameError, toggleNameError] = useState(false);
+  const [descriptionError, toggleDescriptionError] = useState(false);
+
+  const validateString = () => {};
 
   const handleOnClick = async () => {
+    if (!teamDescription) {
+      toggleDescriptionError(true);
+    }
+
+    if (!teamName) {
+      toggleNameError(true);
+    }
+
     if (teamDescription && teamName) {
       const team: Team = {
         name: teamName,
@@ -41,19 +53,25 @@ const CreateTeamPage = () => {
           id="team-name"
           label="Team name"
           required
-          error={teamName.length === 0}
+          error={nameError}
           inputProps={{ "data-testid": "team-name" }}
           variant="outlined"
-          onChange={(e) => setTeamName(e.target.value)}
+          onChange={(e) => {
+            setTeamName(e.target.value);
+            toggleNameError(false);
+          }}
         />
         <TextField
           id="team-description"
           inputProps={{ "data-testid": "team-description" }}
           label="Team description"
           required
-          error={teamDescription.length === 0}
+          error={descriptionError}
           variant="outlined"
-          onChange={(e) => setTeamDescription(e.target.value)}
+          onChange={(e) => {
+            setTeamDescription(e.target.value);
+            toggleDescriptionError(false);
+          }}
         />
         <Button
           variant="outlined"
