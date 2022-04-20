@@ -1,5 +1,5 @@
 import teamService from "./teamService";
-import { Team } from "../../pages/CreateTeamPage/CreateTeamPage";
+import { CreateTeamRequest as Team } from "./Team";
 import client, { ROUTES } from "../infrastructure/ApiClient";
 
 jest.mock("../infrastructure/ApiClient");
