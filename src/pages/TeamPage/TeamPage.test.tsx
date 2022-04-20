@@ -15,18 +15,28 @@ export type Team = {
   members: User[];
 };
 
+const TEAM_ID = "1";
+const TEAM_NAME = "Team 1";
+const TEAM_DESCRIPTION = "Team description";
+const USER_ONE_ID = "1";
+const USER_ONE_FULL_NAME = "Peter Parker";
+const USER_TWO_ID = "2";
+const USER_TWO_FULL_NAME = "Anna Hello";
+
+const GET_TEAM_METHOD = "getTeamById";
+
 const team: Team = {
-  id: "1",
-  name: "Team 1",
-  description: "Team description",
+  id: TEAM_ID,
+  name: TEAM_NAME,
+  description: TEAM_DESCRIPTION,
   members: [
     {
-      id: "1",
-      fullName: "Peter Parker",
+      id: USER_ONE_ID,
+      fullName: USER_ONE_FULL_NAME,
     },
     {
-      id: "2",
-      fullName: "Anna Hello",
+      id: USER_TWO_ID,
+      fullName: USER_TWO_FULL_NAME,
     },
   ],
 };
@@ -34,7 +44,7 @@ const team: Team = {
 describe("Team page should", () => {
   test("retrieve the team information", async () => {
     const mockedTeamService = jest
-      .spyOn(teamService, "getTeamById")
+      .spyOn(teamService, GET_TEAM_METHOD)
       .mockResolvedValue(team);
     render(
       <MemoryRouter initialEntries={["/team/1"]}>
@@ -44,14 +54,16 @@ describe("Team page should", () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => expect(mockedTeamService).toHaveBeenCalledWith("1"));
+    await waitFor(() =>
+      expect(mockedTeamService).toHaveBeenCalledWith(TEAM_ID)
+    );
 
     mockedTeamService.mockRestore();
   });
 
   test("render the team name as a title", async () => {
     const mockedTeamService = jest
-      .spyOn(teamService, "getTeamById")
+      .spyOn(teamService, GET_TEAM_METHOD)
       .mockResolvedValue(team);
 
     render(
@@ -64,7 +76,7 @@ describe("Team page should", () => {
 
     await waitFor(() =>
       expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-        "Team 1"
+        TEAM_NAME
       )
     );
 
