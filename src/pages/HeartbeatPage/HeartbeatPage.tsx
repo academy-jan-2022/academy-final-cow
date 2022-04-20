@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import client, { ROUTES } from "../../services/infrastructure/ApiClient";
-import { Typography } from "@mui/material";
 import PageHeading from "../../components/PageHeading/PageHeading";
 
 interface HeartbeatResponse {
