@@ -7,7 +7,8 @@ const mockedHttpClient = client as jest.Mocked<typeof client>;
 describe("get list of teams that the user is part of", () => {
   test("receive a team", async () => {
     const teamBanana = [{ name: "teamBanana" }];
-    mockedHttpClient.get = jest.fn().mockReturnValue(teamBanana);
+    const mockedResponse = {teams: teamBanana}
+    mockedHttpClient.get = jest.fn().mockReturnValue(mockedResponse);
 
     const result = await teamService.getTeamsByUser();
 
