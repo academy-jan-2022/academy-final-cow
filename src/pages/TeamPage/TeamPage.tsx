@@ -3,7 +3,8 @@ import PageTemplate from "../TemplatePage/PageTemplate";
 import teamService from "../../services/team/teamService";
 import {useParams} from "react-router-dom";
 import {Team} from "./TeamPage.test";
-import {Box, Button, Modal} from "@mui/material";
+import {Box, Button, IconButton, InputAdornment, Modal, TextField} from "@mui/material";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const TeamPage = () => {
     const {id} = useParams();
@@ -19,8 +20,6 @@ const TeamPage = () => {
         }
     }, []);
 
-    if (!team) return <div>Loading...</div>;
-
     function generateLink() {
         if (id) {
             teamService
@@ -29,6 +28,12 @@ const TeamPage = () => {
                 .then(handleOpen);
         }
     }
+
+    const copyLinkToClipboard = () => {
+        navigator.clipboard.writeText(joinLink);
+    }
+
+    if (!team) return <div>Loading...</div>;
 
     return (
         <PageTemplate>
@@ -48,7 +53,27 @@ const TeamPage = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box>{joinLink}</Box>
+                <Box>
+                    <TextField
+                        variant="outlined"
+                        value={joinLink}
+                        inputProps={
+                            {
+                                readOnly: true,
+                                endAdornment: <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={copyLinkToClipboard}
+                                        onMouseDown={copyLinkToClipboard}
+                                        edge="end"
+                                    >
+                                        <ContentCopyIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        }
+                    />
+                </Box>
             </Modal>
         </PageTemplate>
     );

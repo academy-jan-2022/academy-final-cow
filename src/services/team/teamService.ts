@@ -29,7 +29,7 @@ class TeamService {
       body: { teamId },
     });
 
-    return { link: `${window.location.href}join/${resp.token}` };
+    return { link: `${window.location.origin}/join/${resp.token}` };
   }
 }
 
