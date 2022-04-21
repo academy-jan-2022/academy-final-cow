@@ -64,6 +64,7 @@ export enum API_ENDPOINT {
   CREATE_USER = "/login",
   CREATE_TEAM = "/create-team",
   GET_TEAM = "/get-team",
+  GET_TEAMS = "/teams"
 }
 
 const apiClient = new ApiClient();

@@ -14,3 +14,13 @@ export type GetTeamResponse = {
   description: string;
   members: TeamMember[];
 };
+
+export type TeamByUser = {
+  id: string;
+  name: string;
+  description: string;
+};
+
+export type GetTeamsResponse = {
+  teams: TeamByUser[];
+};
