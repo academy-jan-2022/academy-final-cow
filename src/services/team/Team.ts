@@ -19,6 +19,7 @@ export type TeamByUser = {
   id: string;
   name: string;
   description: string;
+  members: TeamMember[];
 };
 
 export type GetTeamsResponse = {

@@ -1,5 +1,4 @@
 import React from "react";
-import { Team } from "../../services/team/Team";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@mui/material";
 
