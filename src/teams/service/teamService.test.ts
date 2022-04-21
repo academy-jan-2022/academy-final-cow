@@ -2,7 +2,7 @@ import teamService from "./teamService";
 import { Team } from "../create/CreateTeamPage";
 import client, {ROUTES} from "../../shared/infrastructure/ApiClient";
 
-jest.mock("../../shared/ApiClient/ApiClient");
+jest.mock("../../shared/infrastructure/ApiClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
 
 describe("team service should", () => {

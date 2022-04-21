@@ -9,7 +9,7 @@ import { storageHandler } from "../shared/infrastructure/StorageHandler";
 jest.mock("../user/createUser");
 const mockedCreateUser = createUser as jest.Mocked<typeof createUser>;
 
-jest.mock("../shared/storageHandler/StorageHandler");
+jest.mock("../shared/infrastructure/StorageHandler");
 
 const EXTERNAL_ID = "externalTestID";
 const FULL_NAME = "Test Name";

@@ -5,7 +5,7 @@ import {Settings} from "../settings/Settings";
 const axios = require("axios");
 
 jest.mock("axios");
-jest.mock("../storageHandler/StorageHandler");
+jest.mock("./StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<typeof storageHandler>
 
 const A_QUERY_PARAM = "bar";

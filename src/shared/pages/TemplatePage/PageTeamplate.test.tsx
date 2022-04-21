@@ -4,7 +4,7 @@ import PageTemplate from "./PageTemplate";
 import { storageHandler } from "../../infrastructure/StorageHandler";
 import { BrowserRouter } from "react-router-dom";
 
-jest.mock("../../storageHandler/StorageHandler");
+jest.mock("../../infrastructure/StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<
   typeof storageHandler
 >;
