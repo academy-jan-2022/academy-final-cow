@@ -1,4 +1,4 @@
-import apiClient, { ROUTES } from "../infrastructure/ApiClient";
+import apiClient, { API_ENDPOINT } from "../infrastructure/ApiClient";
 
 export type User = {
   externalId: string;
@@ -10,8 +10,8 @@ const createUser = (user: User) => {
   const { fullName, externalId } = user;
 
   return apiClient.post({
-    route: ROUTES.CREATE_USER,
-    body: { externalId, fullName }
+    route: API_ENDPOINT.CREATE_USER,
+    body: { externalId, fullName },
   });
 };
 

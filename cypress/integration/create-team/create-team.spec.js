@@ -16,6 +16,10 @@ And("I complete the required data", (url) => {
 });
 
 When("I click on create new team", (url) => {
+  cy.intercept("GET", "/teams", {
+    statusCode: 201,
+    body: { teams: [] }
+  });
   cy.get(".create-team-btn").click();
 });
 
@@ -27,7 +31,6 @@ And("I click on Save Team button", (url) => {
     }
   });
   cy.get("#save-team-btn").click();
-
 });
 
 When("I click on Cancel button", (url) => {

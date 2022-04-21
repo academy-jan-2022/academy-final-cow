@@ -1,6 +1,10 @@
-import client, { ROUTES } from "../infrastructure/ApiClient";
-import { Team } from "../../pages/TeamPage/TeamPage.test";
-import { Team as GetTeam } from "../../pages/CreateTeamPage/CreateTeamPage";
+import client, { API_ENDPOINT } from "../infrastructure/ApiClient";
+import {
+  CreateTeamRequest,
+  GetTeamResponse,
+  GetTeamsResponse,
+  TeamByUser
+} from "./Team";
 
 type CreateTeamResponse = {
   teamId: string;
@@ -11,16 +15,26 @@ type GenerateJoinLinkResponse = {
 };
 
 class TeamService {
-  async createTeam(team: GetTeam): Promise<string> {
-    const resp: CreateTeamResponse = await client.post({
-      route: ROUTES.CREATE_TEAM,
-      body: { team },
+  async getTeamsByUser(): Promise<TeamByUser[]> {
+    const response: GetTeamsResponse = await client.get({
+      route: API_ENDPOINT.GET_TEAMS
     });
-    return resp.teamId;
+
+    return response.teams;
   }
 
-  async getTeamById(id: string): Promise<Team> {
-    throw new Error();
+  async createTeam(team: CreateTeamRequest): Promise<CreateTeamResponse> {
+    return await client.post({
+      route: API_ENDPOINT.CREATE_TEAM,
+      body: { team }
+    });
+  }
+
+  async getTeamById(id: string): Promise<GetTeamResponse> {
+    return await client.get({
+      route: API_ENDPOINT.GET_TEAM,
+      queryParams: { id },
+    });
   }
 
   async generateJoinLink(teamId: string): Promise<GenerateJoinLinkResponse> {

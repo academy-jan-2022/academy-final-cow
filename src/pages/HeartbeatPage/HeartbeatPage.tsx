@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
-import client, { ROUTES } from "../../services/infrastructure/ApiClient";
+import client, { API_ENDPOINT } from "../../services/infrastructure/ApiClient";
+import PageHeading from "../../components/PageHeading/PageHeading";
 
 interface HeartbeatResponse {
   status: string;
@@ -18,7 +19,7 @@ function HeartbeatPage() {
 
   useEffect(() => {
     client
-      .get<HeartbeatResponse>({ route: ROUTES.HEARTBEAT })
+      .get<HeartbeatResponse>({ route: API_ENDPOINT.HEARTBEAT })
       .then((resp: HeartbeatResponse) => {
         if (resp.status === "UP") setBackendState(true);
         if (resp.components.db.status === "UP") setDatabaseStatus(true);
@@ -26,24 +27,24 @@ function HeartbeatPage() {
   }, []);
   return (
     <>
-      <h1>Health check</h1>
+      <PageHeading>Health check</PageHeading>
       <p>Backend status:</p>
       {backendStateIsHealthy ? (
-        <div role="backendIsUp">
+        <div data-testid="backendIsUp">
           <DoneOutlineIcon />
         </div>
       ) : (
-        <div role="backendIsDown">
+        <div data-testid="backendIsDown">
           <CancelIcon />
         </div>
       )}
       <p>Database status:</p>
       {databaseStatus ? (
-        <div role="databaseIsUp">
+        <div data-testid="databaseIsUp">
           <DoneOutlineIcon />
         </div>
       ) : (
-        <div role="databaseIsDown">
+        <div data-testid="databaseIsDown">
           <CancelIcon />
         </div>
       )}
