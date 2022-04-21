@@ -4,20 +4,9 @@ import { useParams } from "react-router-dom";
 import { GetTeamResponse as Team } from "../../services/team/Team";
 
 import PageHeading from "../../components/PageHeading/PageHeading";
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  List,
-  ListItem,
-  Modal,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, List, ListItem, Stack, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -42,10 +31,6 @@ const TeamPage = () => {
     }
   }
 
-  const copyLinkToClipboard = () => {
-    navigator.clipboard.writeText(joinLink);
-  };
-
   if (!team) return <div>Loading...</div>;
 
   return (
@@ -62,35 +47,12 @@ const TeamPage = () => {
         <Button variant={"outlined"} onClick={generateLink}>
           create join link
         </Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box>
-            <TextField
-              variant="outlined"
-              value={joinLink}
-              inputProps={{
-                readOnly: true,
-                endadorment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={copyLinkToClipboard}
-                      onMouseDown={copyLinkToClipboard}
-                      edge="end"
-                    >
-                      <ContentCopyIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-        </Modal>
       </Stack>
+      <JoinLinkModal
+        joinLink={joinLink}
+        open={open}
+        handleClose={handleClose}
+      />
     </PageTemplate>
   );
 };
