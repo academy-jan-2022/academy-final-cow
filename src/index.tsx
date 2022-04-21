@@ -7,12 +7,13 @@ import HeartbeatPage from "./shared/pages/HeartbeatPage/HeartbeatPage";
 import TeamsPage from "./teams/view/TeamsPage";
 import CreateTeamPage from "./teams/create/CreateTeamPage";
 import ErrorPage, { ERRORS } from "./shared/pages/ErrorPage/ErrorPage";
+import ProtectedRoute from "./shared/ProtectedRoute";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/teams" element={<TeamsPage />} />
+        <Route path="/teams" element={<ProtectedRoute component={TeamsPage}/>} />
         <Route path="/team" element={<TeamsPage />} />
         <Route path="/heartbeat" element={<HeartbeatPage />} />
         <Route path="/create-team" element={<CreateTeamPage />} />
