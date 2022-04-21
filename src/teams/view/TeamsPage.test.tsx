@@ -2,7 +2,7 @@ import { act, render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
 import TeamsPage from "./TeamsPage";
-import TeamService from "../teamService";
+import TeamService from "../service/teamService";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -10,7 +10,7 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-jest.mock("../../services/team/teamService");
+jest.mock("../service/teamService");
 const mockedGetTeamsService = TeamService as jest.Mocked<typeof TeamService>;
 
 describe("Teams page should", () => {

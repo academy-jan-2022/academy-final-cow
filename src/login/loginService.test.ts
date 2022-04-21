@@ -4,12 +4,12 @@ import {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 import createUser from "../user/createUser";
-import { storageHandler } from "../shared/storagehandler/StorageHandler";
+import { storageHandler } from "../shared/infrastructure/StorageHandler";
 
-jest.mock("../domain/createUser");
+jest.mock("../user/createUser");
 const mockedCreateUser = createUser as jest.Mocked<typeof createUser>;
 
-jest.mock("../infrastructure/StorageHandler");
+jest.mock("../shared/storageHandler/StorageHandler");
 
 const EXTERNAL_ID = "externalTestID";
 const FULL_NAME = "Test Name";

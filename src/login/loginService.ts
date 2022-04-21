@@ -2,7 +2,7 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import { storageHandler } from "../shared/storagehandler/StorageHandler";
+import { storageHandler } from "../shared/infrastructure/StorageHandler";
 import createUser from "../user/createUser";
 
 export const loginService = async (

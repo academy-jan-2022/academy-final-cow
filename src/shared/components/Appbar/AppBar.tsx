@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import LogoutButton from "../../../login/LogoutButton/LogoutButton";
 import logo from "../../images/teaminator_logo_white.png";
-import {storageHandler} from "../../storagehandler/StorageHandler";
+import {storageHandler} from "../../infrastructure/StorageHandler";
 import "./appbar.css"
 
 const AppBar = () => {

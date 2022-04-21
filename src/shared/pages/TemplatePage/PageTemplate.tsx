@@ -2,7 +2,7 @@ import React from "react";
 import Container from "@mui/material/Container";
 import "./template.css";
 import AppBar from "../../components/Appbar/AppBar";
-import {storageHandler} from "../../storagehandler/StorageHandler";
+import {storageHandler} from "../../infrastructure/StorageHandler";
 import {createTheme, ThemeOptions, ThemeProvider} from "@mui/material";
 
 const PageTemplate: React.FC = ({children}) => {

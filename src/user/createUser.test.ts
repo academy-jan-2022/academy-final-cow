@@ -1,7 +1,7 @@
 import createUser from "./createUser";
-import client, {ROUTES} from "../shared/ApiClient/ApiClient";
+import client, {ROUTES} from "../shared/infrastructure/ApiClient";
 
-jest.mock("../infrastructure/ApiClient");
+jest.mock("../shared/ApiClient/ApiClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
 
 const USER_EXTERNAL_ID = "someID";

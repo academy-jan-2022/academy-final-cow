@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios";
-import {storageHandler} from "../storagehandler/StorageHandler";
+import {storageHandler} from "./StorageHandler";
 import {Settings} from "../settings/Settings";
 
 const axios = require("axios");

@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./login/HomePage/HomePage";
 import ReactDOM from "react-dom";
 import HeartbeatPage from "./shared/pages/HeartbeatPage/HeartbeatPage";
-import TeamsPage from "./teams/TeamsPage/TeamsPage";
-import CreateTeamPage from "./teams/CreateTeamPage/CreateTeamPage";
+import TeamsPage from "./teams/view/TeamsPage";
+import CreateTeamPage from "./teams/create/CreateTeamPage";
 import ErrorPage, { ERRORS } from "./shared/pages/ErrorPage/ErrorPage";
 
 ReactDOM.render(

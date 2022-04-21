@@ -2,9 +2,9 @@ import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../../shared/pages/TemplatePage/PageTemplate";
-import TeamService from "../teamService";
+import TeamService from "../service/teamService";
 import { Team } from "../Team";
-import TeamCard from "../TeamCard/TeamCard";
+import TeamCard from "./TeamCard/TeamCard";
 import "./team.css";
 
 const TeamsPage = () => {

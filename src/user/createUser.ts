@@ -1,4 +1,4 @@
-import apiClient, {ROUTES} from "../shared/ApiClient/ApiClient";
+import apiClient, {ROUTES} from "../shared/infrastructure/ApiClient";
 
 export type User = {
   externalId: string;

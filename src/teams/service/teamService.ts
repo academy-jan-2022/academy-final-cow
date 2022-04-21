@@ -1,5 +1,5 @@
-import { Team } from "./Team";
-import client, { ROUTES } from "../shared/ApiClient/ApiClient";
+import { Team } from "../Team";
+import client, { ROUTES } from "../../shared/infrastructure/ApiClient";
 
 type CreateTeamResponse = {
   teamId: string;

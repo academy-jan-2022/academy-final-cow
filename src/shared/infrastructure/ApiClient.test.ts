@@ -1,11 +1,11 @@
 import client, {ROUTES} from "./ApiClient";
-import {storageHandler} from "../storagehandler/StorageHandler";
+import {storageHandler} from "./StorageHandler";
 import {Settings} from "../settings/Settings";
 
 const axios = require("axios");
 
 jest.mock("axios");
-jest.mock("./StorageHandler");
+jest.mock("../storageHandler/StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<typeof storageHandler>
 
 const A_QUERY_PARAM = "bar";
