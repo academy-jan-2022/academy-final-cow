@@ -1,34 +1,22 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import { useParams } from "react-router-dom";
-import { GetTeamResponse as Team } from "../../services/team/Team";
+import {
+  GetTeamResponse,
+  GetTeamResponse as Team,
+} from "../../services/team/Team";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import { Stack, List, ListItem, Typography } from "@mui/material";
+import teamService from "../../services/team/teamService";
 
 const TeamPage = () => {
   const { id } = useParams();
   const [team, setTeam] = useState<Team>();
 
   useEffect(() => {
-    // TODO: before merging this will be uncommented and the static team removed.
-    //if (id) {
-    //teamService.getTeamById(id).then((team) => setTeam(team));
-    setTeam({
-      id: "1",
-      name: "Team name",
-      description: "Team description",
-      members: [
-        {
-          id: "USER_ONE_ID",
-          fullName: "USER_ONE_FULL_NAME",
-        },
-        {
-          id: " USER_TWO_ID",
-          fullName: "USER_TWO_FULL_NAME",
-        },
-      ],
-    });
-    //}
+    if (id) {
+      teamService.getTeamById(id).then((team) => setTeam(team));
+    }
   }, []);
 
   if (!team) return <div>Loading...</div>;

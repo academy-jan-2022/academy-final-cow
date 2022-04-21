@@ -14,9 +14,6 @@ const CreateTeamPage = () => {
   const [nameError, toggleNameError] = useState(false);
   const [descriptionError, toggleDescriptionError] = useState(false);
 
-  const validateString = () => {
-  };
-
   const handleOnClick = async () => {
     if (!teamDescription) {
       toggleDescriptionError(true);
