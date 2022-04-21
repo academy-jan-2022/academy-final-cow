@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import TeamService from "../../services/team/teamService";
-import { GetTeamResponse as Team } from "../../services/team/Team";
+import { TeamByUser as Team } from "../../services/team/Team";
 import TeamCard from "../../components/Team/TeamCard";
 import "./team.css";
 
