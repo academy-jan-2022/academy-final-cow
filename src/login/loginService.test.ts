@@ -24,9 +24,9 @@ describe("login service should", () => {
       expect(mockedCreateUser).not.toHaveBeenCalled();
     });
 
-    test("return '/error' route string", async () => {
+    test("return false if log in unsuccessful", async () => {
       const returnValue = await loginService(unSuccessfulResponse);
-      expect(returnValue).toEqual("/error");
+      expect(returnValue).toEqual(false);
     });
   });
 
@@ -48,9 +48,9 @@ describe("login service should", () => {
       });
     });
 
-    test("return '/teams' route string", async () => {
+    test("return true if log in successful", async () => {
       const returnValue = await loginService(successfulResponse);
-      expect(returnValue).toEqual("/teams");
+      expect(returnValue).toEqual(true);
     });
 
     test("should set token object using storage handler", async () => {

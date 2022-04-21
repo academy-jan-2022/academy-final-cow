@@ -13,10 +13,16 @@ import "./homepage.css";
 function HomePage() {
   const navigate = useNavigate();
 
-  const googleLoginHandler = async (
+    function getRedirectionRoute(isLoggedIn: boolean) {
+        return isLoggedIn ? "/teams" : "/error"
+    }
+
+    const googleLoginHandler = async (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
-    const route = await loginService(res);
+    const isLoggedIn = await loginService(res);
+    let route;
+    route = getRedirectionRoute(isLoggedIn);
     navigate(route);
   };
 
