@@ -23,17 +23,6 @@ jobs:
           npm install
           npm test -- --coverage --testResultsProcessor=jest-sonar-reporter
 
-      - name: Cypress.io
-        uses: cypress-io/github-action@v2.9.7
-        env:
-          CYPRESS_googleClientId: ${{ secrets.OAUTH_CLIENT_ID }}
-          CYPRESS_googleClientSecret: ${{ secrets.OAUTH_SECRET }}
-          CYPRESS_googleRefreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-        with:
-          config: video=false
-          start: npm run start
-          wait-on: 'http://localhost:3000'
-
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.6
         env:
