@@ -1,12 +1,12 @@
 import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage/HomePage";
+import HomePage from "./login/HomePage/HomePage";
 import ReactDOM from "react-dom";
-import HeartbeatPage from "./pages/HeartbeatPage/HeartbeatPage";
-import TeamsPage from "./pages/TeamsPage/TeamsPage";
-import CreateTeamPage from "./pages/CreateTeamPage/CreateTeamPage";
-import ErrorPage, { ERRORS } from "./pages/ErrorPage/ErrorPage";
+import HeartbeatPage from "./shared/pages/HeartbeatPage/HeartbeatPage";
+import TeamsPage from "./teams/TeamsPage/TeamsPage";
+import CreateTeamPage from "./teams/CreateTeamPage/CreateTeamPage";
+import ErrorPage, { ERRORS } from "./shared/pages/ErrorPage/ErrorPage";
 
 ReactDOM.render(
   <React.StrictMode>
