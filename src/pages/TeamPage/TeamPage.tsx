@@ -1,30 +1,50 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
-import teamService from "../../services/team/teamService";
 import { useParams } from "react-router-dom";
 import { GetTeamResponse as Team } from "../../services/team/Team";
+import PageHeading from "../../components/PageHeading/PageHeading";
+import { Stack, List, ListItem, Typography } from "@mui/material";
 
 const TeamPage = () => {
   const { id } = useParams();
   const [team, setTeam] = useState<Team>();
 
   useEffect(() => {
-    if (id) {
-      teamService.getTeamById(id).then((team) => setTeam(team));
-    }
+    // TODO: before merging this will be uncommented and the static team removed.
+    //if (id) {
+    //teamService.getTeamById(id).then((team) => setTeam(team));
+    setTeam({
+      id: "1",
+      name: "Team name",
+      description: "Team description",
+      members: [
+        {
+          id: "USER_ONE_ID",
+          fullName: "USER_ONE_FULL_NAME",
+        },
+        {
+          id: " USER_TWO_ID",
+          fullName: "USER_TWO_FULL_NAME",
+        },
+      ],
+    });
+    //}
   }, []);
 
   if (!team) return <div>Loading...</div>;
 
   return (
     <PageTemplate>
-      <h1>{team.name}</h1>
-      <p>{team.description}</p>
-      <ul>
-        {team.members.map((member, index) => (
-          <li key={member.id + "_" + index}>{member.fullName}</li>
-        ))}
-      </ul>
+      <PageHeading>{team.name}</PageHeading>
+      <Stack alignSelf="flex-start" alignItems="flex-start" spacing={2}>
+        <Typography component="p">{team.description}</Typography>
+        <List>
+          Members:
+          {team.members.map((member, index) => (
+            <ListItem key={member.id + "_" + index}>{member.fullName}</ListItem>
+          ))}
+        </List>
+      </Stack>
     </PageTemplate>
   );
 };
