@@ -21,8 +21,7 @@ function HomePage() {
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     const isLoggedIn = await loginService(res);
-    let route;
-    route = getRedirectionRoute(isLoggedIn);
+    const route = getRedirectionRoute(isLoggedIn);
     navigate(route);
   };
 
