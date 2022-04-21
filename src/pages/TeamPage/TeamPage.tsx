@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import { useParams } from "react-router-dom";
-import {
-  GetTeamResponse,
-  GetTeamResponse as Team,
-} from "../../services/team/Team";
+import { GetTeamResponse as Team } from "../../services/team/Team";
 
 import PageHeading from "../../components/PageHeading/PageHeading";
-import { Stack, List, ListItem, Typography,Box, Button, IconButton, InputAdornment, Modal, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  List,
+  ListItem,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import teamService from "../../services/team/teamService";
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const TeamPage = () => {
-    const {id} = useParams();
-    const [team, setTeam] = useState<Team>();
-    const [open, setOpen] = React.useState(false);
-    const [joinLink, setJoinLink] = React.useState("");
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+  const { id } = useParams();
+  const [team, setTeam] = useState<Team>();
+  const [open, setOpen] = React.useState(false);
+  const [joinLink, setJoinLink] = React.useState("");
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     if (id) {
@@ -26,20 +33,20 @@ const TeamPage = () => {
     }
   }, []);
 
-    function generateLink() {
-        if (id) {
-            teamService
-                .generateJoinLink(id)
-                .then((response) => setJoinLink(response.link))
-                .then(handleOpen);
-        }
+  function generateLink() {
+    if (id) {
+      teamService
+        .generateJoinLink(id)
+        .then((response) => setJoinLink(response.link))
+        .then(handleOpen);
     }
+  }
 
-    const copyLinkToClipboard = () => {
-        navigator.clipboard.writeText(joinLink);
-    }
+  const copyLinkToClipboard = () => {
+    navigator.clipboard.writeText(joinLink);
+  };
 
-    if (!team) return <div>Loading...</div>;
+  if (!team) return <div>Loading...</div>;
 
   return (
     <PageTemplate>
@@ -52,40 +59,39 @@ const TeamPage = () => {
             <ListItem key={member.id + "_" + index}>{member.fullName}</ListItem>
           ))}
         </List>
-          <Button variant={"outlined"} onClick={generateLink}>
-              create join link
-          </Button>
-          <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-          >
-              <Box>
-                  <TextField
-                      variant="outlined"
-                      value={joinLink}
-                      inputProps={
-                          {
-                              readOnly: true,
-                              endAdornment: <InputAdornment position="end">
-                                  <IconButton
-                                      aria-label="toggle password visibility"
-                                      onClick={copyLinkToClipboard}
-                                      onMouseDown={copyLinkToClipboard}
-                                      edge="end"
-                                  >
-                                      <ContentCopyIcon />
-                                  </IconButton>
-                              </InputAdornment>
-                          }
-                      }
-                  />
-              </Box>
-          </Modal>
+        <Button variant={"outlined"} onClick={generateLink}>
+          create join link
+        </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box>
+            <TextField
+              variant="outlined"
+              value={joinLink}
+              inputProps={{
+                readOnly: true,
+                endadorment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={copyLinkToClipboard}
+                      onMouseDown={copyLinkToClipboard}
+                      edge="end"
+                    >
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+        </Modal>
       </Stack>
     </PageTemplate>
-
   );
 };
 

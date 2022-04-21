@@ -3,6 +3,7 @@ import TeamPage from "./TeamPage";
 import teamService from "../../services/team/teamService";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { GetTeamResponse as Team } from "../../services/team/Team";
+import { act } from "react-dom/test-utils";
 
 const TEAM_ID = "1";
 const TEAM_NAME = "Team 1";
@@ -146,7 +147,7 @@ describe("Team page should", () => {
     );
 
     const joinButton = await screen.findByText("create join link");
-    joinButton.click();
+    await act(async () => await joinButton.click());
 
     expect(mockedGenerateJoinLink).toHaveBeenCalledWith("1");
   });
@@ -168,6 +169,6 @@ describe("Team page should", () => {
 
     const modal = screen.queryByText("http://localhost:3000/join/123456");
 
-    expect(modal).not.toBeInTheDocument();
+    await waitFor(() => expect(modal).not.toBeInTheDocument());
   });
 });
