@@ -6,13 +6,13 @@ class StorageHandler {
     getJSONItem<T>(key: string): T | null {
         const value = window.localStorage.getItem(key);
         if (value) {
-            return JSON.parse(value);
+            return JSON.parse(value)
         } 
         return null;
     }
     removeItem(key: string): void {
         window.localStorage.removeItem(key);
     }
-};
+}
 
 export const storageHandler = new StorageHandler();

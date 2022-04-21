@@ -30,21 +30,21 @@ function HeartbeatPage() {
         <PageHeading>Health check</PageHeading>
       <p>Backend status:</p>
       {backendStateIsHealthy ? (
-        <div role="backendIsUp">
+        <div data-testid="backendIsUp">
           <DoneOutlineIcon />
         </div>
       ) : (
-        <div role="backendIsDown">
+        <div data-testid="backendIsDown">
           <CancelIcon />
         </div>
       )}
       <p>Database status:</p>
       {databaseStatus ? (
-        <div role="databaseIsUp">
+        <div data-testid="databaseIsUp">
           <DoneOutlineIcon />
         </div>
       ) : (
-        <div role="databaseIsDown">
+        <div data-testid="databaseIsDown">
           <CancelIcon />
         </div>
       )}

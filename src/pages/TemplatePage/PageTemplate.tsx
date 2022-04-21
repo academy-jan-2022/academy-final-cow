@@ -8,7 +8,6 @@ import {createTheme, ThemeOptions, ThemeProvider} from "@mui/material";
 const PageTemplate: React.FC = ({children}) => {
     const userIsLoggedIn = () => {
         const tokenObject = storageHandler.getJSONItem("tokenObject");
-
         return !!tokenObject;
     };
 
