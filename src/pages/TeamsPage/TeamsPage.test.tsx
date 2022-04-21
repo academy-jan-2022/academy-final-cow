@@ -14,7 +14,7 @@ jest.mock("../../services/team/teamService");
 const mockedGetTeamsService = TeamService as jest.Mocked<typeof TeamService>;
 
 describe("Teams page should", () => {
-  beforeEach(async () => {
+  test("renders the heading", async () => {
     mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
 
     await act(async () => {
@@ -24,26 +24,39 @@ describe("Teams page should", () => {
         </BrowserRouter>
       );
     });
-  });
-
-  test("renders the heading", () => {
     const title = screen.getByText("Teams");
     expect(title).toBeInTheDocument();
   });
 
-  test("renders the create team button", () => {
+  test("renders the create team button", async () => {
+    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
+
+    await act(async () => {
+      render(
+        <BrowserRouter>
+          <TeamsPage />
+        </BrowserRouter>
+      );
+    });
     const createTeamBtn = screen.getByText("Create New Team");
     expect(createTeamBtn).toBeInTheDocument();
   });
 
-  test("create team button should take you to /create-team page", () => {
+  test("create team button should take you to /create-team page", async () => {
+    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
+
+    await act(async () => {
+      render(
+        <BrowserRouter>
+          <TeamsPage />
+        </BrowserRouter>
+      );
+    });
     const createTeamBtn = screen.getByText("Create New Team");
     createTeamBtn.click();
     expect(mockedUsedNavigate).toBeCalledWith("/create-team");
   });
-});
 
-describe("Teams page should 2", () => {
   test("render a team card when I am part of one team", async () => {
     const team = {
       id: "1",

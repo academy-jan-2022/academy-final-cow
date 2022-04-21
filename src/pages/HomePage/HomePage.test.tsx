@@ -1,5 +1,5 @@
 import React from "react";
-import {logDOM, render, screen, waitFor} from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import HomePage from "./HomePage";
 import { loginService } from "../../services/application/loginService";
 import { BrowserRouter } from "react-router-dom";
@@ -7,7 +7,6 @@ import { BrowserRouter } from "react-router-dom";
 const mockedUsedNavigate = jest.fn();
 
 jest.mock("../../services/application/loginService");
-const mockLoginService = loginService as jest.Mocked<typeof loginService>;
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
   useNavigate: () => mockedUsedNavigate,
@@ -55,7 +54,7 @@ describe("HomePage test should", () => {
   test("calls login service after clicking login button", async () => {
     const button = screen.getByText(LOGIN_BUTTON_TEXT);
     button.click();
-     expect(loginService).toHaveBeenCalled();
+    expect(loginService).toHaveBeenCalled();
   });
 
   test("navigates to the provided route after login", async () => {
