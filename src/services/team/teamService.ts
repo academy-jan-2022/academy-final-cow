@@ -1,4 +1,4 @@
-import client, { ROUTES } from "../infrastructure/ApiClient";
+import client, { API_ENDPOINT } from "../infrastructure/ApiClient";
 import { CreateTeamRequest, GetTeamResponse } from "./Team";
 
 type CreateTeamResponse = {
@@ -6,20 +6,18 @@ type CreateTeamResponse = {
 };
 
 class TeamService {
-  async createTeam(team: CreateTeamRequest): Promise<string> {
-    const resp: CreateTeamResponse = await client.post({
-      route: ROUTES.CREATE_TEAM,
-      body: { team }
+  async createTeam(team: CreateTeamRequest): Promise<CreateTeamResponse> {
+    return await client.post({
+      route: API_ENDPOINT.CREATE_TEAM,
+      body: { team },
     });
-    return resp.teamId;
   }
 
   async getTeamById(id: string): Promise<GetTeamResponse> {
-    const response: GetTeamResponse = await client.get({
-      route: ROUTES.GET_TEAM,
-      queryParams: { id }
+    return await client.get({
+      route: API_ENDPOINT.GET_TEAM,
+      queryParams: { id },
     });
-    return response;
   }
 }
 

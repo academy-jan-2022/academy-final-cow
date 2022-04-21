@@ -8,19 +8,19 @@ import teamService from "../../services/team/teamService";
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
-  useNavigate: () => mockedUsedNavigate
+  useNavigate: () => mockedUsedNavigate,
 }));
 
 jest.mock("../../services/team/teamService");
 const mockedTeamService = teamService as jest.Mocked<typeof teamService>;
 mockedTeamService.createTeam.mockImplementation(() =>
-  Promise.resolve("/team/1")
+  Promise.resolve({ teamId: "1" })
 );
 
 describe("create team page should", () => {
   const team: Team = {
     name: "team name",
-    description: "team description"
+    description: "team description",
   };
   let saveTeamBtn: HTMLElement;
   let teamNameField: HTMLElement;
@@ -61,7 +61,7 @@ describe("create team page should", () => {
   test("call team service when button is clicked", () => {
     fireEvent.change(teamNameField, { target: { value: team.name } });
     fireEvent.change(teamDescriptionField, {
-      target: { value: team.description }
+      target: { value: team.description },
     });
 
     saveTeamBtn.click();
@@ -79,7 +79,7 @@ describe("create team page should", () => {
 
   test("dont call team service if the name is not filled", () => {
     fireEvent.change(teamDescriptionField, {
-      target: { value: "team description" }
+      target: { value: "team description" },
     });
 
     saveTeamBtn.click();
@@ -89,7 +89,7 @@ describe("create team page should", () => {
   test("redirect to the team page", async () => {
     fireEvent.change(teamNameField, { target: { value: team.name } });
     fireEvent.change(teamDescriptionField, {
-      target: { value: team.description }
+      target: { value: team.description },
     });
 
     saveTeamBtn.click();

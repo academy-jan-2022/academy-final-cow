@@ -22,7 +22,7 @@ class ApiClient {
       url.searchParams.append(key, request.queryParams[key]);
     }
     const response: AxiosResponse<T> = await axios.get(url.toString(), {
-      headers: { Authorization: `${token}` }
+      headers: { Authorization: `${token}` },
     });
     return response.data;
   }
@@ -44,22 +44,22 @@ class ApiClient {
     return tokenObject ? tokenObject.id_token : null;
   }
 
-  buildUrl(route: ROUTES): URL {
+  buildUrl(route: API_ENDPOINT): URL {
     return new URL(Settings.getApiUrl() + route);
   }
 }
 
 export interface GetRequest {
-  route: ROUTES;
+  route: API_ENDPOINT;
   readonly queryParams?: { [name: string]: string };
 }
 
 export interface PostRequest {
-  route: ROUTES;
+  route: API_ENDPOINT;
   body: Object;
 }
 
-export enum ROUTES {
+export enum API_ENDPOINT {
   HEARTBEAT = "/actuator/health",
   CREATE_USER = "/login",
   CREATE_TEAM = "/create-team",

@@ -1,4 +1,4 @@
-import client, { ROUTES } from "../infrastructure/ApiClient";
+import client, { API_ENDPOINT } from "../infrastructure/ApiClient";
 import teamService from "./teamService";
 
 jest.mock("../infrastructure/ApiClient");
@@ -10,8 +10,8 @@ describe("get team by id should", () => {
     await teamService.getTeamById(id);
 
     expect(mockedHttpClient.get).toHaveBeenCalledWith({
-      route: ROUTES.GET_TEAM,
-      queryParams: { id }
+      route: API_ENDPOINT.GET_TEAM,
+      queryParams: { id },
     });
   });
 });
