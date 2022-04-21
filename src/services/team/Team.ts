@@ -1,3 +1,5 @@
 export interface Team {
-    name: string;
+  id?: string;
+  name: string;
+  description: string;
 }
