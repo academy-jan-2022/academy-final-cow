@@ -10,8 +10,6 @@ http://teaminator.azurewebsites.net/
 
 | Technology      | Use                  |
 | --------------- | -------------------- |
-| Cucumber        | BDD Testing          |
-| Cypress         | End to End Testing   |
 | Jest            | Unit Testing         |
 | SonarCloud      | Code Analysis        |
 | React Router V6 | Routing              |
@@ -32,13 +30,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `sonar-test`
+### `npm run sonar-test`
 
 Launches the test runner with coverage for SonarCloud.
-
-### `npx cypress open`
-
-Launches the cypress test UI
 
 ### `npm run docker-start`
 

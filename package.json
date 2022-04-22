@@ -30,8 +30,7 @@
     "test": "react-scripts test",
     "sonar-test": "npm test -- --coverage --testResultsProcessor=jest-sonar-reporter",
     "eject": "react-scripts eject",
-    "docker-start": "docker-compose up -d",
-    "cy:run": "cypress run"
+    "docker-start": "docker-compose up -d"
   },
   "eslintConfig": {
     "extends": [

@@ -26,7 +26,7 @@ const CreateTeamPage = () => {
     if (teamDescription && teamName) {
       const team: CreateTeamRequest = {
         name: teamName,
-        description: teamDescription
+        description: teamDescription,
       };
 
       try {

@@ -63,9 +63,9 @@ export enum API_ENDPOINT {
   HEARTBEAT = "/actuator/health",
   CREATE_USER = "/login",
   CREATE_TEAM = "/create-team",
-  GENERATE_JOIN_LINK= "/generate-join-link",
+  GENERATE_JOIN_LINK = "/generate-join-link",
   GET_TEAM = "/get-team",
-  GET_TEAMS = "/teams"
+  GET_TEAMS = "/teams",
 }
 
 const apiClient = new ApiClient();
