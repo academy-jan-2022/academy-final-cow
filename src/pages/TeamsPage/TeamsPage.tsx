@@ -6,6 +6,7 @@ import TeamService from "../../services/team/teamService";
 import { TeamByUser } from "../../services/team/Team";
 import TeamCard from "../../components/Team/TeamCard";
 import "./team.css";
+import PageHeading from "../../components/PageHeading/PageHeading";
 
 const TeamsPage = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const TeamsPage = () => {
 
   return (
     <PageTemplate isLoading={isLoading}>
-      <h1 aria-label="title">Teams</h1>
+      <PageHeading>Teams</PageHeading>
       <Button
         variant="outlined"
         className="create-team-btn"
