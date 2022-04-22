@@ -8,7 +8,7 @@ const TeamCard = (props: { team: any }) => {
   const { name, id, description } = team;
 
   return (
-    <Card onClick={() => navigate(`/teams/${id}`)} role="teamCard">
+    <Card onClick={() => navigate(`/team/${id}`)} role="teamCard">
       <h2>{name} </h2>
       <p>{description}</p>
     </Card>

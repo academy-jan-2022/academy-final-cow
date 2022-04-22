@@ -63,6 +63,7 @@ export enum API_ENDPOINT {
   HEARTBEAT = "/actuator/health",
   CREATE_USER = "/login",
   CREATE_TEAM = "/create-team",
+  GENERATE_JOIN_LINK = "/generate-join-link",
   GET_TEAM = "/get-team",
   GET_TEAMS = "/teams",
 }

@@ -34,7 +34,7 @@ describe("HomePage test should", () => {
     const card = screen.getByText("ECA");
     card.click();
     await waitFor(() =>
-      expect(mockedUsedNavigate).toHaveBeenCalledWith(`/teams/${team.id}`)
+      expect(mockedUsedNavigate).toHaveBeenCalledWith(`/team/${team.id}`)
     );
   });
 });
