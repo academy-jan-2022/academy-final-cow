@@ -2,7 +2,7 @@ import { MenuItem, Typography } from "@mui/material";
 import React from "react";
 import { useGoogleLogout } from "react-google-login";
 import { useNavigate } from "react-router-dom";
-import { storageHandler } from "../../shared/infrastructure/StorageHandler";
+import { storageHandler } from "../../infrastructure/StorageHandler";
 
 const LogoutButton = () => {
   const navigate = useNavigate();

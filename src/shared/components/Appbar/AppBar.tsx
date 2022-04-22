@@ -8,7 +8,7 @@ import {
     Toolbar,
     Tooltip,
 } from "@mui/material";
-import LogoutButton from "../../../login/LogoutButton/LogoutButton";
+import LogoutButton from "./LogoutButton";
 import logo from "../../images/teaminator_logo_white.png";
 import {storageHandler} from "../../infrastructure/StorageHandler";
 import "./appbar.css"

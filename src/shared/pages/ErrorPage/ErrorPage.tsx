@@ -14,8 +14,9 @@ export enum ERRORS {
 const ErrorPage = ({ error }: { error: ERRORS }) => {
   const navigate = useNavigate();
 
+
   return (
-    <PageTemplate>
+      <PageTemplate>
       <PageHeading aria-label="title">Error</PageHeading>
       <img className="sad-cowboy" src={sadcowboy} alt="sad cowboy" />
       <p>{error}</p>
