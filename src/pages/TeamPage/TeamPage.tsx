@@ -12,7 +12,7 @@ const TeamPage = () => {
 
   useEffect(() => {
     if (id) {
-      teamService.getTeamById(id).then((team) => setTeam(team));
+      teamService.getTeamById(id).then((fetchedTeam) => setTeam(fetchedTeam));
     }
   }, []);
 

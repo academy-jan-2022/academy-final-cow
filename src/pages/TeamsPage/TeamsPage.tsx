@@ -12,8 +12,8 @@ const TeamsPage = () => {
   const [teams, setTeams] = useState<TeamByUser[]>([]);
 
   const getTeams = async () => {
-    const teams = await TeamService.getTeamsByUser();
-    setTeams(teams);
+    const fetchedTeams = await TeamService.getTeamsByUser();
+    setTeams(fetchedTeams);
   };
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const TeamsPage = () => {
 
   const renderTeamCards = teams.map((team, index) => {
     return (
-      <Grid xs={6} md={4} className="team-card" key={team.name + index}>
+      <Grid item xs={6} md={4} className="team-card" key={team.name + index}>
         <TeamCard team={team} />
       </Grid>
     );
