@@ -1,11 +1,17 @@
-import React from "react";
+import React, { ReactChild, ReactChildren } from "react";
 import Container from "@mui/material/Container";
 import "./template.css";
 import AppBar from "../../components/Appbar/AppBar";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
-const PageTemplate: React.FC = ({ children }) => {
+interface PageTemplateProps {
+  children: ReactChild | ReactChildren | ReactChild[] | ReactChildren[];
+  isLoading?: boolean;
+}
+
+const PageTemplate = ({ children, isLoading = false }: PageTemplateProps) => {
   const userIsLoggedIn = () => {
     const tokenObject = storageHandler.getJSONItem("tokenObject");
     return !!tokenObject;
@@ -32,9 +38,13 @@ const PageTemplate: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       {userIsLoggedIn() && <AppBar />}
-      <Container maxWidth="xl">
-        <div className="centered-container">{children}</div>
-      </Container>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <Container maxWidth="xl">
+          <div className="centered-container">{children}</div>
+        </Container>
+      )}
     </ThemeProvider>
   );
 };

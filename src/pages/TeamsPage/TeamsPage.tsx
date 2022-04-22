@@ -10,10 +10,16 @@ import "./team.css";
 const TeamsPage = () => {
   const navigate = useNavigate();
   const [teams, setTeams] = useState<TeamByUser[]>([]);
+  const [isLoading, toggleLoading] = useState(true);
 
   const getTeams = async () => {
-    const fetchedTeams = await TeamService.getTeamsByUser();
-    setTeams(fetchedTeams);
+    try {
+      const fetchedTeams = await TeamService.getTeamsByUser();
+      setTeams(fetchedTeams);
+      toggleLoading(false);
+    } catch (e) {
+      navigate("/error");
+    }
   };
 
   useEffect(() => {
@@ -29,7 +35,7 @@ const TeamsPage = () => {
   });
 
   return (
-    <PageTemplate>
+    <PageTemplate isLoading={isLoading}>
       <h1 aria-label="title">Teams</h1>
       <Button
         variant="outlined"

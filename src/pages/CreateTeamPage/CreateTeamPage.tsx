@@ -13,6 +13,7 @@ const CreateTeamPage = () => {
   const [teamDescription, setTeamDescription] = useState("");
   const [nameError, toggleNameError] = useState(false);
   const [descriptionError, toggleDescriptionError] = useState(false);
+  const [isLoading, toggleLoading] = useState(false);
 
   const handleOnClick = async () => {
     if (!teamDescription) {
@@ -30,6 +31,7 @@ const CreateTeamPage = () => {
       };
 
       try {
+        toggleLoading(true);
         const createTeamResponse = await teamService.createTeam(team);
         const route = "/team/" + createTeamResponse.teamId;
         navigate(route);
@@ -40,7 +42,7 @@ const CreateTeamPage = () => {
   };
 
   return (
-    <PageTemplate>
+    <PageTemplate isLoading={isLoading}>
       <PageHeading>Create Team</PageHeading>
       <Stack className="create-team-form" spacing={2}>
         <TextField
