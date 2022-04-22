@@ -17,7 +17,7 @@ export const loginService = async (
       await createUser({
         externalId: response.profileObj.googleId,
         fullName: response.profileObj.name,
-        idToken: response.tokenObj.id_token
+        idToken: response.tokenObj.id_token,
       });
 
       return "/teams";

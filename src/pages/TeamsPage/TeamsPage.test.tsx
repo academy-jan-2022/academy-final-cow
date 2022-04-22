@@ -7,7 +7,7 @@ import TeamService from "../../services/team/teamService";
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
-  useNavigate: () => mockedUsedNavigate
+  useNavigate: () => mockedUsedNavigate,
 }));
 
 jest.mock("../../services/team/teamService");
@@ -61,7 +61,7 @@ describe("Teams page should", () => {
     const team = {
       id: "1",
       name: "Team 1",
-      description: "Team 1 description"
+      description: "Team 1 description",
     };
 
     mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([team]);
@@ -87,13 +87,13 @@ describe("Teams page should", () => {
     const team = {
       id: "1",
       name: "Team 1",
-      description: "Team 1 description"
+      description: "Team 1 description",
     };
 
     const teamTwo = {
       id: "2",
       name: "ECA",
-      description: "Team 2 description"
+      description: "Team 2 description",
     };
 
     mockedGetTeamsService.getTeamsByUser = jest

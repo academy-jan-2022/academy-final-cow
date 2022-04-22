@@ -26,12 +26,12 @@ const CreateTeamPage = () => {
     if (teamDescription && teamName) {
       const team: CreateTeamRequest = {
         name: teamName,
-        description: teamDescription
+        description: teamDescription,
       };
 
       try {
-        const teamId = await teamService.createTeam(team);
-        const route = "/team/" + teamId;
+        const createTeamResponse = await teamService.createTeam(team);
+        const route = "/team/" + createTeamResponse.teamId;
         navigate(route);
       } catch (e) {
         navigate("/error");

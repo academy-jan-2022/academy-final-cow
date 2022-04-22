@@ -6,4 +6,5 @@
 
 .app-bar-logo {
     max-width: 200px;
+    cursor: pointer;
 }
