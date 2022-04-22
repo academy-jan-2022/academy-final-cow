@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
@@ -22,16 +22,15 @@ const TeamsPage = () => {
 
   const renderTeamCards = teams.map((team, index) => {
     return (
-      <li className="team-card" key={team.name + index}>
+      <Grid xs={6} md={4} className="team-card" key={team.name + index}>
         <TeamCard team={team} />
-      </li>
+      </Grid>
     );
   });
 
   return (
     <PageTemplate>
       <h1 aria-label="title">Teams</h1>
-      <ul className="team-list-container">{renderTeamCards}</ul>
       <Button
         variant="outlined"
         className="create-team-btn"
@@ -39,6 +38,15 @@ const TeamsPage = () => {
       >
         Create New Team
       </Button>
+      <Grid
+        container
+        spacing={2}
+        mt={2}
+        width={"80%"}
+        className="team-list-container"
+      >
+        {renderTeamCards}
+      </Grid>
     </PageTemplate>
   );
 };

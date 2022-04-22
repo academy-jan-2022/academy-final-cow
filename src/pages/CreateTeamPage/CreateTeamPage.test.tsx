@@ -20,7 +20,7 @@ mockedTeamService.createTeam.mockImplementation(() =>
 describe("create team page should", () => {
   const team: CreateTeamRequest = {
     name: "team name",
-    description: "team description"
+    description: "team description",
   };
   let saveTeamBtn: HTMLElement;
   let teamNameField: HTMLElement;
