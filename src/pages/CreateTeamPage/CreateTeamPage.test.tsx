@@ -1,6 +1,7 @@
 import React from "react";
-import {fireEvent, render, screen, waitFor} from "@testing-library/react";
-import CreateTeamPage, { Team } from "./CreateTeamPage";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import CreateTeamPage from "./CreateTeamPage";
+import { CreateTeamRequest } from "../../services/team/Team";
 import { BrowserRouter } from "react-router-dom";
 import teamService from "../../services/team/teamService";
 
@@ -12,12 +13,14 @@ jest.mock("react-router-dom", () => ({
 
 jest.mock("../../services/team/teamService");
 const mockedTeamService = teamService as jest.Mocked<typeof teamService>;
-mockedTeamService.createTeam.mockImplementation(() => Promise.resolve("/team/1"));
+mockedTeamService.createTeam.mockImplementation(() =>
+  Promise.resolve({ teamId: "1" })
+);
 
 describe("create team page should", () => {
-  const team: Team = {
+  const team: CreateTeamRequest = {
     name: "team name",
-    description: "team description",
+    description: "team description"
   };
   let saveTeamBtn: HTMLElement;
   let teamNameField: HTMLElement;
@@ -83,7 +86,7 @@ describe("create team page should", () => {
 
     expect(mockedTeamService.createTeam).not.toBeCalled();
   });
-  test("redirect to the team page",  async() => {
+  test("redirect to the team page", async () => {
     fireEvent.change(teamNameField, { target: { value: team.name } });
     fireEvent.change(teamDescriptionField, {
       target: { value: team.description },
@@ -94,10 +97,9 @@ describe("create team page should", () => {
     await waitFor(() => expect(mockedUsedNavigate).toBeCalled());
   });
 
-  test("redirect to the teams page when you click cancel",  async() => {
+  test("redirect to the teams page when you click cancel", async () => {
     const cancelBtn = screen.getByTestId("cancel-team-btn");
     cancelBtn.click();
     await waitFor(() => expect(mockedUsedNavigate).toBeCalled());
   });
 });
-

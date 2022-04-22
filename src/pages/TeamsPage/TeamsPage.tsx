@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import TeamService from "../../services/team/teamService";
-import { Team } from "../../services/team/Team";
+import { TeamByUser } from "../../services/team/Team";
 import TeamCard from "../../components/Team/TeamCard";
 import "./team.css";
 
 const TeamsPage = () => {
   const navigate = useNavigate();
-  const [teams, setTeams] = useState<Team[]>([]);
+  const [teams, setTeams] = useState<TeamByUser[]>([]);
 
   const getTeams = async () => {
     const teams = await TeamService.getTeamsByUser();

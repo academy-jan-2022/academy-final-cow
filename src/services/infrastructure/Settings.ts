@@ -5,7 +5,7 @@ export class Settings {
   private static enviroment = process.env.NODE_ENV;
 
   public static getApiUrl() {
-    return this.settings[Settings.enviroment].apiUrl
+    return this.settings[Settings.enviroment].apiUrl;
 
   }
 

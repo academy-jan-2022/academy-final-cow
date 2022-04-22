@@ -6,7 +6,7 @@ import {
     IconButton,
     Menu,
     Toolbar,
-    Tooltip,
+    Tooltip
 } from "@mui/material";
 import LogoutButton from "../LogoutButton/LogoutButton";
 import logo from "../../images/teaminator_logo_white.png";
@@ -14,7 +14,8 @@ import {storageHandler} from "../../services/infrastructure/StorageHandler";
 import "./appbar.css"
 
 const AppBar = () => {
-    const [anchorElUser, setAnchorElUser] = useState<HTMLAnchorElement | null>();
+  const [anchorElUser, setAnchorElUser] =
+    useState<HTMLAnchorElement | null>();
 
     const [profileImage, setProfileImage] = useState('');
 

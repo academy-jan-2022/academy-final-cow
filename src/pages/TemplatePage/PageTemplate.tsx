@@ -2,8 +2,8 @@ import React from "react";
 import Container from "@mui/material/Container";
 import "./template.css";
 import AppBar from "../../components/Appbar/AppBar";
-import {storageHandler} from "../../services/infrastructure/StorageHandler";
-import {createTheme, ThemeOptions, ThemeProvider} from "@mui/material";
+import { storageHandler } from "../../services/infrastructure/StorageHandler";
+import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material";
 
 const PageTemplate: React.FC = ({children}) => {
     const userIsLoggedIn = () => {
