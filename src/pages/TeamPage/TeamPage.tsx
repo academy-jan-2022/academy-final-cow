@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import { useParams } from "react-router-dom";
-import { GetTeamResponse as Team } from "../../services/team/Team";
+import { GetTeamResponse } from "../../services/team/Team";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import { Stack, List, ListItem, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
 
 const TeamPage = () => {
   const { id } = useParams();
-  const [team, setTeam] = useState<Team>();
+  const [team, setTeam] = useState<GetTeamResponse>();
 
   useEffect(() => {
     if (id) {

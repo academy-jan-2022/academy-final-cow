@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import TeamPage from "./TeamPage";
 import teamService from "../../services/team/teamService";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { GetTeamResponse as Team } from "../../services/team/Team";
+import { GetTeamResponse } from "../../services/team/Team";
 
 const TEAM_ID = "1";
 const TEAM_NAME = "Team 1";
@@ -14,14 +14,14 @@ const USER_TWO_FULL_NAME = "Anna Hello";
 
 const GET_TEAM_METHOD = "getTeamById";
 
-const team: Team = {
+const team: GetTeamResponse = {
   id: TEAM_ID,
   name: TEAM_NAME,
   description: TEAM_DESCRIPTION,
   members: [
     {
       id: USER_ONE_ID,
-      fullName: USER_ONE_FULL_NAME,
+      fullName: USER_ONE_FULL_NAME
     },
     {
       id: USER_TWO_ID,

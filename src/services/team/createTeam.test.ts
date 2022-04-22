@@ -1,12 +1,12 @@
 import teamService from "./teamService";
-import { CreateTeamRequest as Team } from "./Team";
+import { CreateTeamRequest } from "./Team";
 import client, { API_ENDPOINT } from "../infrastructure/ApiClient";
 
 jest.mock("../infrastructure/ApiClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
 
 describe("team service should", () => {
-  const team: Team = { name: "team", description: "desc" };
+  const team: CreateTeamRequest = { name: "team", description: "desc" };
 
   test("call post request", async () => {
     mockedHttpClient.post.mockResolvedValue({ teamId: "1" });
