@@ -11,9 +11,11 @@ const mockedStorageHandler = storageHandler as jest.Mocked<
 describe("page template should", () => {
   beforeEach(() => {
     render(
-      <PageTemplate>
-        <p>Child</p>
-      </PageTemplate>
+      <BrowserRouter>
+        <PageTemplate>
+          <p>Child</p>
+        </PageTemplate>
+      </BrowserRouter>
     );
   });
 

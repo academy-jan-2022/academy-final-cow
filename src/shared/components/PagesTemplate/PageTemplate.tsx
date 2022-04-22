@@ -20,7 +20,7 @@ const PageTemplate = ({children,
         if (!userIsLoggedIn() && isProtected) {
             navigate("/");
         }
-    })
+    }, []);
 
 
     const themeOptions: ThemeOptions = {

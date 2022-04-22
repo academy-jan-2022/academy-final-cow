@@ -1,11 +1,9 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
   Route,
   Routes,
   useNavigate,
 } from "react-router-dom";
-import ProtectedRoute from "./shared/ProtectedRoute";
 import TeamsPage from "./teams/view/TeamsPage";
 import HeartbeatPage from "./shared/pages/HeartbeatPage/HeartbeatPage";
 import CreateTeamPage from "./teams/create/CreateTeamPage";

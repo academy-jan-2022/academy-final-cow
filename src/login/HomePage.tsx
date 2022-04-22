@@ -11,10 +11,6 @@ function HomePage() {
     const navigate = useNavigate();
     const handleLogin = (isLoggedIn: boolean) => {
         const route = getRedirectionRoute(isLoggedIn);
-        console.log(isLoggedIn);
-
-        console.log(route);
-
         navigate(route);
     }
 
