@@ -13,7 +13,7 @@ describe("get list of teams that the user is part of", () => {
     const result = await teamService.getTeamsByUser();
 
     expect(mockedHttpClient.get).toBeCalledWith({
-      route: "/teams"
+      route: "/teams",
     });
     expect(result).toEqual(teamBanana);
   });

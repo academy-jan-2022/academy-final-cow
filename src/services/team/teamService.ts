@@ -3,7 +3,7 @@ import {
   CreateTeamRequest,
   GetTeamResponse,
   GetTeamsResponse,
-  TeamByUser
+  TeamByUser,
 } from "./Team";
 
 type CreateTeamResponse = {
@@ -13,7 +13,7 @@ type CreateTeamResponse = {
 class TeamService {
   async getTeamsByUser(): Promise<TeamByUser[]> {
     const response: GetTeamsResponse = await client.get({
-      route: API_ENDPOINT.GET_TEAMS
+      route: API_ENDPOINT.GET_TEAMS,
     });
 
     return response.teams;
@@ -22,7 +22,7 @@ class TeamService {
   async createTeam(team: CreateTeamRequest): Promise<CreateTeamResponse> {
     return await client.post({
       route: API_ENDPOINT.CREATE_TEAM,
-      body: { team }
+      body: { team },
     });
   }
 

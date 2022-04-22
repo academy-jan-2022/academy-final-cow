@@ -3,7 +3,7 @@ import PageTemplate from "../TemplatePage/PageTemplate";
 import { useParams } from "react-router-dom";
 import { GetTeamResponse } from "../../services/team/Team";
 import PageHeading from "../../components/PageHeading/PageHeading";
-import { Stack, List, ListItem, Typography } from "@mui/material";
+import { List, ListItem, Stack, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
 
 const TeamPage = () => {

@@ -21,7 +21,7 @@ const team: GetTeamResponse = {
   members: [
     {
       id: USER_ONE_ID,
-      fullName: USER_ONE_FULL_NAME
+      fullName: USER_ONE_FULL_NAME,
     },
     {
       id: USER_TWO_ID,
