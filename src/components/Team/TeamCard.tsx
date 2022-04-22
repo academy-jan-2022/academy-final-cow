@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@mui/material";
 
-const TeamCard = (props: { team: any; }) => {
+const TeamCard = (props: { team: any }) => {
   const navigate = useNavigate();
   const { team } = props;
   const { name, id, description } = team;

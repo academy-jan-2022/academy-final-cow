@@ -16,19 +16,28 @@ beforeEach(() => {
   );
 });
 
-test("renders avatar", () => {
-  const avatar = screen.getByTestId("avatar");
-  expect(avatar).toBeInTheDocument();
-});
+describe("appbar should", () => {
+  test("render avatar", () => {
+    const avatar = screen.getByTestId("avatar");
+    expect(avatar).toBeInTheDocument();
+  });
 
-test("renders logo", () => {
-  const logo = screen.getByTestId("logo");
-  expect(logo).toBeInTheDocument();
-});
+  test("render logo", () => {
+    const logo = screen.getByTestId("logo");
+    expect(logo).toBeInTheDocument();
+  });
 
-test("see logout button when you click avatar", () => {
-  const avatar = screen.getByTestId("avatar");
-  avatar.click();
-  const logoutButton = screen.getByText("Logout");
-  expect(logoutButton).toBeInTheDocument();
+  test("see logout button when you click avatar", () => {
+    const avatar = screen.getByTestId("avatar");
+    avatar.click();
+    const logoutButton = screen.getByText("Logout");
+    expect(logoutButton).toBeInTheDocument();
+  });
+
+  test("navigate to teams page when logo is clicked", () => {
+    const logo = screen.getByTestId("logo");
+    logo.click();
+
+    expect(mockedUsedNavigate).toBeCalledWith("/teams");
+  });
 });

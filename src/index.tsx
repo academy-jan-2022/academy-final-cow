@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import ReactDOM from "react-dom";
 import HeartbeatPage from "./pages/HeartbeatPage/HeartbeatPage";

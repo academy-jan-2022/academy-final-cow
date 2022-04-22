@@ -6,7 +6,6 @@ export class Settings {
 
   public static getApiUrl() {
     return this.settings[Settings.enviroment].apiUrl;
-
   }
 
   public static getGoogleClientId() {

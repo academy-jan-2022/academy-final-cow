@@ -1,7 +1,7 @@
 import createUser from "./createUser";
 
 class DomainService {
-    createUser = createUser;
+  createUser = createUser;
 }
 
 const domainService = new DomainService();

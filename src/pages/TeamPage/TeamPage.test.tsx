@@ -2,8 +2,8 @@ import { render, screen, waitFor } from "@testing-library/react";
 import TeamPage from "./TeamPage";
 import teamService from "../../services/team/teamService";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { GetTeamResponse as Team } from "../../services/team/Team";
 import { act } from "react-dom/test-utils";
+import { GetTeamResponse } from "../../services/team/Team";
 
 const TEAM_ID = "1";
 const TEAM_NAME = "Team 1";
@@ -16,7 +16,7 @@ const USER_TWO_FULL_NAME = "Anna Hello";
 const GET_TEAM_METHOD = "getTeamById";
 const GENERATE_JOIN_LINK = "generateJoinLink";
 
-const team: Team = {
+const team: GetTeamResponse = {
   id: TEAM_ID,
   name: TEAM_NAME,
   description: TEAM_DESCRIPTION,

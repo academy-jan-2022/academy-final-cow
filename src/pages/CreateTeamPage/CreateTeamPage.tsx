@@ -5,7 +5,7 @@ import PageTemplate from "../TemplatePage/PageTemplate";
 import "./create-page.css";
 import teamService from "../../services/team/teamService";
 import PageHeading from "../../components/PageHeading/PageHeading";
-import { CreateTeamRequest as Team } from "../../services/team/Team";
+import { CreateTeamRequest } from "../../services/team/Team";
 
 const CreateTeamPage = () => {
   const navigate = useNavigate();
@@ -24,14 +24,14 @@ const CreateTeamPage = () => {
     }
 
     if (teamDescription && teamName) {
-      const team: Team = {
+      const team: CreateTeamRequest = {
         name: teamName,
         description: teamDescription
       };
 
       try {
-        const teamId = await teamService.createTeam(team);
-        const route = "/team/" + teamId;
+        const createTeamResponse = await teamService.createTeam(team);
+        const route = "/team/" + createTeamResponse.teamId;
         navigate(route);
       } catch (e) {
         navigate("/error");

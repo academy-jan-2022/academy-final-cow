@@ -1,7 +1,7 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import CreateTeamPage from "./CreateTeamPage";
-import { CreateTeamRequest as Team } from "../../services/team/Team";
+import { CreateTeamRequest } from "../../services/team/Team";
 import { BrowserRouter } from "react-router-dom";
 import teamService from "../../services/team/teamService";
 
@@ -18,7 +18,7 @@ mockedTeamService.createTeam.mockImplementation(() =>
 );
 
 describe("create team page should", () => {
-  const team: Team = {
+  const team: CreateTeamRequest = {
     name: "team name",
     description: "team description",
   };
