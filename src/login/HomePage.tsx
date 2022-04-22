@@ -1,5 +1,5 @@
 import React from "react";
-import PageTemplate from "../shared/pages/TemplatePage/PageTemplate";
+import PageTemplate from "../shared/components/PagesTemplate/PageTemplate";
 import {useNavigate} from "react-router-dom";
 import {loginService} from "./loginService";
 import logo from "../shared/images/teaminator_logo.png";
@@ -11,6 +11,10 @@ function HomePage() {
     const navigate = useNavigate();
     const handleLogin = (isLoggedIn: boolean) => {
         const route = getRedirectionRoute(isLoggedIn);
+        console.log(isLoggedIn);
+
+        console.log(route);
+
         navigate(route);
     }
 
@@ -19,7 +23,7 @@ function HomePage() {
     }
 
     return (
-        <PageTemplate>
+        <PageTemplate isProtected={false}>
             <header>
                 <img aria-label={"logo"} alt="Teaminator Logo" src={logo} data-testid="logo"/>
             </header>

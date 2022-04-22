@@ -1,5 +1,5 @@
 import React from "react";
-import PageTemplate from "../TemplatePage/PageTemplate";
+import PageTemplate from "../../components/PagesTemplate/PageTemplate";
 import sadcowboy from "../../images/sadcowboy.png";
 import {Button} from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ const ErrorPage = ({ error }: { error: ERRORS }) => {
 
 
   return (
-      <PageTemplate>
+      <PageTemplate isProtected={false}>
       <PageHeading aria-label="title">Error</PageHeading>
       <img className="sad-cowboy" src={sadcowboy} alt="sad cowboy" />
       <p>{error}</p>

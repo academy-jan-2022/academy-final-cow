@@ -1,6 +1,7 @@
 import {AxiosResponse} from "axios";
 import {storageHandler} from "./StorageHandler";
 import {Settings} from "../settings/Settings";
+import {TokenObject} from "../../login/loginService";
 
 const axios = require("axios");
 
@@ -37,8 +38,8 @@ class ApiClient {
     }
 
     getToken(): string | null {
-        const tokenObject: AuthResponse | null = storageHandler.getJSONItem("tokenObject")
-        return tokenObject ? tokenObject.id_token : null;
+        const tokenObject: TokenObject | null = storageHandler.getJSONItem("tokenObject")
+        return tokenObject ? tokenObject.idToken : null;
     }
 
     buildUrl(route: ROUTES): URL {

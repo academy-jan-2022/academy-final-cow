@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <Routes>
-      <Route path="/teams" element={<ProtectedRoute component={TeamsPage} />} />
+      <Route path="/teams" element={<TeamsPage />} />
       <Route path="/team" element={<TeamsPage />} />
       <Route path="/heartbeat" element={<HeartbeatPage />} />
       <Route path="/create-team" element={<CreateTeamPage />} />

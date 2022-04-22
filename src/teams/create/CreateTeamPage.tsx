@@ -1,7 +1,7 @@
 import { Button, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PageTemplate from "../../shared/pages/TemplatePage/PageTemplate";
+import PageTemplate from "../../shared/components/PagesTemplate/PageTemplate";
 import "./create-page.css";
 import teamService from "../service/teamService";
 import PageHeading from "../../shared/components/PageHeading/PageHeading";

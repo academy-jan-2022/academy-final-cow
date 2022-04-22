@@ -16,31 +16,13 @@ const FULL_NAME = "Test Name";
 const TOKEN = "token";
 
 describe("login service should", () => {
-  describe("on unsuccessful response", () => {
-    const unSuccessfulResponse = {} as GoogleLoginResponseOffline;
-
-    test("should not call createUser service", async () => {
-      await loginService(unSuccessfulResponse);
-      expect(mockedCreateUser).not.toHaveBeenCalled();
-    });
-
-    test("return false if log in unsuccessful", async () => {
-      const returnValue = await loginService(unSuccessfulResponse);
-      expect(returnValue).toEqual(false);
-    });
-  });
-
-  describe("on successful response", () => {
-    const successfulResponse = {
-      profileObj: {
-        name: FULL_NAME,
-        googleId: EXTERNAL_ID,
-      },
-      tokenObj: { id_token: TOKEN },
-    } as GoogleLoginResponse;
+    const tokenObject = {externalId: EXTERNAL_ID,
+    provider: "google",
+    fullName: FULL_NAME,
+    idToken: TOKEN}
 
     test("should call createUser service", async () => {
-      await loginService(successfulResponse);
+      await loginService(tokenObject);
       expect(mockedCreateUser).toHaveBeenCalledWith({
         externalId: EXTERNAL_ID,
         fullName: FULL_NAME,
@@ -49,13 +31,12 @@ describe("login service should", () => {
     });
 
     test("return true if log in successful", async () => {
-      const returnValue = await loginService(successfulResponse);
+      const returnValue = await loginService(tokenObject);
       expect(returnValue).toEqual(true);
     });
 
     test("should set token object using storage handler", async () => {
-      await loginService(successfulResponse);
+      await loginService(tokenObject);
       expect(storageHandler.setJSONItem).toHaveBeenCalled();
     });
-  });
 });

@@ -1,15 +1,27 @@
-import React from "react";
+import React, {ReactChild, ReactChildren, useEffect} from "react";
 import Container from "@mui/material/Container";
 import "./template.css";
-import AppBar from "../../components/Appbar/AppBar";
+import AppBar from "../Appbar/AppBar";
 import {storageHandler} from "../../infrastructure/StorageHandler";
 import {createTheme, ThemeOptions, ThemeProvider} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
-const PageTemplate: React.FC = ({children}) => {
+
+const PageTemplate = ({children,
+                                isProtected=true }: {children: ReactChildren[] | ReactChild[] | ReactChildren | ReactChild, isProtected?: boolean}) => {
+    const navigate = useNavigate();
+
     const userIsLoggedIn = () => {
         const tokenObject = storageHandler.getJSONItem("tokenObject");
         return !!tokenObject;
     };
+
+    useEffect(() => {
+        if (!userIsLoggedIn() && isProtected) {
+            navigate("/");
+        }
+    })
+
 
     const themeOptions: ThemeOptions = {
         palette: {

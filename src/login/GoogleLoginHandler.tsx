@@ -12,7 +12,12 @@ const GoogleLoginHandler = ({ handleLogin }: { handleLogin: any }) => {
   ) => {
     const tokenObject = handleGoogleAuthResponse(res);
     if (tokenObject) {
+      console.log("googleLoginHandler")
+      console.log(tokenObject)
+
       const isLoggedIn = await loginService(tokenObject);
+      console.log(isLoggedIn)
+
       handleLogin(isLoggedIn);
     }
   };

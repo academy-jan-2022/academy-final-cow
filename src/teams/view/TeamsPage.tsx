@@ -5,7 +5,7 @@ import TeamService from "../service/teamService";
 import { Team } from "../Team";
 import TeamCard from "./TeamCard/TeamCard";
 import "./team.css";
-import PageTemplate from "../../shared/pages/TemplatePage/PageTemplate";
+import PageTemplate from "../../shared/components/PagesTemplate/PageTemplate";
 
 const TeamsPage = () => {
 

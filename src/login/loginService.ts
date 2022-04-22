@@ -5,7 +5,7 @@ import {
 import { storageHandler } from "../shared/infrastructure/StorageHandler";
 import createUser from "../user/createUser";
 
-type tokenObject = {
+export type TokenObject = {
   externalId: string;
   provider: string;
   fullName: string;
@@ -13,7 +13,7 @@ type tokenObject = {
 };
 
 export const loginService = async (
-  tokenObject: tokenObject
+  tokenObject: TokenObject
 ): Promise<boolean> => {
   try {
     storageHandler.setJSONItem("tokenObject", tokenObject);
@@ -30,7 +30,7 @@ export const loginService = async (
 
 export const handleGoogleAuthResponse = (
   response: GoogleLoginResponse | GoogleLoginResponseOffline
-): tokenObject | null => {
+): TokenObject | null => {
   const googleUserExists = "profileObj" in response;
   if (googleUserExists) {
     storageHandler.setJSONItem("profile", response.profileObj);
