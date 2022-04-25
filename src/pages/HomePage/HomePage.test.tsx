@@ -54,11 +54,19 @@ describe("HomePage test should", () => {
   });
 
 
-  test("navigates to the provided route after login", async () => {
+  test("navigates to the provided route after successful login", async () => {
     mockedLoginService.default.mockResolvedValue(true);
 
     const button = screen.getByText(LOGIN_BUTTON_TEXT);
     button.click();
     await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith("/teams"));
+  });
+
+  test("navigates to the provided route after unsuccessful login", async () => {
+    mockedLoginService.default.mockResolvedValue(false);
+
+    const button = screen.getByText(LOGIN_BUTTON_TEXT);
+    button.click();
+    await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith("/error"));
   });
 });
