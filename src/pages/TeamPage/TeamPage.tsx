@@ -7,6 +7,7 @@ import PageHeading from "../../components/PageHeading/PageHeading";
 import { Button, List, ListItem, Stack, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
+import ActivityModal from "../../components/ActivityModal/ActivityModal";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -14,6 +15,9 @@ const TeamPage = () => {
   const [open, setOpen] = React.useState(false);
   const [joinLink, setJoinLink] = React.useState("");
   const [isLoading, toggleLoading] = useState(true);
+
+  const [showActivityModal, toggleActivityModal] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -54,8 +58,14 @@ const TeamPage = () => {
         <Button variant={"outlined"} onClick={generateLink}>
           create join link
         </Button>
-        <Button variant={"outlined"}>create new activity</Button>
+        <Button variant={"outlined"} onClick={() => toggleActivityModal(true)}>
+          create new activity
+        </Button>
       </Stack>
+      <ActivityModal
+        open={showActivityModal}
+        handleClose={() => toggleActivityModal(false)}
+      />
       <JoinLinkModal
         joinLink={joinLink}
         open={open}
