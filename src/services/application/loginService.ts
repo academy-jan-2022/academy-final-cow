@@ -5,7 +5,7 @@ import {
 import { storageHandler } from "../infrastructure/StorageHandler";
 import createUser from "../domain/createUser";
 
-export const loginService = async (
+const loginService = async (
   response: GoogleLoginResponse | GoogleLoginResponseOffline
 ): Promise<boolean> => {
   const googleUserExists = "profileObj" in response;
@@ -27,3 +27,5 @@ export const loginService = async (
   }
   return false;
 };
+
+export default loginService;

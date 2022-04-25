@@ -1,12 +1,14 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import HomePage from "./HomePage";
-import { loginService } from "../../services/application/loginService";
 import { BrowserRouter } from "react-router-dom";
+import * as loginService from "../../services/application/loginService";
 
 const mockedUsedNavigate = jest.fn();
 
 jest.mock("../../services/application/loginService");
+const mockedLoginService = loginService as jest.Mocked<typeof loginService>;
+
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
   useNavigate: () => mockedUsedNavigate,
@@ -53,8 +55,10 @@ describe("HomePage test should", () => {
 
 
   test("navigates to the provided route after login", async () => {
+    mockedLoginService.default.mockResolvedValue(true);
+
     const button = screen.getByText(LOGIN_BUTTON_TEXT);
     button.click();
-    await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalled());
+    await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith("/teams"));
   });
 });

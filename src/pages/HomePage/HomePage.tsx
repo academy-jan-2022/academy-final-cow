@@ -5,20 +5,20 @@ import GoogleLogin, {
 } from "react-google-login";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate } from "react-router-dom";
-import { loginService } from "../../services/application/loginService";
 import logo from "../../images/teaminator_logo.png";
-import { Settings } from "../../services/infrastructure/Settings";
 import "./homepage.css";
+import LoginButton from "../../components/LoginButton/LoginButton";
 
 function HomePage() {
   const navigate = useNavigate();
 
-  const googleLoginHandler = async (
-    res: GoogleLoginResponse | GoogleLoginResponseOffline
-  ) => {
-    const route = await loginService(res);
-    navigate(route);
-  };
+  const redirectTo = (isSuccessful: boolean) => {
+      if (isSuccessful) {
+          navigate("/teams");
+          return
+      }
+      navigate("/error");
+  }
 
   return (
     <PageTemplate>
@@ -30,13 +30,7 @@ function HomePage() {
           data-testid="logo"
         />
       </header>
-      <GoogleLogin
-        clientId={`${Settings.getGoogleClientId()}`}
-        buttonText="Login"
-        onSuccess={googleLoginHandler}
-        onFailure={googleLoginHandler}
-        cookiePolicy={"single_host_origin"}
-        isSignedIn={true}
+      <LoginButton handleLoginRedirection={redirectTo}
       />
     </PageTemplate>
   );
