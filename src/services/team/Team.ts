@@ -24,3 +24,9 @@ export type TeamByUser = {
 export type GetTeamsResponse = {
   teams: TeamByUser[];
 };
+
+export type ActivityRequest = {
+  activityName: string;
+  numberOfGroups: number;
+  members: TeamMember[];
+};

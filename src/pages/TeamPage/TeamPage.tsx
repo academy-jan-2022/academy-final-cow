@@ -79,6 +79,7 @@ const TeamPage = () => {
       <ActivityModal
         open={showActivityModal}
         handleClose={() => toggleActivityModal(false)}
+        fetchedMembers={team?.members || []}
       />
       <JoinLinkModal
         joinLink={joinLink}

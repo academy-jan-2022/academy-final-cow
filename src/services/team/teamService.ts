@@ -1,5 +1,6 @@
 import client, { API_ENDPOINT } from "../infrastructure/ApiClient";
 import {
+  ActivityRequest,
   CreateTeamRequest,
   GetTeamResponse,
   GetTeamsResponse,
@@ -12,17 +13,6 @@ type CreateTeamResponse = {
 
 type GenerateJoinLinkResponse = {
   link: string;
-};
-
-type ActivityMember = {
-  userId: string;
-  fullName: string;
-};
-
-export type ActivityRequest = {
-  activityName: string;
-  numberOfGroups: number;
-  members: ActivityMember[];
 };
 
 class TeamService {

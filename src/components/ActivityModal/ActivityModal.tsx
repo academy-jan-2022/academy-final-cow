@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
-import teamService, { ActivityRequest } from "../../services/team/teamService";
+import teamService from "../../services/team/teamService";
+import { useNavigate } from "react-router-dom";
+import { ActivityRequest, TeamMember } from "../../services/team/Team";
 
 const ActivityModal = ({
   handleClose = null,
   open = false,
+  fetchedMembers,
 }: {
   handleClose: any;
   open: boolean;
+  fetchedMembers: TeamMember[];
 }) => {
   const style = {
     position: "absolute" as "absolute",
@@ -22,10 +26,12 @@ const ActivityModal = ({
 
   const [activityName, setActivityName] = useState("");
   const [numberOfGroups, setNumberOfGroups] = useState(2);
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState<TeamMember[]>(fetchedMembers);
   const [activityNameError, setActivityNameError] = useState(false);
 
-  const submitActivity = () => {
+  const navigate = useNavigate();
+
+  const submitActivity = async () => {
     if (activityName) {
       const newActivity: ActivityRequest = {
         activityName,
@@ -33,7 +39,11 @@ const ActivityModal = ({
         members,
       };
 
-      teamService.createActivity(newActivity);
+      try {
+        await teamService.createActivity(newActivity);
+      } catch (e) {
+        navigate("/error");
+      }
     }
 
     setActivityNameError(true);
