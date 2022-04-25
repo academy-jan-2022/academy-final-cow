@@ -54,6 +54,7 @@ const TeamPage = () => {
         <Button variant={"outlined"} onClick={generateLink}>
           create join link
         </Button>
+        <Button variant={"outlined"}>create new activity</Button>
       </Stack>
       <JoinLinkModal
         joinLink={joinLink}
