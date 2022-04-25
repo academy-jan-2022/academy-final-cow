@@ -86,6 +86,7 @@ const TeamPage = () => {
         open={showJoinLinkModal}
         handleClose={handleClose}
       />
+      <div data-testid={"activity-box"}/>
     </PageTemplate>
   );
 };

@@ -13,6 +13,7 @@ export type GetTeamResponse = {
   name: string;
   description: string;
   members: TeamMember[];
+  activities?: ActivityResponse[];
 };
 
 export type TeamByUser = {
@@ -29,4 +30,13 @@ export type ActivityRequest = {
   activityName: string;
   numberOfGroups: number;
   members: TeamMember[];
+};
+
+export type ActivityResponse = {
+  name: string;
+  groups: activityMember[];
+};
+
+export type activityMember = {
+  name: string;
 };

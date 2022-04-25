@@ -326,11 +326,19 @@ describe("Team page should", () => {
       ],
       activities:[{name: "My activity", groups:[{name:"cowboy"}]}],
     };
-    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(teamWithActivity);
+      jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(teamWithActivity);
 
-    jest
-      .spyOn(teamService, GENERATE_JOIN_LINK)
-      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+      jest
+        .spyOn(teamService, GENERATE_JOIN_LINK)
+        .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+     render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
 
     const activityBox = screen.getByTestId("activity-box");
     expect(activityBox).toBeInTheDocument();
