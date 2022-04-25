@@ -214,6 +214,29 @@ describe("Team page should", () => {
     expect(activityModal).toBeInTheDocument();
   });
 
+  test("display the header text at modal when you click create activity button", async () => {
+    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
+
+    jest
+      .spyOn(teamService, GENERATE_JOIN_LINK)
+      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const activityButton = await screen.findByText("create new activity");
+
+    await act(async () => activityButton.click());
+
+    const activityHeader = screen.getByTestId("activity-header");
+    expect(activityHeader).toBeInTheDocument();
+  });
+
   test("display the activity name field at modal when you click create activity button", async () => {
     jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
 
