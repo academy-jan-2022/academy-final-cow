@@ -12,26 +12,24 @@ import ActivityModal from "../../components/ActivityModal/ActivityModal";
 const TeamPage = () => {
   const { id } = useParams();
   const [team, setTeam] = useState<GetTeamResponse>();
-  const [open, setOpen] = React.useState(false);
+  const [showJoinLinkModal, setShowJoinLinkModal] = React.useState(false);
   const [joinLink, setJoinLink] = React.useState("");
   const [isLoading, toggleLoading] = useState(true);
 
   const [showActivityModal, toggleActivityModal] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => setShowJoinLinkModal(true);
+  const handleClose = () => setShowJoinLinkModal(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
-      teamService
-        .getTeamById(id)
-        .then((fetchedTeam) => {
-          setTeam(fetchedTeam);
-          toggleLoading(false);
-        })
-       // .catch(() => navigate("/error"));
+      teamService.getTeamById(id).then((fetchedTeam) => {
+        setTeam(fetchedTeam);
+        toggleLoading(false);
+      });
+      // .catch(() => navigate("/error"));
       setTeam({
         id: "1",
         name: "TEAM_NAME",
@@ -84,7 +82,7 @@ const TeamPage = () => {
       />
       <JoinLinkModal
         joinLink={joinLink}
-        open={open}
+        open={showJoinLinkModal}
         handleClose={handleClose}
       />
     </PageTemplate>
