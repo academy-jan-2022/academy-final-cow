@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Modal } from "@mui/material";
+import { Box, Modal, TextField } from "@mui/material";
 
 const ActivityModal = ({
   handleClose = null,
@@ -27,7 +27,9 @@ const ActivityModal = ({
       aria-describedby="modal-modal-description"
     >
       <div data-testid="activity-modal">
-        <Box sx={style}></Box>
+        <Box sx={style}>
+          <TextField data-testid={"activity-name-field"} label={"Activity name"}/>
+        </Box>
       </div>
     </Modal>
   );
