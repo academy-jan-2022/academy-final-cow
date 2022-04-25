@@ -1,5 +1,4 @@
-import teamService from "./teamService";
-import { ActivityRequest } from "../../components/ActivityModal/ActivityModal";
+import teamService, { ActivityRequest } from "./teamService";
 import client, { API_ENDPOINT } from "../infrastructure/ApiClient";
 
 jest.mock("../infrastructure/ApiClient");
