@@ -4,14 +4,15 @@ import React from "react";
 import {loginService} from "../../services/application/loginService";
 import {useNavigate} from "react-router-dom";
 
-function LoginButton () {
+function LoginButton ( {handleLoginRedirection} : {handleLoginRedirection : any}) {
 
     const navigate = useNavigate();
 
     const googleLoginHandler = async (
         res: GoogleLoginResponse | GoogleLoginResponseOffline
     ) => {
-        const route = await loginService(res);
+        const isSuccessful = await loginService(res);
+        handleLoginRedirection(isSuccessful)
     };
 
     return (

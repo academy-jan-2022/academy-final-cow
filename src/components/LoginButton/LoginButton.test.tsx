@@ -1,4 +1,4 @@
-import {render, screen} from "@testing-library/react";
+import {render, screen, waitFor} from "@testing-library/react";
 import {loginService} from "../../services/application/loginService";
 import {BrowserRouter} from "react-router-dom";
 
@@ -27,13 +27,14 @@ jest.mock("react-google-login", () => {
     };
 });
 
+const handleLoginRedirection = jest.fn();
 
 describe("LoginButton should", () => {
 
     beforeEach(() => {
         render(
             <BrowserRouter>
-                <LoginButton />
+                <LoginButton handleLoginRedirection={handleLoginRedirection} />
             </BrowserRouter>
         );
     });
@@ -48,5 +49,11 @@ describe("LoginButton should", () => {
         button.click();
         expect(loginService).toHaveBeenCalled();
     });
+
+    test("calls handleRedirectionFunction after login service", async () => {
+        const button = screen.getByText(LOGIN_BUTTON_TEXT);
+        button.click();
+        await waitFor(() => expect(handleLoginRedirection).toHaveBeenCalled());
+    })
 
 });
