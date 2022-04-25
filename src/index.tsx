@@ -8,6 +8,7 @@ import TeamsPage from "./pages/TeamsPage/TeamsPage";
 import CreateTeamPage from "./pages/CreateTeamPage/CreateTeamPage";
 import ErrorPage, { ERRORS } from "./pages/ErrorPage/ErrorPage";
 import TeamPage from "./pages/TeamPage/TeamPage";
+import JoinTeamPage from "./pages/JoinTeam/JoinTeamPage";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/teams" element={<TeamsPage />} />
         <Route path="/team/:id" element={<TeamPage />} />
+        <Route path="/join/:token" element={<JoinTeamPage />} />
         <Route path="/heartbeat" element={<HeartbeatPage />} />
         <Route path="/create-team" element={<CreateTeamPage />} />
         <Route path="/" element={<HomePage />} />
