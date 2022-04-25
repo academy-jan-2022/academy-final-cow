@@ -340,7 +340,7 @@ describe("Team page should", () => {
       </MemoryRouter>
     );
 
-    const activityBox = screen.getByTestId("activity-box");
+    const activityBox =  await waitFor(()=>screen.getByTestId("activity-box"));
     expect(activityBox).toBeInTheDocument();
   })
 
@@ -375,7 +375,7 @@ describe("Team page should", () => {
       </MemoryRouter>
     );
 
-    const activityBox = screen.getByTestId("activity-box");
-    expect(activityBox).not.toBeInTheDocument();
+    const activityBox =  await waitFor(()=>screen.queryAllByTestId("activity-box"));
+    expect(activityBox.length).toEqual(0);
   })
 });

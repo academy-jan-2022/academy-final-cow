@@ -7,7 +7,7 @@ import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 interface PageTemplateProps {
-  children: ReactChild | ReactChildren | ReactChild[] | ReactChildren[];
+  children:ReactChild | ReactChildren | ReactChild[] | ReactChildren[] ;
   isLoading?: boolean;
 }
 
