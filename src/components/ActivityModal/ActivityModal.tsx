@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Modal, TextField, Typography } from "@mui/material";
+import { Box, Modal, TextField, Typography, Button } from "@mui/material";
 
 const ActivityModal = ({
   handleClose = null,
@@ -28,8 +28,9 @@ const ActivityModal = ({
     >
       <div data-testid="activity-modal">
         <Box sx={style}>
-          <Typography data-testid={"activity-header-text"}>Create new activity</Typography>
-          <TextField data-testid={"activity-name-field"} label={"Activity name"}/>
+          <Typography data-testid="activity-header-text">Create new activity</Typography>
+          <TextField data-testid="activity-name-field" label={"Activity name"}/>
+          <Button data-testid="activity-submit-button">Submit</Button>
         </Box>
       </div>
     </Modal>
