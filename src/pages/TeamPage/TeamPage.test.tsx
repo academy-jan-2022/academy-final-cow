@@ -15,6 +15,7 @@ const USER_TWO_FULL_NAME = "Anna Hello";
 
 const GET_TEAM_METHOD = "getTeamById";
 const GENERATE_JOIN_LINK = "generateJoinLink";
+const CREATE_ACTIVITY = "createActivity";
 
 const team: GetTeamResponse = {
   id: TEAM_ID,
@@ -281,12 +282,15 @@ describe("Team page should", () => {
     const activitySubmitButton = screen.getByTestId("activity-submit-button");
     expect(activitySubmitButton).toBeInTheDocument();
   });
+
   test("call team service when activity name is filled and submit button clicked", async () => {
-    var mockedTeam =jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
+    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
 
     jest
       .spyOn(teamService, GENERATE_JOIN_LINK)
       .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+    const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
 
     render(
       <MemoryRouter initialEntries={["/team/1"]}>
@@ -300,10 +304,9 @@ describe("Team page should", () => {
 
     await act(async () => activityButton.click());
     const activityNameText = screen.getByTestId("activity-name-field");
-    fireEvent.change(activityNameText,{ target: { value: "my activity" }});
+    fireEvent.change(activityNameText, { target: { value: "my activity" } });
     const activitySubmitButton = screen.getByTestId("activity-submit-button");
     activitySubmitButton.click();
-    expect(mockedTeam).toBeCalled();
+    expect(mockedTeamService).toBeCalled();
   });
-
 });

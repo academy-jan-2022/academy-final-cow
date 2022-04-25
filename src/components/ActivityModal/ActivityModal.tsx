@@ -1,5 +1,6 @@
-import React from "react";
-import { Box, Modal, TextField, Typography, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import teamService, { ActivityRequest } from "../../services/team/teamService";
 
 const ActivityModal = ({
   handleClose = null,
@@ -19,6 +20,25 @@ const ActivityModal = ({
     p: 4,
   };
 
+  const [activityName, setActivityName] = useState("");
+  const [numberOfGroups, setNumberOfGroups] = useState(2);
+  const [members, setMembers] = useState([]);
+  const [activityNameError, setActivityNameError] = useState(false);
+
+  const submitActivity = () => {
+    if (activityName) {
+      const newActivity: ActivityRequest = {
+        activityName,
+        numberOfGroups,
+        members,
+      };
+
+      teamService.createActivity(newActivity);
+    }
+
+    setActivityNameError(true);
+  };
+
   return (
     <Modal
       open={open}
@@ -28,9 +48,23 @@ const ActivityModal = ({
     >
       <div data-testid="activity-modal">
         <Box sx={style}>
-          <Typography data-testid="activity-header-text">Create new activity</Typography>
-          <TextField data-testid="activity-name-field" label={"Activity name"}/>
-          <Button data-testid="activity-submit-button">Submit</Button>
+          <Typography data-testid="activity-header-text">
+            Create new activity
+          </Typography>
+          <TextField
+            inputProps={{ "data-testid": "activity-name-field" }}
+            label={"Activity name"}
+            variant="outlined"
+            required
+            onChange={(e) => {
+              setActivityName(e.target.value);
+              setActivityNameError(false);
+            }}
+            error={activityNameError}
+          />
+          <Button onClick={submitActivity} data-testid="activity-submit-button">
+            Submit
+          </Button>
         </Box>
       </div>
     </Modal>

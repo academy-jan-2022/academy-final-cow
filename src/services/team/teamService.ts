@@ -14,6 +14,17 @@ type GenerateJoinLinkResponse = {
   link: string;
 };
 
+type ActivityMember = {
+  userId: string;
+  fullName: string;
+};
+
+export type ActivityRequest = {
+  activityName: string;
+  numberOfGroups: number;
+  members: ActivityMember[];
+};
+
 class TeamService {
   async getTeamsByUser(): Promise<TeamByUser[]> {
     const response: GetTeamsResponse = await client.get({
@@ -44,6 +55,13 @@ class TeamService {
     });
 
     return { link: `${window.location.origin}/join/${resp.token}` };
+  }
+
+  async createActivity(activity: ActivityRequest) {
+    await client.post({
+      route: API_ENDPOINT.CREATE_ACTIVITY,
+      body: activity,
+    });
   }
 }
 
