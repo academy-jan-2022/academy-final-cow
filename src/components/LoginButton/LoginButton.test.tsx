@@ -1,5 +1,5 @@
 import {render, screen, waitFor} from "@testing-library/react";
-import {loginService} from "../../services/application/loginService";
+import loginService from "../../services/application/loginService";
 import {BrowserRouter} from "react-router-dom";
 
 import React from "react";

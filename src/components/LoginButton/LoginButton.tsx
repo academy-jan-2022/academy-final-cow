@@ -2,11 +2,8 @@ import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline} from "reac
 import {Settings} from "../../services/infrastructure/Settings";
 import React from "react";
 import loginService from "../../services/application/loginService";
-import {useNavigate} from "react-router-dom";
 
 function LoginButton ( {handleLoginRedirection} : {handleLoginRedirection : any}) {
-
-    const navigate = useNavigate();
 
     const googleLoginHandler = async (
         res: GoogleLoginResponse | GoogleLoginResponseOffline
