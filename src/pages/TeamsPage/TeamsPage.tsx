@@ -6,14 +6,21 @@ import TeamService from "../../services/team/teamService";
 import { TeamByUser } from "../../services/team/Team";
 import TeamCard from "../../components/Team/TeamCard";
 import "./team.css";
+import PageHeading from "../../components/PageHeading/PageHeading";
 
 const TeamsPage = () => {
   const navigate = useNavigate();
   const [teams, setTeams] = useState<TeamByUser[]>([]);
+  const [isLoading, toggleLoading] = useState(true);
 
   const getTeams = async () => {
-    const fetchedTeams = await TeamService.getTeamsByUser();
-    setTeams(fetchedTeams);
+    try {
+      const fetchedTeams = await TeamService.getTeamsByUser();
+      setTeams(fetchedTeams);
+      toggleLoading(false);
+    } catch (e) {
+      navigate("/error");
+    }
   };
 
   useEffect(() => {
@@ -29,8 +36,8 @@ const TeamsPage = () => {
   });
 
   return (
-    <PageTemplate>
-      <h1 aria-label="title">Teams</h1>
+    <PageTemplate isLoading={isLoading}>
+      <PageHeading>Teams</PageHeading>
       <Button
         variant="outlined"
         className="create-team-btn"

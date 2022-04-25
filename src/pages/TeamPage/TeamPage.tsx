@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GetTeamResponse } from "../../services/team/Team";
 
 import PageHeading from "../../components/PageHeading/PageHeading";
@@ -13,14 +13,23 @@ const TeamPage = () => {
   const [team, setTeam] = useState<GetTeamResponse>();
   const [open, setOpen] = React.useState(false);
   const [joinLink, setJoinLink] = React.useState("");
+  const [isLoading, toggleLoading] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (id) {
-      teamService.getTeamById(id).then((fetchedTeam) => setTeam(fetchedTeam));
+      teamService
+        .getTeamById(id)
+        .then((fetchedTeam) => {
+          setTeam(fetchedTeam);
+          toggleLoading(false);
+        })
+        .catch(() => navigate("/error"));
     }
-  }, []);
+  }, [id, navigate]);
 
   function generateLink() {
     if (id) {
@@ -31,16 +40,14 @@ const TeamPage = () => {
     }
   }
 
-  if (!team) return <div>Loading...</div>;
-
   return (
-    <PageTemplate>
-      <PageHeading>{team.name}</PageHeading>
+    <PageTemplate isLoading={isLoading}>
+      <PageHeading>{team?.name}</PageHeading>
       <Stack alignSelf="flex-start" alignItems="flex-start" spacing={2}>
-        <Typography component="p">{team.description}</Typography>
+        <Typography component="p">{team?.description}</Typography>
         <List>
           Members:
-          {team.members.map((member, index) => (
+          {team?.members.map((member, index) => (
             <ListItem key={member.id + "_" + index}>{member.fullName}</ListItem>
           ))}
         </List>
