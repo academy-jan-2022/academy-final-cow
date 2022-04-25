@@ -54,7 +54,12 @@ describe("join teams page should", () => {
         const loginButton = screen.getByText(LOGIN_BUTTON_TEXT);
         loginButton.click();
         await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith("/error"));
-    })
+    });
 
+    test("not show the login button if the user is logged in", async () => {
+
+        const loginButton = screen.getByText(LOGIN_BUTTON_TEXT);
+        expect(loginButton).not.toBeInTheDocument();
+    });
 
 })
