@@ -31,7 +31,23 @@ const TeamPage = () => {
           setTeam(fetchedTeam);
           toggleLoading(false);
         })
-        .catch(() => navigate("/error"));
+       // .catch(() => navigate("/error"));
+      setTeam({
+        id: "1",
+        name: "TEAM_NAME",
+        description: "TEAM_DESCRIPTION",
+        members: [
+          {
+            id: "USER_ONE_ID",
+            fullName: "USER_ONE_FULL_NAME",
+          },
+          {
+            id: "USER_TWO_ID",
+            fullName: "USER_TWO_FULL_NAME",
+          },
+        ],
+      });
+      toggleLoading(false);
     }
   }, [id, navigate]);
 
