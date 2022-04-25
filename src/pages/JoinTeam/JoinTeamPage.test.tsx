@@ -17,5 +17,7 @@ describe("join teams page should", () => {
 
         const loginButton = screen.getByText(LOGIN_BUTTON_TEXT);
         expect(loginButton).toBeVisible();
-    })
+    });
+
+
 })

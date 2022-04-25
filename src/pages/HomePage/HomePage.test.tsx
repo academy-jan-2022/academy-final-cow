@@ -51,11 +51,6 @@ describe("HomePage test should", () => {
     expect(button).toBeInTheDocument();
   });
 
-  test("calls login service after clicking login button", async () => {
-    const button = screen.getByText(LOGIN_BUTTON_TEXT);
-    button.click();
-    expect(loginService).toHaveBeenCalled();
-  });
 
   test("navigates to the provided route after login", async () => {
     const button = screen.getByText(LOGIN_BUTTON_TEXT);
