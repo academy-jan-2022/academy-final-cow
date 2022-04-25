@@ -233,7 +233,7 @@ describe("Team page should", () => {
 
     await act(async () => activityButton.click());
 
-    const activityHeader = screen.getByTestId("activity-header");
+    const activityHeader = screen.getByTestId("activity-header-text");
     expect(activityHeader).toBeInTheDocument();
   });
 
@@ -258,5 +258,27 @@ describe("Team page should", () => {
 
     const nameFieldElement = screen.getByTestId("activity-name-field");
     expect(nameFieldElement).toBeInTheDocument();
+  });
+  test("display the submit button at modal when you click create activity button", async () => {
+    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
+
+    jest
+      .spyOn(teamService, GENERATE_JOIN_LINK)
+      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const activityButton = await screen.findByText("create new activity");
+
+    await act(async () => activityButton.click());
+
+    const activitySubmitButton = screen.getByTestId("activity-submit-button");
+    expect(activitySubmitButton).toBeInTheDocument();
   });
 });
