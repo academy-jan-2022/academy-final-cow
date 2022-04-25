@@ -1,20 +1,18 @@
-import GoogleLogin from "react-google-login";
-import {Settings} from "../../services/infrastructure/Settings";
+
 import React from "react";
+import LoginButton from "../../components/LoginButton/LoginButton";
+import {useNavigate} from "react-router-dom";
 
 function JoinTeamPage () {
+    const navigate = useNavigate()
 
-    const googleLoginHandler = () => {};
-
+    const redirectTo = (isSuccessful: boolean) => {
+        if (!isSuccessful) {
+            navigate("/error")
+        }
+    };
     return (
-        <GoogleLogin
-        clientId={`${Settings.getGoogleClientId()}`}
-        buttonText="Login"
-        onSuccess={googleLoginHandler}
-        onFailure={googleLoginHandler}
-        cookiePolicy={"single_host_origin"}
-        isSignedIn={true}
-    />)
+        <LoginButton handleLoginRedirection={redirectTo}   />)
 }
 
 export default JoinTeamPage;
