@@ -26,7 +26,7 @@ describe("login service should", () => {
 
     test("return '/error' route string", async () => {
       const returnValue = await loginService(unSuccessfulResponse);
-      expect(returnValue).toEqual("/error");
+      expect(returnValue).toEqual(false);
     });
   });
 
@@ -50,7 +50,7 @@ describe("login service should", () => {
 
     test("return '/teams' route string", async () => {
       const returnValue = await loginService(successfulResponse);
-      expect(returnValue).toEqual("/teams");
+      expect(returnValue).toEqual(true);
     });
 
     test("should set token object using storage handler", async () => {
