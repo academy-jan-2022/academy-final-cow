@@ -213,4 +213,27 @@ describe("Team page should", () => {
     const activityModal = screen.getByTestId("activity-modal");
     expect(activityModal).toBeInTheDocument();
   });
+
+  test("display the activity name field at modal when you click create activity button", async () => {
+    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
+
+    jest
+      .spyOn(teamService, GENERATE_JOIN_LINK)
+      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const activityButton = await screen.findByText("create new activity");
+
+    await act(async () => activityButton.click());
+
+    const nameFieldElement = screen.getByTestId("activity-name-field");
+    expect(nameFieldElement).toBeInTheDocument();
+  });
 });
