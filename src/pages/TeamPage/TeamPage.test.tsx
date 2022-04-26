@@ -522,5 +522,23 @@ describe("Team page should", () => {
         "My activity 2"
       );
     });
+    test("show input where you modify number of groups", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const activityButton = await screen.findByText("create new activity");
+
+      await act(async () => activityButton.click());
+
+      const activityInputAmountGroups = screen.getByTestId(
+        "activity-input-amount-groups"
+      );
+      expect(activityInputAmountGroups).toBeInTheDocument();
+    });
   });
 });
