@@ -22,7 +22,10 @@ const ActivitiesContainer = ({
   };
 
   return (
-    <div data-testid={"activity-box"}>
+    <Box
+      sx={{ border: "1px solid #333", padding: "20px", borderRadius: "5px" }}
+      data-testid={"activity-box"}
+    >
       <FormControl fullWidth>
         <InputLabel id="activity-label">Current Activity</InputLabel>
         <Select
@@ -39,11 +42,15 @@ const ActivitiesContainer = ({
           ))}
         </Select>
       </FormControl>
-      <Typography variant="h3" data-testid="activity-name-text">
+      <Typography variant="h4" data-testid="activity-name-text">
         {activities[currentActivityIndex].name}
       </Typography>
       {activities[currentActivityIndex].groups.map((group) => (
-        <Box key={Math.random()} data-testid="activity-member-box">
+        <Box
+          key={Math.random()}
+          data-testid="activity-member-box"
+          sx={{ padding: "20px", margin: "10px", bgcolor: "lightblue" }}
+        >
           {group.map((user) => (
             <Typography
               variant="body1"
@@ -55,7 +62,7 @@ const ActivitiesContainer = ({
           ))}
         </Box>
       ))}
-    </div>
+    </Box>
   );
 };
 
