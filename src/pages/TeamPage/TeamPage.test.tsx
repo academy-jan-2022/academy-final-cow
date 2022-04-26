@@ -424,4 +424,44 @@ describe("Team page should", () => {
     expect(activityNameText).toBeInTheDocument();
     expect(activityNameText).toContainHTML("My activity");
   });
+
+  test("display member inside activity box of the team when it exists", async () => {
+    const teamWithActivity: GetTeamResponse = {
+      id: TEAM_ID,
+      name: TEAM_NAME,
+      description: TEAM_DESCRIPTION,
+      members: [
+        {
+          id: USER_ONE_ID,
+          fullName: USER_ONE_FULL_NAME,
+        },
+        {
+          id: USER_TWO_ID,
+          fullName: USER_TWO_FULL_NAME,
+        },
+      ],
+      activities: [{ name: "My activity", groups: [{ name: "cowboy" }] }],
+    };
+    jest
+      .spyOn(teamService, GET_TEAM_METHOD)
+      .mockResolvedValue(teamWithActivity);
+
+    jest
+      .spyOn(teamService, GENERATE_JOIN_LINK)
+      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const activityMemberText = await waitFor(() =>
+      screen.getByTestId("activity-member-text")
+    );
+    expect(activityMemberText).toBeInTheDocument();
+    expect(activityMemberText).toContainHTML("cowboy");
+  });
 });
