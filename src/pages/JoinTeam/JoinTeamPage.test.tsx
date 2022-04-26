@@ -1,11 +1,9 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import JoinTeamPage from "./JoinTeamPage";
 import * as loginService from "../../services/application/loginService";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
-import teamService from "../../services/team/teamService";
-import LogoutButton from "../../components/LogoutButton/LogoutButton"
 
 const LOGIN_BUTTON_TEXT = "Login";
 
@@ -24,41 +22,6 @@ jest.mock("../../services/infrastructure/StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<
   typeof storageHandler
 >;
-
-jest.doMock('../../components/LogoutButton/LogoutButton', () => {
-  const LogoutButton = () => <div />;
-  return LogoutButton;
-});
-
-// jest.mock('./esModule', () => ({
-//   __esModule: true, // this property makes it work
-//   namedExport: jest.fn(),
-//   default: 'mockedDefaultExport',
-// }));
-
-// jest.mock("react-google-login", () => ({
-//   __esModule: true,
-//   useGoogleLogout: jest.fn().mockImplementation(() => {
-//     return {
-//       signOut: jest.fn()
-//     }
-//   }),
-//   default: ({
-//     onSuccess,
-//     buttonText,
-//   }: {
-//     onSuccess: any;
-//     buttonText: string;
-//   }) => {
-//     const handleClick = () => {
-//       onSuccess({
-//         profileObj: { name: "test name" },
-//       });
-//     };
-//
-//     return <button onClick={handleClick}>{buttonText}</button>;
-//   },
-// }));
 
 jest.mock("react-google-login", () => {
   return ({
@@ -134,22 +97,4 @@ describe("join teams page should", () => {
       expect(loginButton).not.toBeInTheDocument();
     });
   });
-
-  // test("call the team service to add the user to the team", () => {
-  //   const joinTokenId = "21312das";
-  //   const TOKEN_OBJECT = { token: "token" };
-  //   mockedStorageHandler.getJSONItem = jest
-  //     .fn()
-  //     .mockReturnValue(TOKEN_OBJECT);
-  //
-  //   render(
-  //     <MemoryRouter initialEntries={[`/join/${joinTokenId}`]}>
-  //       <Routes>
-  //         <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
-  //       </Routes>
-  //     </MemoryRouter>
-  //   );
-  //
-  //   expect(teamService.addUserToTeam()).toBeCalledWith(joinTokenId);
-  // })
 });

@@ -45,10 +45,6 @@ class TeamService {
 
     return { link: `${window.location.origin}/join/${resp.token}` };
   }
-
-  addUserToTeam() {
-    return undefined;
-  }
 }
 
 const teamService = new TeamService();

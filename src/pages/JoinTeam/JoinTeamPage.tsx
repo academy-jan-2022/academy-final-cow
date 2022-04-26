@@ -31,6 +31,7 @@ function JoinTeamPage() {
     </>
     );
   </PageTemplate>)
+
 }
 
 export default JoinTeamPage;
