@@ -47,6 +47,11 @@ class TeamService {
   }
 
   async addMember(joinTokenId: string | undefined): Promise<string> {
+    const resp: { teamId: string } = await client.post({
+      route: API_ENDPOINT.JOIN_TEAM,
+      body: { joinTokenId },
+    });
+
     return "";
   }
 }
