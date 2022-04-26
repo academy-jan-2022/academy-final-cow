@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate, useParams } from "react-router-dom";
-import { GetTeamResponse } from "../../services/team/Team";
+import { TeamWithMembers } from "../../services/team/Team";
 
 import PageHeading from "../../components/PageHeading/PageHeading";
 import { Button, List, ListItem, Stack, Typography } from "@mui/material";
@@ -10,7 +10,7 @@ import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 
 const TeamPage = () => {
   const { id } = useParams();
-  const [team, setTeam] = useState<GetTeamResponse>();
+  const [team, setTeam] = useState<TeamWithMembers>();
   const [open, setOpen] = React.useState(false);
   const [joinLink, setJoinLink] = React.useState("");
   const [isLoading, toggleLoading] = useState(true);
@@ -23,8 +23,8 @@ const TeamPage = () => {
     if (id) {
       teamService
         .getTeamById(id)
-        .then((fetchedTeam) => {
-          setTeam(fetchedTeam);
+        .then((response) => {
+          setTeam(response.team);
           toggleLoading(false);
         })
         .catch(() => navigate("/error"));
