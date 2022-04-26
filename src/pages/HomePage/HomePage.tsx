@@ -30,7 +30,7 @@ function HomePage() {
           data-testid="logo"
         />
       </header>
-      <LoginButton handleLoginRedirection={redirectTo}
+      <LoginButton onLogin={redirectTo}
       />
     </PageTemplate>
   );

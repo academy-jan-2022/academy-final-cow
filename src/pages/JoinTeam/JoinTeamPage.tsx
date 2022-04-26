@@ -45,7 +45,7 @@ function JoinTeamPage() {
     addMemberWhenLoggedIn();
   }, []);
 
-  const redirectTo = (isSuccessful: boolean) => {
+  const handleLogin = (isSuccessful: boolean) => {
     if (!isSuccessful) {
       navigate("/error");
       return
@@ -63,7 +63,7 @@ function JoinTeamPage() {
       ) : (
         <>
           <h1>Please, log in so we can add you to a team</h1>
-          <LoginButton handleLoginRedirection={redirectTo} />
+          <LoginButton onLogin={handleLogin} />
         </>
       )}
     </PageTemplate>

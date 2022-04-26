@@ -34,7 +34,7 @@ describe("LoginButton should", () => {
     beforeEach(() => {
         render(
             <BrowserRouter>
-                <LoginButton handleLoginRedirection={handleLoginRedirection} />
+                <LoginButton onLogin={handleLoginRedirection} />
             </BrowserRouter>
         );
     });

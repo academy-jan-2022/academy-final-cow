@@ -3,13 +3,13 @@ import {Settings} from "../../services/infrastructure/Settings";
 import React from "react";
 import loginService from "../../services/application/loginService";
 
-function LoginButton ( {handleLoginRedirection} : {handleLoginRedirection : any}) {
+function LoginButton ( {onLogin} : {onLogin : any}) {
 
     const googleLoginHandler = async (
         res: GoogleLoginResponse | GoogleLoginResponseOffline
     ) => {
         const isSuccessful = await loginService(res);
-        handleLoginRedirection(isSuccessful)
+        onLogin(isSuccessful)
     };
 
     return (
