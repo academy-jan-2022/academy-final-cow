@@ -10,6 +10,7 @@ function JoinTeamPage() {
   const { joinTokenId } = useParams();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const tokenObject = storageHandler.getJSONItem("tokenObject");
@@ -17,7 +18,13 @@ function JoinTeamPage() {
       setIsLoggedIn(true);
       teamService
         .addMember(joinTokenId)
+        .then((teamId) => {
+          setIsLoading(false);
+          return teamId;
+        })
         .then((teamId) => navigate(`/team/${teamId}`));
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
@@ -27,9 +34,9 @@ function JoinTeamPage() {
     }
   };
   return (
-    <PageTemplate>
+    <PageTemplate isLoading={isLoading}>
       {isLoggedIn ? (
-        <>Bla</>
+        <></>
       ) : (
         <>
           <h1>Please, log in so we can add you to a team</h1>

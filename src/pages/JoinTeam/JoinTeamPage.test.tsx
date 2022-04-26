@@ -110,8 +110,10 @@ describe("join teams page should", () => {
       expect(loginButton).not.toBeInTheDocument();
     });
 
-    test("call teamService to add the user", () => {
-      expect(mockedTeamService.addMember).toHaveBeenCalledWith(JOIN_TOKEN_ID);
+    test("call teamService to add the user", async () => {
+      await waitFor(() =>
+        expect(mockedTeamService.addMember).toHaveBeenCalledWith(JOIN_TOKEN_ID)
+      );
     });
 
     test("navigate to team page after joining", async () => {
