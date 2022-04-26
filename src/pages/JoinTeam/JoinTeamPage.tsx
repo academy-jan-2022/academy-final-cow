@@ -23,7 +23,7 @@ function JoinTeamPage() {
     setErrorMessage(error.message);
   }
 
-  useEffect(() => {
+  function addMemberWhenLoggedIn() {
     const tokenObject = storageHandler.getJSONItem("tokenObject");
     if (tokenObject) {
       setIsLoggedIn(true);
@@ -35,17 +35,25 @@ function JoinTeamPage() {
           return teamId;
         })
         .then((teamId) => navigate(`/team/${teamId}`))
-          .catch(handleError);
+        .catch(handleError);
     } else {
       setIsLoading(false);
     }
+  }
+
+  useEffect(() => {
+    addMemberWhenLoggedIn();
   }, []);
 
   const redirectTo = (isSuccessful: boolean) => {
     if (!isSuccessful) {
       navigate("/error");
+      return
     }
+
+    addMemberWhenLoggedIn();
   };
+  
   return (
     <PageTemplate isLoading={isLoading}>
       {isLoggedIn ? (
