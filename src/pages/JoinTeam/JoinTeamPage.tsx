@@ -15,7 +15,9 @@ function JoinTeamPage() {
     const tokenObject = storageHandler.getJSONItem("tokenObject");
     if (tokenObject) {
       setIsLoggedIn(true);
-      teamService.addMember(joinTokenId);
+      teamService
+        .addMember(joinTokenId)
+        .then((teamId) => navigate(`/team/${teamId}`));
     }
   }, []);
 
