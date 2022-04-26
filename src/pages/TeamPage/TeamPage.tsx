@@ -30,28 +30,28 @@ const TeamPage = () => {
         toggleLoading(false);
       });
       // .catch(() => navigate("/error"));
-      setTeam({
-        id: "1",
-        name: "TEAM_NAME",
-        description: "TEAM_DESCRIPTION",
-        members: [
-          {
-            id: "USER_ONE_ID",
-            fullName: "USER_ONE_FULL_NAME",
-          },
-          {
-            id: "USER_TWO_ID",
-            fullName: "USER_TWO_FULL_NAME",
-          },
-        ],
-        activities: [
-          {
-            name: "My activity",
-            groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
-          },
-        ],
-      });
-      toggleLoading(false);
+      /*   setTeam({
+          id: "1",
+          name: "TEAM_NAME",
+          description: "TEAM_DESCRIPTION",
+          members: [
+            {
+              id: "USER_ONE_ID",
+              fullName: "USER_ONE_FULL_NAME",
+            },
+            {
+              id: "USER_TWO_ID",
+              fullName: "USER_TWO_FULL_NAME",
+            },
+          ],
+          activities: [
+            {
+              name: "My activity",
+              groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
+            },
+          ],
+        });
+      toggleLoading(false);*/
     }
   }, [id, navigate]);
 
@@ -98,11 +98,13 @@ const TeamPage = () => {
             <Typography variant="body1" data-testid="activity-name-text">
               {team.activities[0].name}
             </Typography>
-            {team.activities[0].groups[0].map((user) => (
-              <Typography variant="body1" data-testid="activity-member-text">
-                {user.name}
-              </Typography>
-            ))}
+            {team.activities[0].groups.map((group) =>
+              group.map((user) => (
+                <Typography variant="body1" data-testid="activity-member-text">
+                  {user.name}
+                </Typography>
+              ))
+            )}
           </div>
         )}
       </div>

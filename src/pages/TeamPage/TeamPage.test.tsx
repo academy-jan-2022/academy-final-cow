@@ -49,7 +49,10 @@ const teamWithActivity: GetTeamResponse = {
   activities: [
     {
       name: "My activity",
-      groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
+      groups: [
+        [{ name: "cowboy" }, { name: "cowgirl" }],
+        [{ name: "dogboy" }, { name: "doggirl" }],
+      ],
     },
   ],
 };
@@ -419,7 +422,7 @@ describe("Team page should", () => {
       expect(activityMemberText[0]).toContainHTML("cowboy");
     });
 
-    test("display multiple member inside activity box of the team when it exists", async () => {
+    test("display multiple members inside activity box of the team when it exists", async () => {
       render(
         <MemoryRouter initialEntries={["/team/1"]}>
           <Routes>
@@ -433,6 +436,24 @@ describe("Team page should", () => {
       );
       expect(activityMemberText[0]).toContainHTML("cowboy");
       expect(activityMemberText[1]).toContainHTML("cowgirl");
+    });
+
+    test("display multiple groups with multiple members inside activity box of the team when it exists", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const activityMemberText = await waitFor(() =>
+        screen.getAllByTestId("activity-member-text")
+      );
+      expect(activityMemberText[0]).toContainHTML("cowboy");
+      expect(activityMemberText[1]).toContainHTML("cowgirl");
+      expect(activityMemberText[2]).toContainHTML("dogboy");
+      expect(activityMemberText[3]).toContainHTML("doggirl");
     });
   });
 });
