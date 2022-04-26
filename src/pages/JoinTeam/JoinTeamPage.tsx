@@ -25,8 +25,11 @@ function JoinTeamPage() {
       <h1>You're being added to a team...</h1>
     </>
   ) : (
-    <LoginButton handleLoginRedirection={redirectTo} />
-  );
+    <>
+      <h1>Please, log in so we can add you to a team</h1>
+      <LoginButton handleLoginRedirection={redirectTo} />
+    </>
+);
 }
 
 export default JoinTeamPage;
