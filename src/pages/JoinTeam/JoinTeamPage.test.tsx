@@ -9,8 +9,8 @@ const LOGIN_BUTTON_TEXT = "Login";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
-    ...(jest.requireActual("react-router-dom") as any),
-    useNavigate: () => mockedUsedNavigate
+  ...(jest.requireActual("react-router-dom") as any),
+  useNavigate: () => mockedUsedNavigate
 }));
 
 jest.mock("../../services/application/loginService");
@@ -22,78 +22,77 @@ jest.mock("../../services/infrastructure/StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<typeof storageHandler>;
 
 jest.mock("react-google-login", () => {
-    return ({
-                onSuccess,
-                buttonText
-            }: {
-        onSuccess: any;
-        buttonText: string;
-    }) => {
-        const handleClick = () => {
-            onSuccess({
-                profileObj: { name: "test name" }
-            });
-        };
-
-        return <button onClick={handleClick}>{buttonText}</button>;
+  return ({
+            onSuccess,
+            buttonText
+          }: {
+    onSuccess: any;
+    buttonText: string;
+  }) => {
+    const handleClick = () => {
+      onSuccess({
+        profileObj: { name: "test name" }
+      });
     };
+
+    return <button onClick={handleClick}>{buttonText}</button>;
+  };
 });
 
 describe("join teams page should", () => {
-    afterEach(() => {
-        jest.clearAllMocks();
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe("when user is not logged in", () => {
+    beforeEach(() => {
+      mockedStorageHandler.getJSONItem = jest.fn().mockReturnValue(null);
+
+      render(
+        <BrowserRouter>
+          <JoinTeamPage />
+        </BrowserRouter>
+      );
     });
 
-    describe("when user is not logged in", () => {
-        beforeEach(() => {
-            mockedStorageHandler.getJSONItem = jest.fn().mockReturnValue(null);
-
-            render(
-              <BrowserRouter>
-                  <JoinTeamPage />
-              </BrowserRouter>
-            );
-        });
-
-        test("render log in button", () => {
-            const loginButton = screen.getByText(LOGIN_BUTTON_TEXT);
-            expect(loginButton).toBeVisible();
-        });
-
-        test("redirects to error page if login is unsuccessful", async () => {
-            mockedLoginService.default.mockResolvedValue(false);
-
-            const loginButton = screen.getByText(LOGIN_BUTTON_TEXT);
-            loginButton.click();
-            await waitFor(() =>
-              expect(mockedUsedNavigate).toHaveBeenCalledWith("/error")
-            );
-        });
+    test("render log in button", () => {
+      const loginButton = screen.getByText(LOGIN_BUTTON_TEXT);
+      expect(loginButton).toBeVisible();
     });
 
-    describe("when user is logged in", () => {
-        beforeEach(() => {
-            const TOKEN_OBJECT = { token: "token" };
-            mockedStorageHandler.getJSONItem = jest
-              .fn()
-              .mockReturnValue(TOKEN_OBJECT);
+    test("redirects to error page if login is unsuccessful", async () => {
+      mockedLoginService.default.mockResolvedValue(false);
 
-            render(
-              <BrowserRouter>
-                  <JoinTeamPage />
-              </BrowserRouter>
-            );
-        });
-
-        test("render title", () => {
-            const title = screen.getByText("You're being added to a team...");
-            expect(title).toBeInTheDocument();
-        });
-
-
-        test("not show the login button if the user is logged in", async () => {
-            const loginButton = screen.queryByText(LOGIN_BUTTON_TEXT);
-            expect(loginButton).not.toBeInTheDocument();
-        });
+      const loginButton = screen.getByText(LOGIN_BUTTON_TEXT);
+      loginButton.click();
+      await waitFor(() =>
+        expect(mockedUsedNavigate).toHaveBeenCalledWith("/error")
+      );
     });
+  });
+
+  describe("when user is logged in", () => {
+    beforeEach(() => {
+      const TOKEN_OBJECT = { token: "token" };
+      mockedStorageHandler.getJSONItem = jest
+        .fn()
+        .mockReturnValue(TOKEN_OBJECT);
+
+      render(
+        <BrowserRouter>
+          <JoinTeamPage />
+        </BrowserRouter>
+      );
+    });
+
+    test("render title", () => {
+      const title = screen.getByText("You're being added to a team...");
+      expect(title).toBeInTheDocument();
+    });
+
+    test("not show the login button if the user is logged in", async () => {
+      const loginButton = screen.queryByText(LOGIN_BUTTON_TEXT);
+      expect(loginButton).not.toBeInTheDocument();
+    });
+  });
 });
