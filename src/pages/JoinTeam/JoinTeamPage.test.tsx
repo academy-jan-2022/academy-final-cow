@@ -10,7 +10,7 @@ const LOGIN_BUTTON_TEXT = "Login";
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
-  useNavigate: () => mockedUsedNavigate
+  useNavigate: () => mockedUsedNavigate,
 }));
 
 jest.mock("../../services/application/loginService");
@@ -19,19 +19,21 @@ const mockedLoginService = loginService as jest.Mocked<typeof loginService>;
 const mockedGetJSONItem = jest.fn();
 
 jest.mock("../../services/infrastructure/StorageHandler");
-const mockedStorageHandler = storageHandler as jest.Mocked<typeof storageHandler>;
+const mockedStorageHandler = storageHandler as jest.Mocked<
+  typeof storageHandler
+>;
 
 jest.mock("react-google-login", () => {
   return ({
-            onSuccess,
-            buttonText
-          }: {
+    onSuccess,
+    buttonText,
+  }: {
     onSuccess: any;
     buttonText: string;
   }) => {
     const handleClick = () => {
       onSuccess({
-        profileObj: { name: "test name" }
+        profileObj: { name: "test name" },
       });
     };
 
@@ -53,6 +55,11 @@ describe("join teams page should", () => {
           <JoinTeamPage />
         </BrowserRouter>
       );
+    });
+
+    test("render title", () => {
+      const title = screen.getByText("Please, log in so we can add you to a team");
+      expect(title).toBeInTheDocument();
     });
 
     test("render log in button", () => {
