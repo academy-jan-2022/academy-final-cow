@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import LoginButton from "../../components/LoginButton/LoginButton";
 import { useNavigate } from "react-router-dom";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
+import PageTemplate from "../TemplatePage/PageTemplate";
 
 function JoinTeamPage() {
   const navigate = useNavigate();
@@ -20,16 +21,17 @@ function JoinTeamPage() {
       navigate("/error");
     }
   };
-  return isLoggedIn ? (
-    <>
-      <h1>You're being added to a team...</h1>
-    </>
-  ) : (
+  return (<PageTemplate>
+    isLoggedIn ? (
+    <></>
+    ) : (
     <>
       <h1>Please, log in so we can add you to a team</h1>
       <LoginButton handleLoginRedirection={redirectTo} />
     </>
-);
+    );
+  </PageTemplate>)
+
 }
 
 export default JoinTeamPage;

@@ -92,11 +92,6 @@ describe("join teams page should", () => {
       );
     });
 
-    test("render title", () => {
-      const title = screen.getByText("You're being added to a team...");
-      expect(title).toBeInTheDocument();
-    });
-
     test("not show the login button if the user is logged in", async () => {
       const loginButton = screen.queryByText(LOGIN_BUTTON_TEXT);
       expect(loginButton).not.toBeInTheDocument();
