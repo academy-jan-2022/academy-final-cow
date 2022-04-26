@@ -85,6 +85,10 @@ const ActivityModal = ({
             <TextField
               type="number"
               inputProps={{ "data-testid": "activity-input-amount-groups" }}
+              onChange={(e) => {
+                setNumberOfGroups(parseInt(e.target.value));
+              }}
+              value={numberOfGroups}
             />
             <Button
               variant={"outlined"}
