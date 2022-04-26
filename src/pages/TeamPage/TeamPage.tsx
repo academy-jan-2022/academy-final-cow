@@ -15,7 +15,6 @@ import sadcowboy from "../../images/sadcowboy.png";
 const TeamPage = () => {
   const { id } = useParams();
   const [team, setTeam] = useState<TeamWithMembers>();
-  const [open, setOpen] = React.useState(false);
   const [showJoinLinkModal, setShowJoinLinkModal] = React.useState(false);
   const [joinLink, setJoinLink] = React.useState("");
   const [isLoading, toggleLoading] = useState(true);
