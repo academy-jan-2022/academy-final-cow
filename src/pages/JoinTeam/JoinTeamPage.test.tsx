@@ -16,15 +16,15 @@ jest.mock("react-router-dom", () => ({
 jest.mock("../../services/application/loginService");
 const mockedLoginService = loginService as jest.Mocked<typeof loginService>;
 
-const mockedGetJSONItem = jest.fn();
-
 jest.mock("../../services/infrastructure/StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<
   typeof storageHandler
 >;
 
-jest.mock("react-google-login", () => {
-  return ({
+jest.mock("react-google-login", () => ({
+  __esModule: true, // this property makes it work
+  ...(jest.requireActual("react-google-login") as any),
+  default: ({
     onSuccess,
     buttonText,
   }: {
@@ -38,8 +38,8 @@ jest.mock("react-google-login", () => {
     };
 
     return <button onClick={handleClick}>{buttonText}</button>;
-  };
-});
+  },
+}));
 
 describe("join teams page should", () => {
   afterEach(() => {
@@ -58,7 +58,9 @@ describe("join teams page should", () => {
     });
 
     test("render title", () => {
-      const title = screen.getByText("Please, log in so we can add you to a team");
+      const title = screen.getByText(
+        "Please, log in so we can add you to a team"
+      );
       expect(title).toBeInTheDocument();
     });
 
@@ -92,7 +94,7 @@ describe("join teams page should", () => {
       );
     });
 
-    test("not show the login button if the user is logged in", async () => {
+    test("not show the login button if the user is logged in", () => {
       const loginButton = screen.queryByText(LOGIN_BUTTON_TEXT);
       expect(loginButton).not.toBeInTheDocument();
     });

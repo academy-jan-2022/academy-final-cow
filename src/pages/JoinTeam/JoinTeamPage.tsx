@@ -21,17 +21,18 @@ function JoinTeamPage() {
       navigate("/error");
     }
   };
-  return (<PageTemplate>
-    isLoggedIn ? (
-    <></>
-    ) : (
-    <>
-      <h1>Please, log in so we can add you to a team</h1>
-      <LoginButton handleLoginRedirection={redirectTo} />
-    </>
-    );
-  </PageTemplate>)
-
+  return (
+    <PageTemplate>
+      {isLoggedIn ? (
+        <>Bla</>
+      ) : (
+        <>
+          <h1>Please, log in so we can add you to a team</h1>
+          <LoginButton handleLoginRedirection={redirectTo} />
+        </>
+      )}
+    </PageTemplate>
+  );
 }
 
 export default JoinTeamPage;
