@@ -162,7 +162,7 @@ describe("Team page should", () => {
       </MemoryRouter>
     );
 
-    const teamImage = await screen.getByTestId("team-image");
+    const teamImage = await waitFor(() => screen.getByTestId("team-image"));
     expect(teamImage).toBeInTheDocument();
 
     mockedTeamService.mockRestore();
