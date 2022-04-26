@@ -64,17 +64,6 @@ const teamWithActivity: GetTeamResponse = {
   ],
 };
 
-const teamWithOneActivity: GetTeamResponse = teamWithActivity;
-teamWithOneActivity.activities = [
-  {
-    name: "My activity",
-    groups: [
-      [{ name: "cowboy" }, { name: "cowgirl" }],
-      [{ name: "dogboy" }, { name: "doggirl" }],
-    ],
-  },
-];
-
 const teamWithoutActivity: GetTeamResponse = {
   id: TEAM_ID,
   name: TEAM_NAME,
@@ -512,11 +501,7 @@ describe("Team page should", () => {
       expect(activitySelector.length).toBe(1);
     });
 
-    test("display don't show selector when there is only one activity on team", async () => {
-      jest
-        .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue(teamWithOneActivity);
-
+    test("change activity that is displayed with select", async () => {
       render(
         <MemoryRouter initialEntries={["/team/1"]}>
           <Routes>
@@ -525,11 +510,25 @@ describe("Team page should", () => {
         </MemoryRouter>
       );
 
-      const activitySelector = await waitFor(() =>
-        screen.getAllByTestId("activity-selector")
+      const originalActivityName = await waitFor(() =>
+        screen.getByTestId("activity-name-text")
       );
 
-      expect(activitySelector.length).toBe(0);
+      expect(originalActivityName).toHaveTextContent("My activity");
+
+      const activitySelector = await waitFor(() =>
+        screen.getByTestId("activity-selector")
+      );
+
+      fireEvent.change(activitySelector, {
+        target: { value: 1 },
+      });
+
+      const newActivityName = await waitFor(() =>
+        screen.getByTestId("activity-name-text")
+      );
+
+      expect(newActivityName).toHaveTextContent("My activity 2");
     });
   });
 });
