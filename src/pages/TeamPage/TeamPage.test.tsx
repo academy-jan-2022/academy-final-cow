@@ -3,7 +3,7 @@ import TeamPage from "./TeamPage";
 import teamService from "../../services/team/teamService";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import { GetTeamResponse } from "../../services/team/Team";
+import { TeamWithMembers } from "../../services/team/Team";
 
 const TEAM_ID = "1";
 const TEAM_NAME = "Team 1";
@@ -16,7 +16,7 @@ const USER_TWO_FULL_NAME = "Anna Hello";
 const GET_TEAM_METHOD = "getTeamById";
 const GENERATE_JOIN_LINK = "generateJoinLink";
 
-const team: GetTeamResponse = {
+const team: TeamWithMembers = {
   id: TEAM_ID,
   name: TEAM_NAME,
   description: TEAM_DESCRIPTION,
@@ -36,7 +36,7 @@ describe("Team page should", () => {
   test("retrieve the team information", async () => {
     const mockedTeamService = jest
       .spyOn(teamService, GET_TEAM_METHOD)
-      .mockResolvedValue(team);
+      .mockResolvedValue({ team });
     render(
       <MemoryRouter initialEntries={["/team/1"]}>
         <Routes>
@@ -55,7 +55,7 @@ describe("Team page should", () => {
   test("render the team name as a title", async () => {
     const mockedTeamService = jest
       .spyOn(teamService, GET_TEAM_METHOD)
-      .mockResolvedValue(team);
+      .mockResolvedValue({ team });
 
     render(
       <MemoryRouter initialEntries={["/team/1"]}>
@@ -77,7 +77,7 @@ describe("Team page should", () => {
   test("render the team description", async () => {
     const mockedTeamService = jest
       .spyOn(teamService, GET_TEAM_METHOD)
-      .mockResolvedValue(team);
+      .mockResolvedValue({ team });
 
     render(
       <MemoryRouter initialEntries={["/team/1"]}>
@@ -96,7 +96,7 @@ describe("Team page should", () => {
   test("render team members", async () => {
     const mockedTeamService = jest
       .spyOn(teamService, GET_TEAM_METHOD)
-      .mockResolvedValue(team);
+      .mockResolvedValue({ team });
 
     render(
       <MemoryRouter initialEntries={["/team/1"]}>
@@ -116,7 +116,7 @@ describe("Team page should", () => {
   test("render generate join team link button", async () => {
     const mockedTeamService = jest
       .spyOn(teamService, GET_TEAM_METHOD)
-      .mockResolvedValue(team);
+      .mockResolvedValue({ team });
 
     render(
       <MemoryRouter initialEntries={["/team/1"]}>
@@ -132,7 +132,7 @@ describe("Team page should", () => {
   });
 
   test("calls generate uri on button clicked", async () => {
-    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
+    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue({ team });
 
     const mockedGenerateJoinLink = jest
       .spyOn(teamService, GENERATE_JOIN_LINK)
@@ -153,7 +153,7 @@ describe("Team page should", () => {
   });
 
   test("does not render modal when button has not been clicked", async () => {
-    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue(team);
+    jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue({ team });
 
     jest
       .spyOn(teamService, GENERATE_JOIN_LINK)
