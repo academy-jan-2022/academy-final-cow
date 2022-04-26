@@ -593,5 +593,32 @@ describe("Team page should", () => {
 
       expect(listOfUserCheckboxes.length).toEqual(2);
     });
+
+    test("send second user of 2 users inside activity modal when create new activity", async () => {
+      const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
+
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const activityButton = await screen.findByText("create new activity");
+      await act(async () => activityButton.click());
+      const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
+      listOfUserCheckboxes[0].click();
+      const activityNameText = screen.getByTestId("activity-name-field");
+      fireEvent.change(activityNameText, { target: { value: "My Activity" } });
+      const activitySubmitButton = screen.getByTestId("activity-submit-button");
+      activitySubmitButton.click();
+
+      expect(mockedTeamService).toBeCalledWith({
+        activityName: "My Activity",
+        numberOfGroups: 2,
+        members: [{ fullName: "Anna Hello", id: "2" }],
+      });
+    });
   });
 });
