@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
   Stack,
+  Checkbox,
 } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import { useNavigate } from "react-router-dom";
@@ -90,6 +91,13 @@ const ActivityModal = ({
               }}
               value={numberOfGroups}
             />
+            {members.map((member) => (
+              <Checkbox
+                data-testid="user-checkbox"
+                key={`user-checkbox-${member.fullName}`}
+                label={member.fullName}
+              />
+            ))}
             <Button
               variant={"outlined"}
               onClick={submitActivity}
