@@ -608,9 +608,12 @@ describe("Team page should", () => {
       const activityButton = await screen.findByText("create new activity");
       await act(async () => activityButton.click());
       const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
-      listOfUserCheckboxes[0].click();
+      fireEvent.click(listOfUserCheckboxes[0]);
+      //listOfUserCheckboxes[0].click();
       const activityNameText = screen.getByTestId("activity-name-field");
-      fireEvent.change(activityNameText, { target: { value: "My Activity" } });
+      fireEvent.change(activityNameText, {
+        target: { value: "My Activity" },
+      });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
       activitySubmitButton.click();
 

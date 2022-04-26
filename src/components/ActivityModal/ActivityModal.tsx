@@ -91,11 +91,18 @@ const ActivityModal = ({
               }}
               value={numberOfGroups}
             />
-            {members.map((member) => (
+            {fetchedMembers.map((member) => (
               <Checkbox
+                defaultChecked
                 data-testid="user-checkbox"
                 key={`user-checkbox-${member.fullName}`}
-                label={member.fullName}
+                onChange={(e) => {
+                  if (members.filter((e) => e.id === member.id).length > 0) {
+                    setMembers(members.filter((user) => user.id !== member.id));
+                  } else {
+                    setMembers([...members, member]);
+                  }
+                }}
               />
             ))}
             <Button
