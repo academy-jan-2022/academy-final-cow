@@ -149,6 +149,25 @@ describe("Team page should", () => {
     mockedTeamService.mockRestore();
   });
 
+  test("render the team image", async () => {
+    const mockedTeamService = jest
+      .spyOn(teamService, GET_TEAM_METHOD)
+      .mockResolvedValue(team);
+
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const teamImage = await screen.getByTestId("team-image");
+    expect(teamImage).toBeInTheDocument();
+
+    mockedTeamService.mockRestore();
+  });
+
   test("render team members", async () => {
     const mockedTeamService = jest
       .spyOn(teamService, GET_TEAM_METHOD)
