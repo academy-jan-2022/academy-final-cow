@@ -1,10 +1,12 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import {
   Box,
+  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   Typography,
+  FormControl,
 } from "@mui/material";
 import { ActivityResponse } from "../../services/team/Team";
 
@@ -21,17 +23,22 @@ const ActivitiesContainer = ({
 
   return (
     <div data-testid={"activity-box"}>
-      <Select
-        label="Activity"
-        onChange={handleSelectOnChange}
-        inputProps={{ "data-testid": "activity-selector" }}
-      >
-        {activities.map((activity, index) => (
-          <MenuItem key={activity.name} value={index}>
-            {activity.name}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl fullWidth>
+        <InputLabel id="activity-label">Current Activity</InputLabel>
+        <Select
+          labelId="activity-label"
+          label="Current Activity"
+          onChange={handleSelectOnChange}
+          inputProps={{ "data-testid": "activity-selector", label: "Activity" }}
+          value={currentActivityIndex.toString()}
+        >
+          {activities.map((activity, index) => (
+            <MenuItem key={activity.name} value={index}>
+              {activity.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <Typography variant="h3" data-testid="activity-name-text">
         {activities[currentActivityIndex].name}
       </Typography>
