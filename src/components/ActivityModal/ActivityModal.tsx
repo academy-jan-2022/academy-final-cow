@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Modal,
+  TextField,
+  Typography,
+  Stack,
+} from "@mui/material";
 import teamService from "../../services/team/teamService";
 import { useNavigate } from "react-router-dom";
 import { ActivityRequest, TeamMember } from "../../services/team/Team";
@@ -22,6 +29,8 @@ const ActivityModal = ({
     bgcolor: "white",
     borderRadius: "5px",
     p: 4,
+    display: "flex",
+    flexDirection: "column",
   };
 
   const [activityName, setActivityName] = useState("");
@@ -57,23 +66,29 @@ const ActivityModal = ({
     >
       <div data-testid="activity-modal">
         <Box sx={style}>
-          <Typography data-testid="activity-header-text">
-            Create new activity
-          </Typography>
-          <TextField
-            inputProps={{ "data-testid": "activity-name-field" }}
-            label={"Activity name"}
-            variant="outlined"
-            required
-            onChange={(e) => {
-              setActivityName(e.target.value);
-              setActivityNameError(false);
-            }}
-            error={activityNameError}
-          />
-          <Button onClick={submitActivity} data-testid="activity-submit-button">
-            Submit
-          </Button>
+          <Stack spacing={2}>
+            <Typography data-testid="activity-header-text">
+              Create new activity
+            </Typography>
+            <TextField
+              inputProps={{ "data-testid": "activity-name-field" }}
+              label={"Activity name"}
+              variant="outlined"
+              required
+              onChange={(e) => {
+                setActivityName(e.target.value);
+                setActivityNameError(false);
+              }}
+              error={activityNameError}
+            />
+            <Button
+              variant={"outlined"}
+              onClick={submitActivity}
+              data-testid="activity-submit-button"
+            >
+              Submit
+            </Button>
+          </Stack>
         </Box>
       </div>
     </Modal>
