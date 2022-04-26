@@ -85,16 +85,21 @@ describe("join teams page should", () => {
   });
 
   describe("when user is logged in", () => {
+    const JOIN_TOKEN_ID = "123239992";
     beforeEach(() => {
       const TOKEN_OBJECT = { token: "token" };
+
       mockedStorageHandler.getJSONItem = jest
         .fn()
         .mockReturnValue(TOKEN_OBJECT);
+      mockedTeamService.addMember = jest.fn();
 
       render(
-        <BrowserRouter>
-          <JoinTeamPage />
-        </BrowserRouter>
+        <MemoryRouter initialEntries={[`/join/${JOIN_TOKEN_ID}`]}>
+          <Routes>
+            <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
+          </Routes>
+        </MemoryRouter>
       );
     });
 
@@ -102,23 +107,9 @@ describe("join teams page should", () => {
       const loginButton = screen.queryByText(LOGIN_BUTTON_TEXT);
       expect(loginButton).not.toBeInTheDocument();
     });
-  });
 
-  test("call teamService to add the user", () => {
-    const TOKEN_OBJECT = { token: "token" };
-    mockedStorageHandler.getJSONItem = jest.fn().mockReturnValue(TOKEN_OBJECT);
-    const joinTokenId = "123239992";
-
-    mockedTeamService.addMember = jest.fn();
-
-    render(
-      <MemoryRouter initialEntries={[`/join/${joinTokenId}`]}>
-        <Routes>
-          <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    expect(mockedTeamService.addMember).toHaveBeenCalledWith(joinTokenId);
+    test("call teamService to add the user", () => {
+      expect(mockedTeamService.addMember).toHaveBeenCalledWith(JOIN_TOKEN_ID);
+    });
   });
 });
