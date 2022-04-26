@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { Box, MenuItem, Select, Typography } from "@mui/material";
+import React, { useState, ChangeEvent } from "react";
+import {
+  Box,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
 import { ActivityResponse } from "../../services/team/Team";
 
 const ActivitiesContainer = ({
@@ -7,10 +13,10 @@ const ActivitiesContainer = ({
 }: {
   activities: ActivityResponse[];
 }) => {
-  const [currentActivity, setCurrentActivity] = useState(0);
+  const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
 
-  const handleSelectOnChange = (e) => {
-    setCurrentActivity(e.target.value);
+  const handleSelectOnChange = (event: SelectChangeEvent) => {
+    setCurrentActivityIndex(parseInt(event.target.value));
   };
 
   return (
@@ -27,9 +33,9 @@ const ActivitiesContainer = ({
         ))}
       </Select>
       <Typography variant="h3" data-testid="activity-name-text">
-        {activities[0].name}
+        {activities[currentActivityIndex].name}
       </Typography>
-      {activities[0].groups.map((group) => (
+      {activities[currentActivityIndex].groups.map((group) => (
         <Box key={Math.random()} data-testid="activity-member-box">
           {group.map((user) => (
             <Typography

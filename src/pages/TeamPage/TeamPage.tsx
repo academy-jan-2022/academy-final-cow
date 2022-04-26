@@ -31,28 +31,35 @@ const TeamPage = () => {
         toggleLoading(false);
       });
       // .catch(() => navigate("/error"));
-      /*   setTeam({
-                id: "1",
-                name: "TEAM_NAME",
-                description: "TEAM_DESCRIPTION",
-                members: [
-                  {
-                    id: "USER_ONE_ID",
-                    fullName: "USER_ONE_FULL_NAME",
-                  },
-                  {
-                    id: "USER_TWO_ID",
-                    fullName: "USER_TWO_FULL_NAME",
-                  },
-                ],
-                activities: [
-                  {
-                    name: "My activity",
-                    groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
-                  },
-                ],
-              });
-            toggleLoading(false);*/
+      setTeam({
+        id: "1",
+        name: "TEAM_NAME",
+        description: "TEAM_DESCRIPTION",
+        members: [
+          {
+            id: "USER_ONE_ID",
+            fullName: "USER_ONE_FULL_NAME",
+          },
+          {
+            id: "USER_TWO_ID",
+            fullName: "USER_TWO_FULL_NAME",
+          },
+        ],
+        activities: [
+          {
+            name: "My activity",
+            groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
+          },
+          {
+            name: "My activity 2",
+            groups: [
+              [{ name: "fishboy" }, { name: "fishgirl" }],
+              [{ name: "chickenboy" }, { name: "chickengirl" }],
+            ],
+          },
+        ],
+      });
+      toggleLoading(false);
     }
   }, [id, navigate]);
 
@@ -93,6 +100,7 @@ const TeamPage = () => {
         <Button variant={"outlined"} onClick={() => toggleActivityModal(true)}>
           create new activity
         </Button>
+        {renderActivityBox()}
       </Stack>
       <ActivityModal
         open={showActivityModal}
@@ -104,7 +112,6 @@ const TeamPage = () => {
         open={showJoinLinkModal}
         handleClose={handleClose}
       />
-      <div>{renderActivityBox()}</div>
     </PageTemplate>
   );
 };
