@@ -57,7 +57,7 @@ const ActivitiesContainer = ({
       </Typography>
       {activities[currentActivityIndex].groups.map((group) => (
         <Box
-          key={Math.random()}
+          key={`group-${group[0].name}`}
           data-testid="activity-member-box"
           sx={{ padding: "20px", margin: "10px 0", bgcolor: "lightblue" }}
         >
