@@ -53,8 +53,9 @@ const ActivityModal = ({
       } catch (e) {
         navigate("/error");
       }
+    } else {
+      setActivityNameError(true);
     }
-    setActivityNameError(true);
   };
 
   return (
