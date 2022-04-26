@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate, useParams } from "react-router-dom";
 import { GetTeamResponse } from "../../services/team/Team";
-
+import "./team.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
-import { Button, List, ListItem, Stack, Typography } from "@mui/material";
+import { Button, List, ListItem, Typography, Container } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 import ActivityModal from "../../components/ActivityModal/ActivityModal";
@@ -87,24 +87,38 @@ const TeamPage = () => {
 
   return (
     <PageTemplate isLoading={isLoading}>
-      <PageHeading>{team?.name}</PageHeading>
-      <Stack alignSelf="flex-start" alignItems="flex-start" spacing={2}>
-        <Typography component="p">{team?.description}</Typography>
-        <img src={sadcowboy} alt="team logo" data-testid="team-image" />
-        <List>
-          Members:
-          {team?.members.map((member, index) => (
-            <ListItem key={member.id + "_" + index}>{member.fullName}</ListItem>
-          ))}
-        </List>
-        <Button variant={"outlined"} onClick={generateLink}>
-          create join link
-        </Button>
-        <Button variant={"outlined"} onClick={() => toggleActivityModal(true)}>
-          create new activity
-        </Button>
-        {renderActivityBox()}
-      </Stack>
+      <Container sx={{ display: "flex", marginTop: "25px" }}>
+        <Container>
+          <img
+            className="team-logo"
+            src={sadcowboy}
+            alt="team logo"
+            data-testid="team-image"
+          />
+          <List>
+            <Typography variant="h4">Members:</Typography>
+            {team?.members.map((member, index) => (
+              <ListItem key={member.id + "_" + index}>
+                {member.fullName}
+              </ListItem>
+            ))}
+          </List>
+          <Button variant={"outlined"} onClick={generateLink}>
+            create join link
+          </Button>
+        </Container>
+        <Container>
+          <PageHeading>{team?.name}</PageHeading>
+          <Typography component="p">{team?.description}</Typography>
+          {renderActivityBox()}
+          <Button
+            variant={"outlined"}
+            onClick={() => toggleActivityModal(true)}
+          >
+            create new activity
+          </Button>
+        </Container>
+      </Container>
       <ActivityModal
         open={showActivityModal}
         handleClose={() => toggleActivityModal(false)}
