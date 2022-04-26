@@ -10,6 +10,8 @@ import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 import ActivityModal from "../../components/ActivityModal/ActivityModal";
 import ActivitiesContainer from "../../components/ActivitiesContainer/ActivitiesContainer";
 
+import sadcowboy from "../../images/sadcowboy.png";
+
 const TeamPage = () => {
   const { id } = useParams();
   const [team, setTeam] = useState<GetTeamResponse>();
@@ -88,6 +90,7 @@ const TeamPage = () => {
       <PageHeading>{team?.name}</PageHeading>
       <Stack alignSelf="flex-start" alignItems="flex-start" spacing={2}>
         <Typography component="p">{team?.description}</Typography>
+        <img src={sadcowboy} alt="team logo" data-testid="team-image" />
         <List>
           Members:
           {team?.members.map((member, index) => (
