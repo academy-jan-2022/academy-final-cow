@@ -608,7 +608,7 @@ describe("Team page should", () => {
       await act(async () => activityButton.click());
 
       const includedMembersHeading = await screen.findByText(
-        "included members"
+        "Included members"
       );
       expect(includedMembersHeading).toBeInTheDocument();
     });

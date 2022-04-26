@@ -85,7 +85,7 @@ const ActivityModal = ({
       <div data-testid="activity-modal">
         <Box sx={style}>
           <Stack spacing={2}>
-            <Typography data-testid="activity-header-text">
+            <Typography data-testid="activity-header-text" variant="h5">
               Create new activity
             </Typography>
             <TextField
@@ -114,6 +114,7 @@ const ActivityModal = ({
               value={numberOfGroups}
             />
             <FormGroup>
+              <Typography variant="h6">Included members</Typography>
               {fetchedMembers.map((member) => (
                 <FormControlLabel
                   key={`user-checkbox-${member.fullName}`}
