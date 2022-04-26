@@ -1,9 +1,11 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import JoinTeamPage from "./JoinTeamPage";
 import * as loginService from "../../services/application/loginService";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
+import TeamPage from "../TeamPage/TeamPage";
+import TeamService from "../../services/team/teamService";
 
 const LOGIN_BUTTON_TEXT = "Login";
 
@@ -20,6 +22,9 @@ jest.mock("../../services/infrastructure/StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<
   typeof storageHandler
 >;
+
+jest.mock("../../services/team/teamService");
+const mockedTeamService = TeamService as jest.Mocked<typeof TeamService>;
 
 jest.mock("react-google-login", () => ({
   __esModule: true, // this property makes it work
@@ -98,5 +103,23 @@ describe("join teams page should", () => {
       const loginButton = screen.queryByText(LOGIN_BUTTON_TEXT);
       expect(loginButton).not.toBeInTheDocument();
     });
+  });
+
+  test("call teamService to add the user", () => {
+    const TOKEN_OBJECT = { token: "token" };
+    mockedStorageHandler.getJSONItem = jest.fn().mockReturnValue(TOKEN_OBJECT);
+    const joinTokenId = "123239992";
+
+    mockedTeamService.addMember = jest.fn();
+
+    render(
+      <MemoryRouter initialEntries={[`team/${joinTokenId}`]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(mockedTeamService.addMember).toHaveBeenCalledWith(joinTokenId);
   });
 });

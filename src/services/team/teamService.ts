@@ -45,6 +45,8 @@ class TeamService {
 
     return { link: `${window.location.origin}/join/${resp.token}` };
   }
+
+  async addMember(joinTokenId: string): void {}
 }
 
 const teamService = new TeamService();
