@@ -8,12 +8,16 @@ export type TeamMember = {
   fullName: string;
 };
 
-export type GetTeamResponse = {
+export type TeamWithMembers = {
   id: string;
   name: string;
   description: string;
   members: TeamMember[];
   activities?: ActivityResponse[];
+};
+
+export type GetTeamResponse = {
+  team: TeamWithMembers;
 };
 
 export type TeamByUser = {
