@@ -32,6 +32,44 @@ const team: GetTeamResponse = {
     },
   ],
 };
+const teamWithActivity: GetTeamResponse = {
+  id: TEAM_ID,
+  name: TEAM_NAME,
+  description: TEAM_DESCRIPTION,
+  members: [
+    {
+      id: USER_ONE_ID,
+      fullName: USER_ONE_FULL_NAME,
+    },
+    {
+      id: USER_TWO_ID,
+      fullName: USER_TWO_FULL_NAME,
+    },
+  ],
+  activities: [
+    {
+      name: "My activity",
+      groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
+    },
+  ],
+};
+
+const teamWithoutActivity: GetTeamResponse = {
+  id: TEAM_ID,
+  name: TEAM_NAME,
+  description: TEAM_DESCRIPTION,
+  members: [
+    {
+      id: USER_ONE_ID,
+      fullName: USER_ONE_FULL_NAME,
+    },
+    {
+      id: USER_TWO_ID,
+      fullName: USER_TWO_FULL_NAME,
+    },
+  ],
+  activities: [],
+};
 
 describe("Team page should", () => {
   test("retrieve the team information", async () => {
@@ -309,159 +347,93 @@ describe("Team page should", () => {
     activitySubmitButton.click();
     expect(mockedTeamService).toBeCalled();
   });
-  test("display activities box of the team when they exist", async () => {
-    const teamWithActivity: GetTeamResponse = {
-      id: TEAM_ID,
-      name: TEAM_NAME,
-      description: TEAM_DESCRIPTION,
-      members: [
-        {
-          id: USER_ONE_ID,
-          fullName: USER_ONE_FULL_NAME,
-        },
-        {
-          id: USER_TWO_ID,
-          fullName: USER_TWO_FULL_NAME,
-        },
-      ],
-      activities: [{ name: "My activity", groups: [{ name: "cowboy" }] }],
-    };
-    jest
-      .spyOn(teamService, GET_TEAM_METHOD)
-      .mockResolvedValue(teamWithActivity);
 
-    jest
-      .spyOn(teamService, GENERATE_JOIN_LINK)
-      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+  describe("Team page activity display should", () => {
+    beforeEach(() => {
+      jest
+        .spyOn(teamService, GET_TEAM_METHOD)
+        .mockResolvedValue(teamWithActivity);
 
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+      jest
+        .spyOn(teamService, GENERATE_JOIN_LINK)
+        .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+    });
+    test("display activities box of the team when they exist", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
 
-    const activityBox = await waitFor(() => screen.getByTestId("activity-box"));
-    expect(activityBox).toBeInTheDocument();
-  });
+      const activityBox = await waitFor(() =>
+        screen.getByTestId("activity-box")
+      );
+      expect(activityBox).toBeInTheDocument();
+    });
 
-  test("not display activities box of the team when they dont exist", async () => {
-    const teamWithoutActivity: GetTeamResponse = {
-      id: TEAM_ID,
-      name: TEAM_NAME,
-      description: TEAM_DESCRIPTION,
-      members: [
-        {
-          id: USER_ONE_ID,
-          fullName: USER_ONE_FULL_NAME,
-        },
-        {
-          id: USER_TWO_ID,
-          fullName: USER_TWO_FULL_NAME,
-        },
-      ],
-      activities: [],
-    };
-    jest
-      .spyOn(teamService, GET_TEAM_METHOD)
-      .mockResolvedValue(teamWithoutActivity);
+    test("not display activities box of the team when they dont exist", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
 
-    jest
-      .spyOn(teamService, GENERATE_JOIN_LINK)
-      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+      const activityBox = await waitFor(() =>
+        screen.queryAllByTestId("activity-box")
+      );
+      expect(activityBox.length).toEqual(0);
+    });
 
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    test("display activity name inside activity box of the team when it exists", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
 
-    const activityBox = await waitFor(() =>
-      screen.queryAllByTestId("activity-box")
-    );
-    expect(activityBox.length).toEqual(0);
-  });
+      const activityNameText = await waitFor(() =>
+        screen.getByTestId("activity-name-text")
+      );
+      expect(activityNameText).toBeInTheDocument();
+      expect(activityNameText).toContainHTML("My activity");
+    });
 
-  test("display activity name inside activity box of the team when it exists", async () => {
-    const teamWithActivity: GetTeamResponse = {
-      id: TEAM_ID,
-      name: TEAM_NAME,
-      description: TEAM_DESCRIPTION,
-      members: [
-        {
-          id: USER_ONE_ID,
-          fullName: USER_ONE_FULL_NAME,
-        },
-        {
-          id: USER_TWO_ID,
-          fullName: USER_TWO_FULL_NAME,
-        },
-      ],
-      activities: [{ name: "My activity", groups: [{ name: "cowboy" }] }],
-    };
-    jest
-      .spyOn(teamService, GET_TEAM_METHOD)
-      .mockResolvedValue(teamWithActivity);
+    test("display member inside activity box of the team when it exists", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
 
-    jest
-      .spyOn(teamService, GENERATE_JOIN_LINK)
-      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+      const activityMemberText = await waitFor(() =>
+        screen.getByTestId("activity-member-text")
+      );
+      expect(activityMemberText).toBeInTheDocument();
+      expect(activityMemberText).toContainHTML("cowboy");
+    });
 
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    test("display multiple member inside activity box of the team when it exists", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
 
-    const activityNameText = await waitFor(() =>
-      screen.getByTestId("activity-name-text")
-    );
-    expect(activityNameText).toBeInTheDocument();
-    expect(activityNameText).toContainHTML("My activity");
-  });
-
-  test("display member inside activity box of the team when it exists", async () => {
-    const teamWithActivity: GetTeamResponse = {
-      id: TEAM_ID,
-      name: TEAM_NAME,
-      description: TEAM_DESCRIPTION,
-      members: [
-        {
-          id: USER_ONE_ID,
-          fullName: USER_ONE_FULL_NAME,
-        },
-        {
-          id: USER_TWO_ID,
-          fullName: USER_TWO_FULL_NAME,
-        },
-      ],
-      activities: [{ name: "My activity", groups: [{ name: "cowboy" }] }],
-    };
-    jest
-      .spyOn(teamService, GET_TEAM_METHOD)
-      .mockResolvedValue(teamWithActivity);
-
-    jest
-      .spyOn(teamService, GENERATE_JOIN_LINK)
-      .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
-
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    const activityMemberText = await waitFor(() =>
-      screen.getByTestId("activity-member-text")
-    );
-    expect(activityMemberText).toBeInTheDocument();
-    expect(activityMemberText).toContainHTML("cowboy");
+      const activityMemberText = await waitFor(() =>
+        screen.getAllByTestId("activity-member-text")
+      );
+      expect(activityMemberText[0]).toContainHTML("cowboy");
+      expect(activityMemberText[1]).toContainHTML("cowgirl");
+    });
   });
 });

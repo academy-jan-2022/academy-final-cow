@@ -34,7 +34,7 @@ export type ActivityRequest = {
 
 export type ActivityResponse = {
   name: string;
-  groups: activityMember[];
+  groups: activityMember[][];
 };
 
 export type activityMember = {

@@ -44,7 +44,12 @@ const TeamPage = () => {
             fullName: "USER_TWO_FULL_NAME",
           },
         ],
-        activities: [{ name: "My activity", groups: [{ name: "cowboy" }] }],
+        activities: [
+          {
+            name: "My activity",
+            groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
+          },
+        ],
       });
       toggleLoading(false);
     }
@@ -94,7 +99,7 @@ const TeamPage = () => {
               {team.activities[0].name}
             </Typography>
             <Typography variant="body1" data-testid="activity-member-text">
-              {team.activities[0].groups[0].name}
+              {team.activities[0].groups[0][0].name}
             </Typography>
           </div>
         )}

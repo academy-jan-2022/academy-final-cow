@@ -45,7 +45,6 @@ const ActivityModal = ({
         navigate("/error");
       }
     }
-
     setActivityNameError(true);
   };
 
