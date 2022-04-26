@@ -87,8 +87,8 @@ const TeamPage = () => {
 
   return (
     <PageTemplate isLoading={isLoading}>
-      <Container sx={{ display: "flex", marginTop: "25px" }}>
-        <Container>
+      <Container sx={{ display: "flex", marginTop: "25px", height: "100%" }}>
+        <Container sx={{ flex: 1 }}>
           <img
             className="team-logo"
             src={sadcowboy}
@@ -107,7 +107,7 @@ const TeamPage = () => {
             create join link
           </Button>
         </Container>
-        <Container>
+        <Container sx={{ flex: 2 }}>
           <PageHeading>{team?.name}</PageHeading>
           <Typography component="p">{team?.description}</Typography>
           {renderActivityBox()}
