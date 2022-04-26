@@ -16,13 +16,15 @@ function JoinTeamPage() {
     const tokenObject = storageHandler.getJSONItem("tokenObject");
     if (tokenObject) {
       setIsLoggedIn(true);
+
       teamService
         .addMember(joinTokenId)
         .then((teamId) => {
           setIsLoading(false);
           return teamId;
         })
-        .then((teamId) => navigate(`/team/${teamId}`));
+        .then((teamId) => navigate(`/team/${teamId}`))
+          .catch((error) => navigate('/error'));
     } else {
       setIsLoading(false);
     }

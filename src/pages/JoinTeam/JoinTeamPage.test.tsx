@@ -1,10 +1,11 @@
 import React from "react";
-import {act, render, screen, waitFor} from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import JoinTeamPage from "./JoinTeamPage";
 import * as loginService from "../../services/application/loginService";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import TeamService from "../../services/team/teamService";
+import { AxiosError } from "axios";
 
 const LOGIN_BUTTON_TEXT = "Login";
 
@@ -55,9 +56,9 @@ describe("join teams page should", () => {
       mockedStorageHandler.getJSONItem = jest.fn().mockReturnValue(null);
       await act(async () => {
         render(
-            <BrowserRouter>
-              <JoinTeamPage/>
-            </BrowserRouter>
+          <BrowserRouter>
+            <JoinTeamPage />
+          </BrowserRouter>
         );
       });
     });
@@ -90,20 +91,20 @@ describe("join teams page should", () => {
     const TEAM_ID = "123";
 
     beforeEach(async () => {
-      const TOKEN_OBJECT = {token: "token"};
+      const TOKEN_OBJECT = { token: "token" };
 
       mockedStorageHandler.getJSONItem = jest
-          .fn()
-          .mockReturnValue(TOKEN_OBJECT);
+        .fn()
+        .mockReturnValue(TOKEN_OBJECT);
       mockedTeamService.addMember = jest.fn().mockResolvedValue(TEAM_ID);
 
       await act(async () => {
         render(
-            <MemoryRouter initialEntries={[`/join/${JOIN_TOKEN_ID}`]}>
-              <Routes>
-                <Route path="/join/:joinTokenId" element={<JoinTeamPage/>}/>
-              </Routes>
-            </MemoryRouter>
+          <MemoryRouter initialEntries={[`/join/${JOIN_TOKEN_ID}`]}>
+            <Routes>
+              <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
+            </Routes>
+          </MemoryRouter>
         );
       });
     });
@@ -113,38 +114,69 @@ describe("join teams page should", () => {
       expect(loginButton).not.toBeInTheDocument();
     });
 
-
     test("call teamService to add the user", async () => {
-        expect(mockedTeamService.addMember).toHaveBeenCalledWith(JOIN_TOKEN_ID)
+      expect(mockedTeamService.addMember).toHaveBeenCalledWith(JOIN_TOKEN_ID);
     });
 
     test("navigate to team page after joining", async () => {
       const teamRoute = `/team/${TEAM_ID}`;
-      expect(mockedUsedNavigate).toHaveBeenCalledWith(teamRoute)
+      expect(mockedUsedNavigate).toHaveBeenCalledWith(teamRoute);
+    });
+  });
 
+  describe("On error", () => {
+    test("show the error page if request fails ", async () => {
+      const JOIN_TOKEN_ID = "123239992";
+      const TOKEN_OBJECT = { token: "token" };
+
+      mockedStorageHandler.getJSONItem = jest
+        .fn()
+        .mockReturnValue(TOKEN_OBJECT);
+
+      const errorResponse: AxiosError = {
+        name: "error",
+        message: "Something went wrong",
+        config: {},
+        code: "500",
+        toJSON: jest.fn(),
+        isAxiosError: true,
+      };
+      mockedTeamService.addMember = jest.fn().mockRejectedValue(errorResponse);
+
+      await act(async () => {
+        render(
+          <MemoryRouter initialEntries={[`/join/${JOIN_TOKEN_ID}`]}>
+            <Routes>
+              <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
+            </Routes>
+          </MemoryRouter>
+        );
+      });
+
+      await expect(mockedUsedNavigate).toBeCalledWith("/error");
     });
   });
 
   test("display loading spinner while making the api call", async () => {
     const JOIN_TOKEN_ID = "123239992";
     const TEAM_ID = "123";
-    const TOKEN_OBJECT = {token: "token"};
+    const TOKEN_OBJECT = { token: "token" };
 
-    mockedStorageHandler.getJSONItem = jest
-        .fn()
-        .mockReturnValue(TOKEN_OBJECT);
+    mockedStorageHandler.getJSONItem = jest.fn().mockReturnValue(TOKEN_OBJECT);
     mockedTeamService.addMember = jest.fn().mockResolvedValue(TEAM_ID);
 
-    act( () => {render(
+    act(() => {
+      render(
         <MemoryRouter initialEntries={[`/join/${JOIN_TOKEN_ID}`]}>
           <Routes>
-            <Route path="/join/:joinTokenId" element={<JoinTeamPage/>}/>
+            <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
           </Routes>
-        </MemoryRouter>)})
+        </MemoryRouter>
+      );
+    });
 
-
-    const spinner = screen.getByTestId("loading-spinner")
+    const spinner = screen.getByTestId("loading-spinner");
     expect(spinner).toBeInTheDocument();
-    await waitFor( () => expect(spinner).not.toBeInTheDocument());
+    await waitFor(() => expect(spinner).not.toBeInTheDocument());
   });
 });
