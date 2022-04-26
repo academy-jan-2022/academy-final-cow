@@ -1,9 +1,16 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  fireEvent,
+  getByRole,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import TeamPage from "./TeamPage";
 import teamService from "../../services/team/teamService";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { GetTeamResponse } from "../../services/team/Team";
+import UserEvent from "@testing-library/user-event";
 
 const TEAM_ID = "1";
 const TEAM_NAME = "Team 1";
@@ -516,19 +523,13 @@ describe("Team page should", () => {
 
       expect(originalActivityName).toHaveTextContent("My activity");
 
-      const activitySelector = await waitFor(() =>
-        screen.getByTestId("activity-selector")
+      UserEvent.click(
+        getByRole(screen.getByTestId("activity-selector-container"), "button")
       );
-
-      fireEvent.change(activitySelector, {
-        target: { value: 1 },
-      });
-
-      const newActivityName = await waitFor(() =>
-        screen.getByTestId("activity-name-text")
+      await waitFor(() => UserEvent.click(screen.getByText("My activity 2")));
+      expect(screen.getByTestId("activity-name-text")).toHaveTextContent(
+        "My activity 2"
       );
-
-      expect(newActivityName).toHaveTextContent("My activity 2");
     });
   });
 });

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { GetTeamResponse } from "../../services/team/Team";
 
 import PageHeading from "../../components/PageHeading/PageHeading";
-import { Box, Button, List, ListItem, Stack, Typography } from "@mui/material";
+import { Button, List, ListItem, Stack, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 import ActivityModal from "../../components/ActivityModal/ActivityModal";
@@ -31,35 +31,35 @@ const TeamPage = () => {
         toggleLoading(false);
       });
       // .catch(() => navigate("/error"));
-      setTeam({
-        id: "1",
-        name: "TEAM_NAME",
-        description: "TEAM_DESCRIPTION",
-        members: [
-          {
-            id: "USER_ONE_ID",
-            fullName: "USER_ONE_FULL_NAME",
-          },
-          {
-            id: "USER_TWO_ID",
-            fullName: "USER_TWO_FULL_NAME",
-          },
-        ],
-        activities: [
-          {
-            name: "My activity",
-            groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
-          },
-          {
-            name: "My activity 2",
-            groups: [
-              [{ name: "fishboy" }, { name: "fishgirl" }],
-              [{ name: "chickenboy" }, { name: "chickengirl" }],
-            ],
-          },
-        ],
-      });
-      toggleLoading(false);
+      // setTeam({
+      //   id: "1",
+      //   name: "TEAM_NAME",
+      //   description: "TEAM_DESCRIPTION",
+      //   members: [
+      //     {
+      //       id: "USER_ONE_ID",
+      //       fullName: "USER_ONE_FULL_NAME",
+      //     },
+      //     {
+      //       id: "USER_TWO_ID",
+      //       fullName: "USER_TWO_FULL_NAME",
+      //     },
+      //   ],
+      //   activities: [
+      //     {
+      //       name: "My activity",
+      //       groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
+      //     },
+      //     {
+      //       name: "My activity 2",
+      //       groups: [
+      //         [{ name: "fishboy" }, { name: "fishgirl" }],
+      //         [{ name: "chickenboy" }, { name: "chickengirl" }],
+      //       ],
+      //     },
+      //   ],
+      // });
+      // toggleLoading(false);
     }
   }, [id, navigate]);
 

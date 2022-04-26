@@ -29,10 +29,11 @@ const ActivitiesContainer = ({
       <FormControl fullWidth>
         <InputLabel id="activity-label">Current Activity</InputLabel>
         <Select
+          data-testid={"activity-selector-container"}
           labelId="activity-label"
           label="Current Activity"
           onChange={handleSelectOnChange}
-          inputProps={{ "data-testid": "activity-selector", label: "Activity" }}
+          inputProps={{ "data-testid": "activity-selector" }}
           value={currentActivityIndex.toString()}
         >
           {activities.map((activity, index) => (
