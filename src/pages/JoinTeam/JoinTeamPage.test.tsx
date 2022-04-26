@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import {act, render, screen, waitFor} from "@testing-library/react";
 import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import JoinTeamPage from "./JoinTeamPage";
 import * as loginService from "../../services/application/loginService";
@@ -51,14 +51,15 @@ describe("join teams page should", () => {
   });
 
   describe("when user is not logged in", () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       mockedStorageHandler.getJSONItem = jest.fn().mockReturnValue(null);
-
-      render(
-        <BrowserRouter>
-          <JoinTeamPage />
-        </BrowserRouter>
-      );
+      await act(async () => {
+        render(
+            <BrowserRouter>
+              <JoinTeamPage/>
+            </BrowserRouter>
+        );
+      });
     });
 
     test("render title", () => {
@@ -88,40 +89,62 @@ describe("join teams page should", () => {
     const JOIN_TOKEN_ID = "123239992";
     const TEAM_ID = "123";
 
-    beforeEach(() => {
-      const TOKEN_OBJECT = { token: "token" };
+    beforeEach(async () => {
+      const TOKEN_OBJECT = {token: "token"};
 
       mockedStorageHandler.getJSONItem = jest
-        .fn()
-        .mockReturnValue(TOKEN_OBJECT);
+          .fn()
+          .mockReturnValue(TOKEN_OBJECT);
       mockedTeamService.addMember = jest.fn().mockResolvedValue(TEAM_ID);
 
-      render(
-        <MemoryRouter initialEntries={[`/join/${JOIN_TOKEN_ID}`]}>
-          <Routes>
-            <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
+      await act(async () => {
+        render(
+            <MemoryRouter initialEntries={[`/join/${JOIN_TOKEN_ID}`]}>
+              <Routes>
+                <Route path="/join/:joinTokenId" element={<JoinTeamPage/>}/>
+              </Routes>
+            </MemoryRouter>
+        );
+      });
     });
 
-    test("not show the login button if the user is logged in", () => {
+    test("not show the login button", () => {
       const loginButton = screen.queryByText(LOGIN_BUTTON_TEXT);
       expect(loginButton).not.toBeInTheDocument();
     });
 
+
     test("call teamService to add the user", async () => {
-      await waitFor(() =>
         expect(mockedTeamService.addMember).toHaveBeenCalledWith(JOIN_TOKEN_ID)
-      );
     });
 
     test("navigate to team page after joining", async () => {
       const teamRoute = `/team/${TEAM_ID}`;
+      expect(mockedUsedNavigate).toHaveBeenCalledWith(teamRoute)
 
-      await waitFor(() =>
-        expect(mockedUsedNavigate).toHaveBeenCalledWith(teamRoute)
-      );
     });
+  });
+
+  test("display loading spinner while making the api call", async () => {
+    const JOIN_TOKEN_ID = "123239992";
+    const TEAM_ID = "123";
+    const TOKEN_OBJECT = {token: "token"};
+
+    mockedStorageHandler.getJSONItem = jest
+        .fn()
+        .mockReturnValue(TOKEN_OBJECT);
+    mockedTeamService.addMember = jest.fn().mockResolvedValue(TEAM_ID);
+
+    act( () => {render(
+        <MemoryRouter initialEntries={[`/join/${JOIN_TOKEN_ID}`]}>
+          <Routes>
+            <Route path="/join/:joinTokenId" element={<JoinTeamPage/>}/>
+          </Routes>
+        </MemoryRouter>)})
+
+
+    const spinner = screen.getByTestId("loading-spinner")
+    expect(spinner).toBeInTheDocument();
+    await waitFor( () => expect(spinner).not.toBeInTheDocument());
   });
 });
