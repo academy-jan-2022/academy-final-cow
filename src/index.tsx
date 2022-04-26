@@ -16,7 +16,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/teams" element={<TeamsPage />} />
         <Route path="/team/:id" element={<TeamPage />} />
-        <Route path="/join/:token" element={<JoinTeamPage />} />
+        <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
         <Route path="/heartbeat" element={<HeartbeatPage />} />
         <Route path="/create-team" element={<CreateTeamPage />} />
         <Route path="/" element={<HomePage />} />

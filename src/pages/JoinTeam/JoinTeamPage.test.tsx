@@ -4,7 +4,6 @@ import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import JoinTeamPage from "./JoinTeamPage";
 import * as loginService from "../../services/application/loginService";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
-import TeamPage from "../TeamPage/TeamPage";
 import TeamService from "../../services/team/teamService";
 
 const LOGIN_BUTTON_TEXT = "Login";
@@ -113,9 +112,9 @@ describe("join teams page should", () => {
     mockedTeamService.addMember = jest.fn();
 
     render(
-      <MemoryRouter initialEntries={[`team/${joinTokenId}`]}>
+      <MemoryRouter initialEntries={[`/join/${joinTokenId}`]}>
         <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
+          <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
         </Routes>
       </MemoryRouter>
     );

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import LoginButton from "../../components/LoginButton/LoginButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import PageTemplate from "../TemplatePage/PageTemplate";
+import teamService from "../../services/team/teamService";
 
 function JoinTeamPage() {
   const navigate = useNavigate();
+  const { joinTokenId } = useParams();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -13,6 +15,7 @@ function JoinTeamPage() {
     const tokenObject = storageHandler.getJSONItem("tokenObject");
     if (tokenObject) {
       setIsLoggedIn(true);
+      teamService.addMember(joinTokenId);
     }
   }, []);
 
