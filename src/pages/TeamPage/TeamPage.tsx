@@ -44,6 +44,7 @@ const TeamPage = () => {
             fullName: "USER_TWO_FULL_NAME",
           },
         ],
+        activities: [{ name: "My activity", groups: [{ name: "cowboy" }] }],
       });
       toggleLoading(false);
     }
@@ -87,7 +88,13 @@ const TeamPage = () => {
         handleClose={handleClose}
       />
       <div>
-        {team?.activities && team?.activities?.length > 0 && <div data-testid={"activity-box"} />}
+        {team?.activities && team?.activities?.length > 0 && (
+          <div data-testid={"activity-box"}>
+            <Typography variant="body1" data-testid="activity-name-text">
+              {team.activities[0].name}
+            </Typography>
+          </div>
+        )}
       </div>
     </PageTemplate>
   );
