@@ -574,5 +574,24 @@ describe("Team page should", () => {
         ],
       });
     });
+    test("show list of users inside activity modal when create new activity", async () => {
+      const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
+
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const activityButton = await screen.findByText("create new activity");
+
+      await act(async () => activityButton.click());
+
+      const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
+
+      expect(listOfUserCheckboxes.length).toEqual(2);
+    });
   });
 });
