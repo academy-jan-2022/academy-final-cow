@@ -414,10 +414,9 @@ describe("Team page should", () => {
       );
 
       const activityMemberText = await waitFor(() =>
-        screen.getByTestId("activity-member-text")
+        screen.getAllByTestId("activity-member-text")
       );
-      expect(activityMemberText).toBeInTheDocument();
-      expect(activityMemberText).toContainHTML("cowboy");
+      expect(activityMemberText[0]).toContainHTML("cowboy");
     });
 
     test("display multiple member inside activity box of the team when it exists", async () => {

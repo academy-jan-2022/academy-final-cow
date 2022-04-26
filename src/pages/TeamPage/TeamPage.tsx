@@ -98,9 +98,11 @@ const TeamPage = () => {
             <Typography variant="body1" data-testid="activity-name-text">
               {team.activities[0].name}
             </Typography>
-            <Typography variant="body1" data-testid="activity-member-text">
-              {team.activities[0].groups[0][0].name}
-            </Typography>
+            {team.activities[0].groups[0].map((user) => (
+              <Typography variant="body1" data-testid="activity-member-text">
+                {user.name}
+              </Typography>
+            ))}
           </div>
         )}
       </div>
