@@ -54,8 +54,26 @@ const teamWithActivity: GetTeamResponse = {
         [{ name: "dogboy" }, { name: "doggirl" }],
       ],
     },
+    {
+      name: "My activity 2",
+      groups: [
+        [{ name: "fishboy" }, { name: "fishgirl" }],
+        [{ name: "chickenboy" }, { name: "chickengirl" }],
+      ],
+    },
   ],
 };
+
+const teamWithOneActivity: GetTeamResponse = teamWithActivity;
+teamWithOneActivity.activities = [
+  {
+    name: "My activity",
+    groups: [
+      [{ name: "cowboy" }, { name: "cowgirl" }],
+      [{ name: "dogboy" }, { name: "doggirl" }],
+    ],
+  },
+];
 
 const teamWithoutActivity: GetTeamResponse = {
   id: TEAM_ID,
@@ -361,6 +379,7 @@ describe("Team page should", () => {
         .spyOn(teamService, GENERATE_JOIN_LINK)
         .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
     });
+
     test("display activities box of the team when they exist", async () => {
       render(
         <MemoryRouter initialEntries={["/team/1"]}>
@@ -377,6 +396,10 @@ describe("Team page should", () => {
     });
 
     test("not display activities box of the team when they dont exist", async () => {
+      jest
+        .spyOn(teamService, GET_TEAM_METHOD)
+        .mockResolvedValue(teamWithoutActivity);
+
       render(
         <MemoryRouter initialEntries={["/team/1"]}>
           <Routes>
@@ -455,6 +478,7 @@ describe("Team page should", () => {
       expect(activityMemberText[2]).toContainHTML("dogboy");
       expect(activityMemberText[3]).toContainHTML("doggirl");
     });
+
     test("display multiple box groups containing multiple members inside activity box of the team when it exists", async () => {
       render(
         <MemoryRouter initialEntries={["/team/1"]}>
@@ -470,6 +494,42 @@ describe("Team page should", () => {
       expect(activityMemberBox[0]).toContainHTML("cowgirl");
       expect(activityMemberBox[1]).toContainHTML("dogboy");
       expect(activityMemberBox[1]).toContainHTML("doggirl");
+    });
+
+    test("display selector when multiple activities exist on team", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const activitySelector = await waitFor(() =>
+        screen.getAllByTestId("activity-selector")
+      );
+
+      expect(activitySelector.length).toBe(1);
+    });
+
+    test("display don't show selector when there is only one activity on team", async () => {
+      jest
+        .spyOn(teamService, GET_TEAM_METHOD)
+        .mockResolvedValue(teamWithOneActivity);
+
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const activitySelector = await waitFor(() =>
+        screen.getAllByTestId("activity-selector")
+      );
+
+      expect(activitySelector.length).toBe(0);
     });
   });
 });

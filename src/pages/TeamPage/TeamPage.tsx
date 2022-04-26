@@ -4,10 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { GetTeamResponse } from "../../services/team/Team";
 
 import PageHeading from "../../components/PageHeading/PageHeading";
-import { Button, List, ListItem, Stack, Typography } from "@mui/material";
+import { Box, Button, List, ListItem, Stack, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 import ActivityModal from "../../components/ActivityModal/ActivityModal";
+import ActivitiesContainer from "../../components/ActivitiesContainer/ActivitiesContainer";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -31,27 +32,27 @@ const TeamPage = () => {
       });
       // .catch(() => navigate("/error"));
       /*   setTeam({
-          id: "1",
-          name: "TEAM_NAME",
-          description: "TEAM_DESCRIPTION",
-          members: [
-            {
-              id: "USER_ONE_ID",
-              fullName: "USER_ONE_FULL_NAME",
-            },
-            {
-              id: "USER_TWO_ID",
-              fullName: "USER_TWO_FULL_NAME",
-            },
-          ],
-          activities: [
-            {
-              name: "My activity",
-              groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
-            },
-          ],
-        });
-      toggleLoading(false);*/
+                id: "1",
+                name: "TEAM_NAME",
+                description: "TEAM_DESCRIPTION",
+                members: [
+                  {
+                    id: "USER_ONE_ID",
+                    fullName: "USER_ONE_FULL_NAME",
+                  },
+                  {
+                    id: "USER_TWO_ID",
+                    fullName: "USER_TWO_FULL_NAME",
+                  },
+                ],
+                activities: [
+                  {
+                    name: "My activity",
+                    groups: [[{ name: "cowboy" }, { name: "cowgirl" }]],
+                  },
+                ],
+              });
+            toggleLoading(false);*/
     }
   }, [id, navigate]);
 
@@ -63,6 +64,17 @@ const TeamPage = () => {
         .then(handleOpen);
     }
   }
+
+  const renderActivityBox = () => {
+    const activitiesExistOnTeam =
+      team && team.activities && team.activities.length > 0;
+
+    if (activitiesExistOnTeam) {
+      const activities = team?.activities || [];
+      return <ActivitiesContainer activities={activities} />;
+    }
+    return <></>;
+  };
 
   return (
     <PageTemplate isLoading={isLoading}>
@@ -92,22 +104,7 @@ const TeamPage = () => {
         open={showJoinLinkModal}
         handleClose={handleClose}
       />
-      <div>
-        {team?.activities && team?.activities?.length > 0 && (
-          <div data-testid={"activity-box"}>
-            <Typography variant="body1" data-testid="activity-name-text">
-              {team.activities[0].name}
-            </Typography>
-            {team.activities[0].groups.map((group) =>
-              group.map((user) => (
-                <Typography variant="body1" data-testid="activity-member-text">
-                  {user.name}
-                </Typography>
-              ))
-            )}
-          </div>
-        )}
-      </div>
+      <div>{renderActivityBox()}</div>
     </PageTemplate>
   );
 };
