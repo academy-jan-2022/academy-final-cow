@@ -33,7 +33,7 @@ const TeamPage = () => {
         toggleLoading(false);
       });
       //.catch(() => navigate("/error"));
-      /*setTeam({
+      setTeam({
         id: "1",
         name: "TEAM_NAME",
         description: "TEAM_DESCRIPTION",
@@ -61,7 +61,7 @@ const TeamPage = () => {
           },
         ],
       });
-      toggleLoading(false);*/
+      toggleLoading(false);
     }
   }, [id, navigate]);
 

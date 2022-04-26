@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
   Modal,
+  Stack,
   TextField,
   Typography,
-  Stack,
-  Checkbox,
 } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import { useNavigate } from "react-router-dom";
@@ -59,6 +61,20 @@ const ActivityModal = ({
     }
   };
 
+  const handleCheckbox = (memberToCheck: TeamMember): void => {
+    const memberIsInlist =
+      members.filter((memberInList) => memberInList.id === memberToCheck.id)
+        .length > 0;
+
+    if (memberIsInlist) {
+      setMembers(
+        members.filter((memberInList) => memberInList.id !== memberToCheck.id)
+      );
+    } else {
+      setMembers([...members, memberToCheck]);
+    }
+  };
+
   return (
     <Modal
       open={open}
@@ -85,26 +101,33 @@ const ActivityModal = ({
             />
             <TextField
               type="number"
-              inputProps={{ "data-testid": "activity-input-amount-groups" }}
               onChange={(e) => {
                 setNumberOfGroups(parseInt(e.target.value));
               }}
+              InputProps={{
+                inputProps: {
+                  min: 2,
+                  max: fetchedMembers.length,
+                  "data-testid": "activity-input-amount-groups",
+                },
+              }}
               value={numberOfGroups}
             />
-            {fetchedMembers.map((member) => (
-              <Checkbox
-                defaultChecked
-                data-testid="user-checkbox"
-                key={`user-checkbox-${member.fullName}`}
-                onChange={(e) => {
-                  if (members.filter((e) => e.id === member.id).length > 0) {
-                    setMembers(members.filter((user) => user.id !== member.id));
-                  } else {
-                    setMembers([...members, member]);
+            <FormGroup>
+              {fetchedMembers.map((member) => (
+                <FormControlLabel
+                  key={`user-checkbox-${member.fullName}`}
+                  control={
+                    <Checkbox
+                      defaultChecked
+                      data-testid="user-checkbox"
+                      onChange={() => handleCheckbox(member)}
+                    />
                   }
-                }}
-              />
-            ))}
+                  label={member.fullName}
+                />
+              ))}
+            </FormGroup>
             <Button
               variant={"outlined"}
               onClick={submitActivity}

@@ -532,7 +532,6 @@ describe("Team page should", () => {
       );
 
       const activityButton = await screen.findByText("create new activity");
-
       await act(async () => activityButton.click());
 
       const activityInputAmountGroups = screen.getByTestId(
@@ -594,6 +593,26 @@ describe("Team page should", () => {
       expect(listOfUserCheckboxes.length).toEqual(2);
     });
 
+    test("display included members heading", async () => {
+      const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
+
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const activityButton = await screen.findByText("create new activity");
+      await act(async () => activityButton.click());
+
+      const includedMembersHeading = await screen.findByText(
+        "included members"
+      );
+      expect(includedMembersHeading).toBeInTheDocument();
+    });
+
     test("send second user of 2 users inside activity modal when create new activity", async () => {
       const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
 
@@ -608,8 +627,9 @@ describe("Team page should", () => {
       const activityButton = await screen.findByText("create new activity");
       await act(async () => activityButton.click());
       const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
-      fireEvent.click(listOfUserCheckboxes[0]);
-      //listOfUserCheckboxes[0].click();
+
+      listOfUserCheckboxes[0].click();
+
       const activityNameText = screen.getByTestId("activity-name-field");
       fireEvent.change(activityNameText, {
         target: { value: "My Activity" },
