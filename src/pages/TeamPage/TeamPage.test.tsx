@@ -455,5 +455,21 @@ describe("Team page should", () => {
       expect(activityMemberText[2]).toContainHTML("dogboy");
       expect(activityMemberText[3]).toContainHTML("doggirl");
     });
+    test("display multiple box groups containing multiple members inside activity box of the team when it exists", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+      const activityMemberBox = await waitFor(() =>
+        screen.getAllByTestId("activity-member-box")
+      );
+      expect(activityMemberBox[0]).toContainHTML("cowboy");
+      expect(activityMemberBox[0]).toContainHTML("cowgirl");
+      expect(activityMemberBox[1]).toContainHTML("dogboy");
+      expect(activityMemberBox[1]).toContainHTML("doggirl");
+    });
   });
 });
