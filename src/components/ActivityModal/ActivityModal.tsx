@@ -82,6 +82,10 @@ const ActivityModal = ({
               }}
               error={activityNameError}
             />
+            <TextField
+              type="number"
+              inputProps={{ "data-testid": "activity-input-amount-groups" }}
+            />
             <Button
               variant={"outlined"}
               onClick={submitActivity}

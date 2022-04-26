@@ -540,5 +540,39 @@ describe("Team page should", () => {
       );
       expect(activityInputAmountGroups).toBeInTheDocument();
     });
+
+    test("send 4 groups where you modify number of input groups", async () => {
+      const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
+
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const activityButton = await screen.findByText("create new activity");
+
+      await act(async () => activityButton.click());
+
+      const activityInputAmountGroups = screen.getByTestId(
+        "activity-input-amount-groups"
+      );
+      fireEvent.change(activityInputAmountGroups, { target: { value: "4" } });
+
+      const activityNameText = screen.getByTestId("activity-name-field");
+      fireEvent.change(activityNameText, { target: { value: "My Activity" } });
+      const activitySubmitButton = screen.getByTestId("activity-submit-button");
+      activitySubmitButton.click();
+      expect(mockedTeamService).toBeCalledWith({
+        activityName: "My Activity",
+        numberOfGroups: 4,
+        members: [
+          { fullName: "Peter Parker", id: "1" },
+          { fullName: "Anna Hello", id: "2" },
+        ],
+      });
+    });
   });
 });
