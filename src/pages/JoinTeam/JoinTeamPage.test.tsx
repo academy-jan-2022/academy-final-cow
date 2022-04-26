@@ -86,13 +86,15 @@ describe("join teams page should", () => {
 
   describe("when user is logged in", () => {
     const JOIN_TOKEN_ID = "123239992";
+    const TEAM_ID = "123";
+
     beforeEach(() => {
       const TOKEN_OBJECT = { token: "token" };
 
       mockedStorageHandler.getJSONItem = jest
         .fn()
         .mockReturnValue(TOKEN_OBJECT);
-      mockedTeamService.addMember = jest.fn();
+      mockedTeamService.addMember = jest.fn().mockResolvedValue(TEAM_ID);
 
       render(
         <MemoryRouter initialEntries={[`/join/${JOIN_TOKEN_ID}`]}>
@@ -110,6 +112,14 @@ describe("join teams page should", () => {
 
     test("call teamService to add the user", () => {
       expect(mockedTeamService.addMember).toHaveBeenCalledWith(JOIN_TOKEN_ID);
+    });
+
+    test("navigate to team page after joining", async () => {
+      const teamRoute = `/team/${TEAM_ID}`;
+
+      await waitFor(() =>
+        expect(mockedUsedNavigate).toHaveBeenCalledWith(teamRoute)
+      );
     });
   });
 });
