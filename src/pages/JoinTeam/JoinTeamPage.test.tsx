@@ -4,8 +4,8 @@ import JoinTeamPage from "./JoinTeamPage";
 import * as loginService from "../../services/application/loginService";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import TeamService from "../../services/team/teamService";
-import { AxiosError } from "axios";
 import renderWithMemoryRouter from "../../testUtils/renderWithRouter";
+import createAxiosError from "../../testUtils/createAxiosError";
 
 const LOGIN_BUTTON_TEXT = "Login";
 
@@ -125,16 +125,9 @@ describe("join teams page should", () => {
         .fn()
         .mockReturnValue(TOKEN_OBJECT);
 
-      const errorResponse: AxiosError = {
-        name: "error",
-        message: "Something went wrong",
-        config: {},
-        code: "500",
-        toJSON: jest.fn(),
-        isAxiosError: true,
-      };
-
-      mockedTeamService.addMember = jest.fn().mockRejectedValue(errorResponse);
+      mockedTeamService.addMember = jest
+        .fn()
+        .mockRejectedValue(createAxiosError("500", "Something went wrong"));
       await act(async () => {
         renderWithMemoryRouter(<JoinTeamPage />, {
           pageUrl: JOIN_TEAM_URL_PATH,
@@ -150,14 +143,7 @@ describe("join teams page should", () => {
         .fn()
         .mockReturnValue(TOKEN_OBJECT);
 
-      const errorResponse: AxiosError = {
-        name: "error",
-        message: "Token is invalid",
-        config: {},
-        code: "400",
-        toJSON: jest.fn(),
-        isAxiosError: true,
-      };
+      const errorResponse = createAxiosError("400", "Token is invalid");
       mockedTeamService.addMember = jest.fn().mockRejectedValue(errorResponse);
 
       await act(async () => {
