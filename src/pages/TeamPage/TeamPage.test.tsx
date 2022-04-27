@@ -346,8 +346,12 @@ describe("Team page should", () => {
       expect(activitySubmitButton).toBeInTheDocument();
     });
 
-    test("call team service when activity name is filled and submit button clicked", async () => {
-      const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
+    test("call team service when activity name is filled and submit button clicked and the page is refreshed", async () => {
+      const mockedTeamServiceCreateActivty = jest.spyOn(
+        teamService,
+        CREATE_ACTIVITY
+      );
+      const mockedTeamServiceGetTeam = jest.spyOn(teamService, GET_TEAM_METHOD);
 
       render(
         <MemoryRouter initialEntries={["/team/1"]}>
@@ -364,7 +368,8 @@ describe("Team page should", () => {
       fireEvent.change(activityNameText, { target: { value: "my activity" } });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
       activitySubmitButton.click();
-      expect(mockedTeamService).toBeCalled();
+      expect(mockedTeamServiceCreateActivty).toBeCalled();
+      expect(mockedTeamServiceGetTeam).toBeCalledTimes(2);
     });
 
     test("display activities box of the team when they exist", async () => {
@@ -385,7 +390,7 @@ describe("Team page should", () => {
     test("not display activities box of the team when they dont exist", async () => {
       jest
         .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue(teamWithoutActivity);
+        .mockResolvedValue({ team: teamWithoutActivity });
 
       render(
         <MemoryRouter initialEntries={["/team/1"]}>

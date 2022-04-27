@@ -52,7 +52,10 @@ const ActivityModal = ({
       };
 
       try {
+        // set loading
         await teamService.createActivity(newActivity);
+        // fetch team again
+        // turn off loading
       } catch (e) {
         navigate("/error");
       }
