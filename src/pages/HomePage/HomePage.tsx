@@ -1,24 +1,21 @@
 import React from "react";
-import GoogleLogin, {
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-} from "react-google-login";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate } from "react-router-dom";
 import logo from "../../images/teaminator_logo.png";
 import "./homepage.css";
 import LoginButton from "../../components/LoginButton/LoginButton";
+import { PageRoutes } from "../../index";
 
 function HomePage() {
   const navigate = useNavigate();
 
   const redirectTo = (isSuccessful: boolean) => {
-      if (isSuccessful) {
-          navigate("/teams");
-          return
-      }
-      navigate("/error");
-  }
+    if (isSuccessful) {
+      navigate(PageRoutes.TEAMS);
+      return;
+    }
+    navigate(PageRoutes.ERROR);
+  };
 
   return (
     <PageTemplate>
@@ -30,8 +27,7 @@ function HomePage() {
           data-testid="logo"
         />
       </header>
-      <LoginButton onLogin={redirectTo}
-      />
+      <LoginButton onLogin={redirectTo} />
     </PageTemplate>
   );
 }

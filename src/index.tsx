@@ -10,22 +10,33 @@ import ErrorPage, { ERRORS } from "./pages/ErrorPage/ErrorPage";
 import TeamPage from "./pages/TeamPage/TeamPage";
 import JoinTeamPage from "./pages/JoinTeam/JoinTeamPage";
 
+export enum PageRoutes {
+  TEAMS = "/teams",
+  TEAM = "/team/:id",
+  JOIN_TEAM = "/join/:joinTokenId",
+  HEARTBEAT = "/heartbeat",
+  CREATE_TEAM = "/create-team",
+  HOME = "/",
+  ERROR = "/error",
+  NOT_FOUND = "/*",
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/teams" element={<TeamsPage />} />
-        <Route path="/team/:id" element={<TeamPage />} />
-        <Route path="/join/:joinTokenId" element={<JoinTeamPage />} />
-        <Route path="/heartbeat" element={<HeartbeatPage />} />
-        <Route path="/create-team" element={<CreateTeamPage />} />
-        <Route path="/" element={<HomePage />} />
+        <Route path={PageRoutes.TEAMS} element={<TeamsPage />} />
+        <Route path={PageRoutes.TEAM} element={<TeamPage />} />
+        <Route path={PageRoutes.JOIN_TEAM} element={<JoinTeamPage />} />
+        <Route path={PageRoutes.HEARTBEAT} element={<HeartbeatPage />} />
+        <Route path={PageRoutes.CREATE_TEAM} element={<CreateTeamPage />} />
+        <Route path={PageRoutes.HOME} element={<HomePage />} />
         <Route
-          path="/error"
+          path={PageRoutes.ERROR}
           element={<ErrorPage error={ERRORS.SOMETHING_WENT_WRONG} />}
         />
         <Route
-          path="/*"
+          path={PageRoutes.NOT_FOUND}
           element={<ErrorPage error={ERRORS.PAGE_NOT_FOUND} />}
         />
       </Routes>
