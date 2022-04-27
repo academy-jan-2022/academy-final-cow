@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../images/teaminator_logo.png";
 import "./homepage.css";
 import LoginButton from "../../components/LoginButton/LoginButton";
-import { PageRoutes } from "../../index";
+import { PageRoutes } from "../pageRoutes";
 
 function HomePage() {
   const navigate = useNavigate();
