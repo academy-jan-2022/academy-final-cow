@@ -18,12 +18,14 @@ const ActivityModal = ({
   handleClose,
   open,
   fetchedMembers,
+  teamId,
   getTeam,
   toggleLoading,
 }: {
   handleClose: () => void;
   open: boolean;
   fetchedMembers: TeamMember[];
+  teamId: string | undefined;
   getTeam: () => void;
   toggleLoading: (loading: boolean) => void;
 }) => {
@@ -48,10 +50,11 @@ const ActivityModal = ({
   const navigate = useNavigate();
 
   const submitActivity = async () => {
-    if (activityName) {
+    if (activityName && teamId) {
       const newActivity: ActivityRequest = {
         activityName,
         numberOfGroups,
+        teamId,
         members,
       };
 
