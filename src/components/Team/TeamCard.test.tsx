@@ -10,7 +10,11 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("HomePage test should", () => {
-  const team = { id: 1, name: "ECA", description: "Amazing team description" };
+  const team = {
+    id: "1",
+    name: "ECA",
+    description: "Amazing team description",
+  };
 
   beforeEach(() => {
     render(
