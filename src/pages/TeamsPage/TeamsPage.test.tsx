@@ -14,60 +14,38 @@ jest.mock("../../services/team/teamService");
 const mockedGetTeamsService = TeamService as jest.Mocked<typeof TeamService>;
 
 describe("Teams page should", () => {
-  test("renders the heading", async () => {
-    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
+  describe("as default behaviour", () => {
+    beforeEach(async () => {
+      mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
 
-    await act(async () => {
-      renderWithMemoryRouter(<TeamsPage />, {});
-    });
-    const title = screen.getByText("Teams");
-    expect(title).toBeInTheDocument();
-  });
-
-  test("renders the create team button", async () => {
-    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
-
-    await act(async () => {
-      renderWithMemoryRouter(<TeamsPage />, {});
-    });
-    const createTeamBtn = screen.getByText("Create New Team");
-    expect(createTeamBtn).toBeInTheDocument();
-  });
-
-  test("create team button should take you to /create-team page", async () => {
-    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
-
-    await act(async () => {
-      renderWithMemoryRouter(<TeamsPage />, {});
-    });
-    const createTeamBtn = screen.getByText("Create New Team");
-    createTeamBtn.click();
-    expect(mockedUsedNavigate).toBeCalledWith("/create-team");
-  });
-
-  test("render a team card when I am part of one team", async () => {
-    const team = {
-      id: "1",
-      name: "Team 1",
-      description: "Team 1 description",
-    };
-
-    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([team]);
-
-    await act(async () => {
-      renderWithMemoryRouter(<TeamsPage />, {});
+      await act(async () => {
+        renderWithMemoryRouter(<TeamsPage />, {});
+      });
     });
 
-    const cardElement = screen.getAllByRole("teamCard");
-    expect(cardElement).toHaveLength(1);
+    test("renders the heading", () => {
+      const title = screen.getByText("Teams");
+      expect(title).toBeInTheDocument();
+    });
 
-    const cardDescription = screen.getByText("Team 1 description");
-    expect(cardDescription).toBeInTheDocument();
-    const cardName = screen.getByText("Team 1");
-    expect(cardName).toBeInTheDocument();
+    test("renders the create team button", () => {
+      const createTeamBtn = screen.getByText("Create New Team");
+      expect(createTeamBtn).toBeInTheDocument();
+    });
+
+    test("create team button should take you to /create-team page", async () => {
+      const createTeamBtn = screen.getByText("Create New Team");
+      createTeamBtn.click();
+      expect(mockedUsedNavigate).toBeCalledWith("/create-team");
+    });
+
+    test("not render a team card when I am not part of at least one team", async () => {
+      const cardElement = screen.queryByRole("teamCard");
+      expect(cardElement).not.toBeInTheDocument();
+    });
   });
 
-  test("render 2 team cards when I am part of two teams", async () => {
+  test("render as many cards as teams I belong to", async () => {
     const team = {
       id: "1",
       name: "Team 1",
@@ -89,27 +67,15 @@ describe("Teams page should", () => {
     });
 
     const cardElement = screen.getAllByRole("teamCard");
-    expect(cardElement).toHaveLength(2);
-
     const cardName = screen.getByText("Team 1");
-    expect(cardName).toBeInTheDocument();
     const team1DescriptionElement = screen.getByText("Team 1 description");
-    expect(team1DescriptionElement).toBeInTheDocument();
-
     const cardNameForTwo = screen.getByText("ECA");
-    expect(cardNameForTwo).toBeInTheDocument();
     const team2DescriptionElement = screen.getByText("Team 2 description");
+
+    expect(cardElement).toHaveLength(2);
+    expect(cardName).toBeInTheDocument();
+    expect(team1DescriptionElement).toBeInTheDocument();
+    expect(cardNameForTwo).toBeInTheDocument();
     expect(team2DescriptionElement).toBeInTheDocument();
-  });
-
-  test("not render a team card when I am not part of at least one team", async () => {
-    mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
-
-    await act(async () => {
-      renderWithMemoryRouter(<TeamsPage />, {});
-    });
-
-    const cardElement = screen.queryByRole("teamCard");
-    expect(cardElement).not.toBeInTheDocument();
   });
 });
