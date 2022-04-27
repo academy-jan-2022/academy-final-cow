@@ -1,6 +1,5 @@
 import React from "react";
-import { act, render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { act, screen, waitFor } from "@testing-library/react";
 import JoinTeamPage from "./JoinTeamPage";
 import * as loginService from "../../services/application/loginService";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
@@ -63,11 +62,7 @@ describe("join teams page should", () => {
     beforeEach(async () => {
       mockedStorageHandler.getJSONItem = jest.fn().mockReturnValue(null);
       await act(async () => {
-        render(
-          <BrowserRouter>
-            <JoinTeamPage />
-          </BrowserRouter>
-        );
+        renderWithMemoryRouter(<JoinTeamPage />, {});
       });
     });
 
@@ -189,6 +184,7 @@ describe("join teams page should", () => {
       });
 
       const spinner = screen.getByTestId("loading-spinner");
+
       expect(spinner).toBeInTheDocument();
       await waitFor(() => expect(spinner).not.toBeInTheDocument());
     });
