@@ -1,9 +1,9 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import CreateTeamPage from "./CreateTeamPage";
 import { CreateTeamRequest } from "../../services/team/Team";
-import { BrowserRouter } from "react-router-dom";
 import teamService from "../../services/team/teamService";
+import renderWithMemoryRouter from "../../testUtils/renderWithRouter";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -27,11 +27,7 @@ describe("create team page should", () => {
   let teamDescriptionField: HTMLElement;
 
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <CreateTeamPage />
-      </BrowserRouter>
-    );
+    renderWithMemoryRouter(<CreateTeamPage />, {});
 
     saveTeamBtn = screen.getByTestId("save-team-btn");
     teamNameField = screen.getByTestId("team-name");
