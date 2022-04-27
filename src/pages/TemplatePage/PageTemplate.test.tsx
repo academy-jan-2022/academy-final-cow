@@ -2,12 +2,13 @@ import { render, screen } from "@testing-library/react";
 
 import PageTemplate from "./PageTemplate";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
-import { BrowserRouter } from "react-router-dom";
+import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
 
 jest.mock("../../services/infrastructure/StorageHandler");
 const mockedStorageHandler = storageHandler as jest.Mocked<
   typeof storageHandler
 >;
+
 describe("page template should", () => {
   beforeEach(() => {
     render(
@@ -27,19 +28,16 @@ describe("page template should", () => {
     expect(appBar.length).toBe(0);
   });
 
-  describe("user is logged in", () => {
+  describe("if user is logged in", () => {
     test("render the app bar at the top of the screen if logged in", () => {
       mockedStorageHandler.getJSONItem = jest
         .fn()
         .mockReturnValueOnce({ token: "token" });
-      render(
-        <BrowserRouter>
-          <PageTemplate>
-            <p>Child</p>
-          </PageTemplate>
-        </BrowserRouter>
-      );
+
+      renderWithMemoryRouter(<PageTemplate children={<></>} />, {});
+
       const appBar = screen.queryAllByTestId("app-bar");
+
       expect(appBar.length).toBe(1);
     });
   });
