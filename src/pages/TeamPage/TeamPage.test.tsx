@@ -33,7 +33,7 @@ const aTeamWithMembers: TeamWithMembers = {
   ],
 };
 
-const TEAM_PAGE_URL = PageRoutes.TEAM.replace(":id", TEAM_ID);
+const TEAM_PAGE_URL = PageRoutes.TEAM.replace(":id", TEAM_ID) as PageRoutes;
 const TEAM_PAGE_ROUTE = PageRoutes.TEAM;
 let mockedTeamService: jest.Mocked<any>;
 
