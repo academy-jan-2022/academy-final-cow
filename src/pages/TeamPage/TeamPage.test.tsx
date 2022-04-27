@@ -347,7 +347,7 @@ describe("Team page should", () => {
     });
 
     test("call team service when activity name is filled and submit button clicked and the page is refreshed", async () => {
-      const mockedTeamServiceCreateActivty = jest.spyOn(
+      const mockedTeamServiceCreateActivity = jest.spyOn(
         teamService,
         CREATE_ACTIVITY
       );
@@ -368,7 +368,7 @@ describe("Team page should", () => {
       fireEvent.change(activityNameText, { target: { value: "my activity" } });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
       activitySubmitButton.click();
-      expect(mockedTeamServiceCreateActivty).toBeCalled();
+      expect(mockedTeamServiceCreateActivity).toBeCalled();
       expect(mockedTeamServiceGetTeam).toBeCalledTimes(2);
     });
 

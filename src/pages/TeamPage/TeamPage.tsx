@@ -26,7 +26,7 @@ const TeamPage = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const getTeam = () => {
     if (id) {
       teamService
         .getTeamById(id)
@@ -36,7 +36,11 @@ const TeamPage = () => {
         })
         .catch(() => navigate("/error"));
     }
-  }, [id, navigate]);
+  };
+
+  useEffect(() => {
+    getTeam();
+  }, []);
 
   function generateLink() {
     if (id) {
@@ -96,6 +100,8 @@ const TeamPage = () => {
         open={showActivityModal}
         handleClose={() => toggleActivityModal(false)}
         fetchedMembers={team?.members || []}
+        toggleLoading={toggleLoading}
+        getTeam={getTeam}
       />
       <JoinLinkModal
         joinLink={joinLink}

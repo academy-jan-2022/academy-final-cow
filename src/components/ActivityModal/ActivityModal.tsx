@@ -18,10 +18,14 @@ const ActivityModal = ({
   handleClose = null,
   open = false,
   fetchedMembers,
+  getTeam,
+  toggleLoading,
 }: {
   handleClose: any;
   open: boolean;
   fetchedMembers: TeamMember[];
+  getTeam: any;
+  toggleLoading: any;
 }) => {
   const style = {
     position: "absolute" as "absolute",
@@ -52,11 +56,11 @@ const ActivityModal = ({
       };
 
       try {
-        // set loading
+        toggleLoading(true);
         await teamService.createActivity(newActivity);
-        // fetch team again
-        // turn off loading
+        getTeam();
       } catch (e) {
+        console.log(e);
         navigate("/error");
       }
     } else {
