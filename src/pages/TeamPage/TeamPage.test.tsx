@@ -367,7 +367,7 @@ describe("Team page should", () => {
       const activityNameText = screen.getByTestId("activity-name-field");
       fireEvent.change(activityNameText, { target: { value: "my activity" } });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
-      activitySubmitButton.click();
+      await act(async () => activitySubmitButton.click());
       expect(mockedTeamServiceCreateActivity).toBeCalled();
       await waitFor(() => expect(mockedTeamServiceGetTeam).toBeCalledTimes(2));
     });
@@ -568,7 +568,7 @@ describe("Team page should", () => {
       const activityNameText = screen.getByTestId("activity-name-field");
       fireEvent.change(activityNameText, { target: { value: "My Activity" } });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
-      activitySubmitButton.click();
+      await act(async () => activitySubmitButton.click());
       expect(mockedTeamService).toBeCalledWith({
         activityName: "My Activity",
         numberOfGroups: 4,
@@ -640,7 +640,7 @@ describe("Team page should", () => {
         target: { value: "My Activity" },
       });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
-      activitySubmitButton.click();
+      await act(async () => activitySubmitButton.click());
 
       expect(mockedTeamService).toBeCalledWith({
         activityName: "My Activity",
