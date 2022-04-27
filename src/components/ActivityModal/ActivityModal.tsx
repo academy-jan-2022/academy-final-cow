@@ -15,17 +15,17 @@ import { useNavigate } from "react-router-dom";
 import { ActivityRequest, TeamMember } from "../../services/team/Team";
 
 const ActivityModal = ({
-  handleClose = null,
-  open = false,
+  handleClose,
+  open,
   fetchedMembers,
   getTeam,
   toggleLoading,
 }: {
-  handleClose: any;
+  handleClose: () => void;
   open: boolean;
   fetchedMembers: TeamMember[];
-  getTeam: any;
-  toggleLoading: any;
+  getTeam: () => void;
+  toggleLoading: (loading: boolean) => void;
 }) => {
   const style = {
     position: "absolute" as "absolute",
@@ -61,7 +61,6 @@ const ActivityModal = ({
         getTeam();
         handleClose();
       } catch (e) {
-        console.log(e);
         navigate("/error");
       }
     } else {
