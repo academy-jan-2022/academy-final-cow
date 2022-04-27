@@ -1,5 +1,6 @@
 import teamService from "./teamService";
 import client, { API_ENDPOINT } from "../infrastructure/ApiClient";
+import { PageRoutes } from "../../pages/pageRoutes";
 
 jest.mock("../infrastructure/ApiClient");
 const mockedHttpClient = client as jest.Mocked<typeof client>;
@@ -15,8 +16,12 @@ describe("generate join link should", () => {
   });
 
   test("return formed link", async () => {
-    mockedHttpClient.post.mockResolvedValue({ token: "456456456" });
-    let response = await teamService.generateJoinLink("1");
-    expect(response.link).toContain("/join/456456456");
+    const tokenId = "456456456";
+    mockedHttpClient.post.mockResolvedValue({ token: tokenId });
+    const expectedPath = PageRoutes.JOIN_TEAM.replace(":joinTokenId", tokenId);
+
+    const response = await teamService.generateJoinLink("1");
+
+    expect(response.link).toContain(expectedPath);
   });
 });

@@ -6,6 +6,7 @@ import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import TeamService from "../../services/team/teamService";
 import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
 import createAxiosError from "../../testUtils/createAxiosError";
+import { PageRoutes } from "../pageRoutes";
 
 const LOGIN_BUTTON_TEXT = "Login";
 
@@ -49,8 +50,11 @@ jest.mock("react-google-login", () => ({
 const JOIN_TOKEN_ID = "123239992";
 const TEAM_ID = "123";
 
-const JOIN_TEAM_URL_PATH = `/join/${JOIN_TOKEN_ID}`;
-const JOIN_TEAM_ROUTE = "/join/:joinTokenId";
+const JOIN_TEAM_URL_PATH = PageRoutes.JOIN_TEAM.replace(
+  ":joinTokenId",
+  JOIN_TOKEN_ID
+);
+const JOIN_TEAM_ROUTE = PageRoutes.JOIN_TEAM;
 const TOKEN_OBJECT = { token: "token" };
 
 describe("join teams page should", () => {
