@@ -1,8 +1,8 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import HomePage from "./HomePage";
-import { BrowserRouter } from "react-router-dom";
 import * as loginService from "../../services/application/loginService";
+import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
 
 const mockedUsedNavigate = jest.fn();
 
@@ -36,11 +36,7 @@ const LOGIN_BUTTON_TEXT = "Login";
 
 describe("HomePage test should", () => {
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <HomePage />
-      </BrowserRouter>
-    );
+    renderWithMemoryRouter(<HomePage />, {});
   });
 
   test("renders logo", () => {
@@ -53,13 +49,14 @@ describe("HomePage test should", () => {
     expect(button).toBeInTheDocument();
   });
 
-
   test("navigates to the provided route after successful login", async () => {
     mockedLoginService.default.mockResolvedValue(true);
 
     const button = screen.getByText(LOGIN_BUTTON_TEXT);
     button.click();
-    await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith("/teams"));
+    await waitFor(() =>
+      expect(mockedUsedNavigate).toHaveBeenCalledWith("/teams")
+    );
   });
 
   test("navigates to the provided route after unsuccessful login", async () => {
@@ -67,6 +64,8 @@ describe("HomePage test should", () => {
 
     const button = screen.getByText(LOGIN_BUTTON_TEXT);
     button.click();
-    await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith("/error"));
+    await waitFor(() =>
+      expect(mockedUsedNavigate).toHaveBeenCalledWith("/error")
+    );
   });
 });

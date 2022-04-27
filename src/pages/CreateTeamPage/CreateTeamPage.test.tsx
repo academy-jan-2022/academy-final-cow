@@ -3,7 +3,7 @@ import { fireEvent, screen, waitFor } from "@testing-library/react";
 import CreateTeamPage from "./CreateTeamPage";
 import { CreateTeamRequest } from "../../services/team/Team";
 import teamService from "../../services/team/teamService";
-import renderWithMemoryRouter from "../../testUtils/renderWithRouter";
+import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({

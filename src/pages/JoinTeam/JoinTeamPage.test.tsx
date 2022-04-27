@@ -4,7 +4,7 @@ import JoinTeamPage from "./JoinTeamPage";
 import * as loginService from "../../services/application/loginService";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import TeamService from "../../services/team/teamService";
-import renderWithMemoryRouter from "../../testUtils/renderWithRouter";
+import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
 import createAxiosError from "../../testUtils/createAxiosError";
 
 const LOGIN_BUTTON_TEXT = "Login";
