@@ -9,17 +9,7 @@ import CreateTeamPage from "./pages/CreateTeamPage/CreateTeamPage";
 import ErrorPage, { ERRORS } from "./pages/ErrorPage/ErrorPage";
 import TeamPage from "./pages/TeamPage/TeamPage";
 import JoinTeamPage from "./pages/JoinTeam/JoinTeamPage";
-
-export enum PageRoutes {
-  TEAMS = "/teams",
-  TEAM = "/team/:id",
-  JOIN_TEAM = "/join/:joinTokenId",
-  HEARTBEAT = "/heartbeat",
-  CREATE_TEAM = "/create-team",
-  HOME = "/",
-  ERROR = "/error",
-  NOT_FOUND = "/*",
-}
+import { PageRoutes } from "./pages/pageRoutes";
 
 ReactDOM.render(
   <React.StrictMode>
