@@ -5,7 +5,7 @@ import PageTemplate from "../TemplatePage/PageTemplate";
 import TeamService from "../../services/team/teamService";
 import { TeamByUser } from "../../services/team/Team";
 import TeamCard from "../../components/Team/TeamCard";
-import "./team.css";
+import "./teams.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import { PageRoutes } from "../pageRoutes";
 

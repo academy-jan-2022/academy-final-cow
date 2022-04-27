@@ -28,7 +28,7 @@ const PageTemplate = ({ children, isLoading = false }: PageTemplateProps) => {
         light: "#ffdfaf",
       },
       background: {
-        paper: "#60afe06e",
+        paper: "lightblue",
       },
     },
   };

@@ -1,5 +1,6 @@
 import client, { API_ENDPOINT } from "../infrastructure/ApiClient";
 import {
+  ActivityRequest,
   CreateTeamRequest,
   GetTeamResponse,
   GetTeamsResponse,
@@ -46,6 +47,13 @@ class TeamService {
     });
 
     return { link: `${window.location.origin}/join/${resp.token}` };
+  }
+
+  async createActivity(activity: ActivityRequest) {
+    await client.post({
+      route: API_ENDPOINT.CREATE_ACTIVITY,
+      body: activity,
+    });
   }
 
   async addMember(joinTokenId: string | undefined): Promise<AddMemberResponse> {
