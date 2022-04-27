@@ -3,6 +3,7 @@ import { screen, waitFor } from "@testing-library/react";
 import HomePage from "./HomePage";
 import * as loginService from "../../services/application/loginService";
 import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
+import { PageRoutes } from "../pageRoutes";
 
 const mockedUsedNavigate = jest.fn();
 
@@ -55,7 +56,7 @@ describe("HomePage test should", () => {
     const button = screen.getByText(LOGIN_BUTTON_TEXT);
     button.click();
     await waitFor(() =>
-      expect(mockedUsedNavigate).toHaveBeenCalledWith("/teams")
+      expect(mockedUsedNavigate).toHaveBeenCalledWith(PageRoutes.TEAMS)
     );
   });
 
