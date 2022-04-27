@@ -66,7 +66,7 @@ describe("HomePage test should", () => {
     const button = screen.getByText(LOGIN_BUTTON_TEXT);
     button.click();
     await waitFor(() =>
-      expect(mockedUsedNavigate).toHaveBeenCalledWith("/error")
+      expect(mockedUsedNavigate).toHaveBeenCalledWith(PageRoutes.ERROR)
     );
   });
 });

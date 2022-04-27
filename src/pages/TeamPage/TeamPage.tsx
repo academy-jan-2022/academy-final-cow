@@ -7,6 +7,7 @@ import PageHeading from "../../components/PageHeading/PageHeading";
 import { Button, List, ListItem, Stack, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
+import { PageRoutes } from "../pageRoutes";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const TeamPage = () => {
           setTeam(response.team);
           toggleLoading(false);
         })
-        .catch(() => navigate("/error"));
+        .catch(() => navigate(PageRoutes.ERROR));
     }
   }, [id, navigate]);
 

@@ -53,7 +53,7 @@ const TEAM_ID = "123";
 const JOIN_TEAM_URL_PATH = PageRoutes.JOIN_TEAM.replace(
   ":joinTokenId",
   JOIN_TOKEN_ID
-);
+) as PageRoutes;
 const JOIN_TEAM_ROUTE = PageRoutes.JOIN_TEAM;
 const TOKEN_OBJECT = { token: "token" };
 
@@ -88,7 +88,7 @@ describe("join teams page should", () => {
       const loginButton = screen.getByText(LOGIN_BUTTON_TEXT);
       loginButton.click();
       await waitFor(() =>
-        expect(mockedUsedNavigate).toHaveBeenCalledWith("/error")
+        expect(mockedUsedNavigate).toHaveBeenCalledWith(PageRoutes.ERROR)
       );
     });
   });
@@ -139,7 +139,7 @@ describe("join teams page should", () => {
         });
       });
 
-      await expect(mockedUsedNavigate).toBeCalledWith("/error");
+      await expect(mockedUsedNavigate).toBeCalledWith(PageRoutes.ERROR);
     });
 
     test("show message when token is invalid", async () => {

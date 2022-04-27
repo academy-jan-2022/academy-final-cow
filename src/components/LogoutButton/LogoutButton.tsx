@@ -14,7 +14,7 @@ const LogoutButton = () => {
   };
 
   const handleFailure = () => {
-    navigate("/error");
+    navigate(PageRoutes.ERROR);
   };
 
   const { signOut } = useGoogleLogout({

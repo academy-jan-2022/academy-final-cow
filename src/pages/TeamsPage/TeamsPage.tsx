@@ -20,7 +20,7 @@ const TeamsPage = () => {
       setTeams(fetchedTeams);
       toggleLoading(false);
     } catch (e) {
-      navigate("/error");
+      navigate(PageRoutes.ERROR);
     }
   };
 

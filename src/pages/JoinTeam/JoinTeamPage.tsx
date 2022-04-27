@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import teamService from "../../services/team/teamService";
-import {AxiosError} from "axios";
+import { AxiosError } from "axios";
+import { PageRoutes } from "../pageRoutes";
 
 function JoinTeamPage() {
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ function JoinTeamPage() {
   function handleError(error: AxiosError) {
     setIsLoading(false);
     if (error.code === "500") {
-      navigate("/error");
-      return
+      navigate(PageRoutes.ERROR);
+      return;
     }
     setErrorMessage(error.message);
   }
@@ -47,19 +48,17 @@ function JoinTeamPage() {
 
   const handleLogin = (isSuccessful: boolean) => {
     if (!isSuccessful) {
-      navigate("/error");
-      return
+      navigate(PageRoutes.ERROR);
+      return;
     }
 
     addMemberWhenLoggedIn();
   };
-  
+
   return (
     <PageTemplate isLoading={isLoading}>
       {isLoggedIn ? (
-        <>
-        {errorMessage && <h5>{errorMessage}</h5>}
-        </>
+        <>{errorMessage && <h5>{errorMessage}</h5>}</>
       ) : (
         <>
           <h1>Please, log in so we can add you to a team</h1>
