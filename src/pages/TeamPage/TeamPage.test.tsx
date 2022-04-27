@@ -1,9 +1,9 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import TeamPage from "./TeamPage";
 import teamService from "../../services/team/teamService";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { TeamWithMembers } from "../../services/team/Team";
+import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
 
 const TEAM_ID = "1";
 const TEAM_NAME = "Team 1";
@@ -32,18 +32,19 @@ const team: TeamWithMembers = {
   ],
 };
 
+const TEAM_PAGE_URL = "/team/1";
+const TEAM_PAGE_ROUTE = "/team/:id";
+
 describe("Team page should", () => {
   test("retrieve the team information", async () => {
     const mockedTeamService = jest
       .spyOn(teamService, GET_TEAM_METHOD)
       .mockResolvedValue({ team });
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+
+    renderWithMemoryRouter(<TeamPage />, {
+      pageUrl: TEAM_PAGE_URL,
+      route: TEAM_PAGE_ROUTE,
+    });
 
     await waitFor(() =>
       expect(mockedTeamService).toHaveBeenCalledWith(TEAM_ID)
@@ -57,13 +58,10 @@ describe("Team page should", () => {
       .spyOn(teamService, GET_TEAM_METHOD)
       .mockResolvedValue({ team });
 
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<TeamPage />, {
+      pageUrl: TEAM_PAGE_URL,
+      route: TEAM_PAGE_ROUTE,
+    });
 
     await waitFor(() =>
       expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
@@ -79,13 +77,10 @@ describe("Team page should", () => {
       .spyOn(teamService, GET_TEAM_METHOD)
       .mockResolvedValue({ team });
 
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<TeamPage />, {
+      pageUrl: TEAM_PAGE_URL,
+      route: TEAM_PAGE_ROUTE,
+    });
 
     const teamDescription = await screen.findByText(TEAM_DESCRIPTION);
     expect(teamDescription).toBeInTheDocument();
@@ -98,13 +93,10 @@ describe("Team page should", () => {
       .spyOn(teamService, GET_TEAM_METHOD)
       .mockResolvedValue({ team });
 
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<TeamPage />, {
+      pageUrl: TEAM_PAGE_URL,
+      route: TEAM_PAGE_ROUTE,
+    });
 
     const teamMembers = await screen.findByRole("list");
     expect(teamMembers).toHaveTextContent(USER_ONE_FULL_NAME);
@@ -118,13 +110,10 @@ describe("Team page should", () => {
       .spyOn(teamService, GET_TEAM_METHOD)
       .mockResolvedValue({ team });
 
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<TeamPage />, {
+      pageUrl: TEAM_PAGE_URL,
+      route: TEAM_PAGE_ROUTE,
+    });
 
     const joinButton = await screen.findByText("create join link");
     expect(joinButton).toBeInTheDocument();
@@ -138,13 +127,10 @@ describe("Team page should", () => {
       .spyOn(teamService, GENERATE_JOIN_LINK)
       .mockResolvedValue({ link: "mocked url" });
 
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<TeamPage />, {
+      pageUrl: TEAM_PAGE_URL,
+      route: TEAM_PAGE_ROUTE,
+    });
 
     const joinButton = await screen.findByText("create join link");
     await act(async () => await joinButton.click());
@@ -159,13 +145,10 @@ describe("Team page should", () => {
       .spyOn(teamService, GENERATE_JOIN_LINK)
       .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
 
-    render(
-      <MemoryRouter initialEntries={["/team/1"]}>
-        <Routes>
-          <Route path="/team/:id" element={<TeamPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<TeamPage />, {
+      pageUrl: TEAM_PAGE_URL,
+      route: TEAM_PAGE_ROUTE,
+    });
 
     const modal = screen.queryByText("http://localhost:3000/join/123456");
 
