@@ -4,6 +4,7 @@ import teamService from "../../services/team/teamService";
 import { act } from "react-dom/test-utils";
 import { TeamWithMembers } from "../../services/team/Team";
 import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
+import { PageRoutes } from "../pageRoutes";
 
 const TEAM_ID = "1";
 const TEAM_NAME = "Team 1";
@@ -32,8 +33,8 @@ const aTeamWithMembers: TeamWithMembers = {
   ],
 };
 
-const TEAM_PAGE_URL = "/team/1";
-const TEAM_PAGE_ROUTE = "/team/:id";
+const TEAM_PAGE_URL = PageRoutes.TEAM.replace(":id", TEAM_ID);
+const TEAM_PAGE_ROUTE = PageRoutes.TEAM;
 let mockedTeamService: jest.Mocked<any>;
 
 describe("Team page should", () => {
