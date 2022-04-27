@@ -3,6 +3,7 @@ import { act, screen } from "@testing-library/react";
 import TeamsPage from "./TeamsPage";
 import TeamService from "../../services/team/teamService";
 import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
+import { PageRoutes } from "../pageRoutes";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -36,7 +37,7 @@ describe("Teams page should", () => {
     test("create team button should take you to /create-team page", async () => {
       const createTeamBtn = screen.getByText("Create New Team");
       createTeamBtn.click();
-      expect(mockedUsedNavigate).toBeCalledWith("/create-team");
+      expect(mockedUsedNavigate).toBeCalledWith(PageRoutes.CREATE_TEAM);
     });
 
     test("not render a team card when I am not part of at least one team", async () => {
