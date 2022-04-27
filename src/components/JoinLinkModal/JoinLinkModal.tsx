@@ -14,7 +14,7 @@ const JoinLinkModal = ({
   open,
 }: {
   joinLink: string;
-  handleClose: any;
+  handleClose: () => void;
   open: boolean;
 }) => {
   const copyLinkToClipboard = () => {

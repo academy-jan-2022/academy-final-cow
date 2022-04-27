@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@mui/material";
+import { TeamByUser } from "../../services/team/Team";
 
-const TeamCard = (props: { team: any }) => {
+const TeamCard = (props: { team: TeamByUser }) => {
   const navigate = useNavigate();
   const { team } = props;
   const { name, id, description } = team;

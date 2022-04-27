@@ -66,6 +66,7 @@ export enum API_ENDPOINT {
   GENERATE_JOIN_LINK = "/generate-join-link",
   GET_TEAM = "/get-team",
   GET_TEAMS = "/teams",
+  CREATE_ACTIVITY = "/create-activity",
 }
 
 const apiClient = new ApiClient();
