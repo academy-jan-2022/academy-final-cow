@@ -1,8 +1,8 @@
-import { act, render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { act, screen } from "@testing-library/react";
 
 import TeamsPage from "./TeamsPage";
 import TeamService from "../../services/team/teamService";
+import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -18,11 +18,7 @@ describe("Teams page should", () => {
     mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
 
     await act(async () => {
-      render(
-        <BrowserRouter>
-          <TeamsPage />
-        </BrowserRouter>
-      );
+      renderWithMemoryRouter(<TeamsPage />, {});
     });
     const title = screen.getByText("Teams");
     expect(title).toBeInTheDocument();
@@ -32,11 +28,7 @@ describe("Teams page should", () => {
     mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
 
     await act(async () => {
-      render(
-        <BrowserRouter>
-          <TeamsPage />
-        </BrowserRouter>
-      );
+      renderWithMemoryRouter(<TeamsPage />, {});
     });
     const createTeamBtn = screen.getByText("Create New Team");
     expect(createTeamBtn).toBeInTheDocument();
@@ -46,11 +38,7 @@ describe("Teams page should", () => {
     mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
 
     await act(async () => {
-      render(
-        <BrowserRouter>
-          <TeamsPage />
-        </BrowserRouter>
-      );
+      renderWithMemoryRouter(<TeamsPage />, {});
     });
     const createTeamBtn = screen.getByText("Create New Team");
     createTeamBtn.click();
@@ -67,11 +55,7 @@ describe("Teams page should", () => {
     mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([team]);
 
     await act(async () => {
-      render(
-        <BrowserRouter>
-          <TeamsPage />
-        </BrowserRouter>
-      );
+      renderWithMemoryRouter(<TeamsPage />, {});
     });
 
     const cardElement = screen.getAllByRole("teamCard");
@@ -101,11 +85,7 @@ describe("Teams page should", () => {
       .mockResolvedValue([team, teamTwo]);
 
     await act(async () => {
-      render(
-        <BrowserRouter>
-          <TeamsPage />
-        </BrowserRouter>
-      );
+      renderWithMemoryRouter(<TeamsPage />, {});
     });
 
     const cardElement = screen.getAllByRole("teamCard");
@@ -126,11 +106,7 @@ describe("Teams page should", () => {
     mockedGetTeamsService.getTeamsByUser = jest.fn().mockResolvedValue([]);
 
     await act(async () => {
-      render(
-        <BrowserRouter>
-          <TeamsPage />
-        </BrowserRouter>
-      );
+      renderWithMemoryRouter(<TeamsPage />, {});
     });
 
     const cardElement = screen.queryByRole("teamCard");
