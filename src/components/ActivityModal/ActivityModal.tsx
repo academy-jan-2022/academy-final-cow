@@ -59,6 +59,7 @@ const ActivityModal = ({
         toggleLoading(true);
         await teamService.createActivity(newActivity);
         getTeam();
+        handleClose();
       } catch (e) {
         console.log(e);
         navigate("/error");

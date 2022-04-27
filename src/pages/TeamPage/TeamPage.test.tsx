@@ -369,7 +369,7 @@ describe("Team page should", () => {
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
       activitySubmitButton.click();
       expect(mockedTeamServiceCreateActivity).toBeCalled();
-      expect(mockedTeamServiceGetTeam).toBeCalledTimes(2);
+      await waitFor(() => expect(mockedTeamServiceGetTeam).toBeCalledTimes(2));
     });
 
     test("display activities box of the team when they exist", async () => {
