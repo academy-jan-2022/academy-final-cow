@@ -67,6 +67,7 @@ const TeamPage = () => {
   const handleRemoveUser = async () => {
     try {
       if (id) {
+        toggleLoading(true);
         await teamService.removeUser(id);
         navigate("/teams");
       }
