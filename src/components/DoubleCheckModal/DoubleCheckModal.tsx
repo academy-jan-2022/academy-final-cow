@@ -19,7 +19,7 @@ const DoubleCheckModal = ({
           data-testid="double-check-confirmation-button"
           onClick={handleConfirmButton}
         >
-          salu2
+          Yes
         </Button>
       </div>
     </Modal>

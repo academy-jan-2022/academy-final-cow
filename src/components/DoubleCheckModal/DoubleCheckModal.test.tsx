@@ -17,4 +17,19 @@ describe("double check modal should", () => {
     const heading = screen.getByText("Are you sure bro?");
     expect(heading).toBeInTheDocument();
   });
+
+  test("should have confirm button", () => {
+    render(
+      <DoubleCheckModal
+        open={true}
+        handleConfirmButton={handleButton}
+        heading={"Are you sure bro?"}
+      />
+    );
+
+    const confirmButton = screen.getByText("Yes");
+    confirmButton.click();
+    expect(confirmButton).toBeInTheDocument();
+    expect(handleButton).toBeCalled();
+  });
 });
