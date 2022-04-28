@@ -21,6 +21,8 @@ const USER_ONE_ID = "1";
 const USER_ONE_FULL_NAME = "Peter Parker";
 const USER_TWO_ID = "2";
 const USER_TWO_FULL_NAME = "Anna Hello";
+const USER_THREE_ID = "3";
+const USER_THREE_FULL_NAME = "Brian Hello";
 
 const GET_TEAM_METHOD = "getTeamById";
 const GENERATE_JOIN_LINK = "generateJoinLink";
@@ -54,6 +56,10 @@ const teamWithActivity: TeamWithMembers = {
       id: USER_TWO_ID,
       fullName: USER_TWO_FULL_NAME,
     },
+    {
+      id: USER_THREE_ID,
+      fullName: USER_THREE_FULL_NAME,
+    }
   ],
   activities: [
     {
@@ -400,6 +406,7 @@ describe("Team page should", () => {
         members: [
           { fullName: "Peter Parker", id: "1" },
           { fullName: "Anna Hello", id: "2" },
+          { fullName: "Brian Hello", id: "3" },
         ],
       });
     });
@@ -410,7 +417,7 @@ describe("Team page should", () => {
 
       const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
 
-      expect(listOfUserCheckboxes.length).toEqual(2);
+      expect(listOfUserCheckboxes.length).toEqual(3);
     });
 
     test("display included members heading", async () => {
@@ -441,7 +448,7 @@ describe("Team page should", () => {
         activityName: "My Activity",
         numberOfGroups: 2,
         teamId: "1",
-        members: [{ fullName: "Anna Hello", id: "2" }],
+        members: [{ fullName: "Anna Hello", id: "2" }, { fullName: "Brian Hello", id: "3" }],
       });
     });
   });
