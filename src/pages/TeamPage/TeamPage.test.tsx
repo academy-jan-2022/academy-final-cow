@@ -10,6 +10,8 @@ import teamService from "../../services/team/teamService";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { TeamWithMembers } from "../../services/team/Team";
+import renderWithMemoryRouter from "../../testUtils/renderWithMemoryRouter";
+import { PageRoutes } from "../pageRoutes";
 import UserEvent from "@testing-library/user-event";
 
 const TEAM_ID = "1";
@@ -19,13 +21,15 @@ const USER_ONE_ID = "1";
 const USER_ONE_FULL_NAME = "Peter Parker";
 const USER_TWO_ID = "2";
 const USER_TWO_FULL_NAME = "Anna Hello";
+const USER_THREE_ID = "3";
+const USER_THREE_FULL_NAME = "Brian Hello";
 
 const GET_TEAM_METHOD = "getTeamById";
 const GENERATE_JOIN_LINK = "generateJoinLink";
 const CREATE_ACTIVITY = "createActivity";
 const REMOVE_USER = "removeUser";
 
-const team: TeamWithMembers = {
+const aTeamWithMembers: TeamWithMembers = {
   id: TEAM_ID,
   name: TEAM_NAME,
   description: TEAM_DESCRIPTION,
@@ -52,6 +56,10 @@ const teamWithActivity: TeamWithMembers = {
     {
       id: USER_TWO_ID,
       fullName: USER_TWO_FULL_NAME,
+    },
+    {
+      id: USER_THREE_ID,
+      fullName: USER_THREE_FULL_NAME,
     },
   ],
   activities: [
@@ -89,6 +97,10 @@ const teamWithoutActivity: TeamWithMembers = {
   activities: [],
 };
 
+const TEAM_PAGE_URL = PageRoutes.TEAM.replace(":id", TEAM_ID) as PageRoutes;
+const TEAM_PAGE_ROUTE = PageRoutes.TEAM;
+let mockedTeamService: jest.Mocked<any>;
+
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
@@ -96,23 +108,23 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("Team page should", () => {
-  beforeEach(() => {
-    jest.spyOn(teamService, CREATE_ACTIVITY);
-  });
+  describe("on render", () => {
+    beforeEach(async () => {
+      await act(async () => {
+        mockedTeamService = jest
+          .spyOn(teamService, GET_TEAM_METHOD)
+          .mockResolvedValue({ team: aTeamWithMembers });
 
-  describe("get team should", () => {
+        jest.spyOn(teamService, CREATE_ACTIVITY);
+
+        renderWithMemoryRouter(<TeamPage />, {
+          pageUrl: TEAM_PAGE_URL,
+          route: TEAM_PAGE_ROUTE,
+        });
+      });
+    });
+
     test("retrieve the team information", async () => {
-      const mockedTeamService = jest
-        .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue({ team });
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       await waitFor(() =>
         expect(mockedTeamService).toHaveBeenCalledWith(TEAM_ID)
       );
@@ -121,18 +133,6 @@ describe("Team page should", () => {
     });
 
     test("render the team name as a title", async () => {
-      const mockedTeamService = jest
-        .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue({ team });
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       await waitFor(() =>
         expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
           TEAM_NAME
@@ -143,18 +143,6 @@ describe("Team page should", () => {
     });
 
     test("render the team description", async () => {
-      const mockedTeamService = jest
-        .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue({ team });
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const teamDescription = await screen.findByText(TEAM_DESCRIPTION);
       expect(teamDescription).toBeInTheDocument();
 
@@ -162,18 +150,6 @@ describe("Team page should", () => {
     });
 
     test("render the team image", async () => {
-      const mockedTeamService = jest
-        .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue({ team });
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const teamImage = await waitFor(() => screen.getByTestId("team-image"));
       expect(teamImage).toBeInTheDocument();
 
@@ -181,59 +157,34 @@ describe("Team page should", () => {
     });
 
     test("render team members", async () => {
-      const mockedTeamService = jest
-        .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue({ team });
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const teamMembers = await screen.findByRole("list");
       expect(teamMembers).toHaveTextContent(USER_ONE_FULL_NAME);
       expect(teamMembers).toHaveTextContent(USER_TWO_FULL_NAME);
 
       mockedTeamService.mockRestore();
     });
-  });
 
-  describe("generate join link should", () => {
     test("render generate join team link button", async () => {
-      const mockedTeamService = jest
-        .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue({ team });
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const joinButton = await screen.findByText("create join link");
       expect(joinButton).toBeInTheDocument();
       mockedTeamService.mockRestore();
     });
+  });
 
+  describe("on generateLink action", () => {
     test("calls generate uri on button clicked", async () => {
-      jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue({ team });
+      jest
+        .spyOn(teamService, GET_TEAM_METHOD)
+        .mockResolvedValue({ team: aTeamWithMembers });
 
       const mockedGenerateJoinLink = jest
         .spyOn(teamService, GENERATE_JOIN_LINK)
         .mockResolvedValue({ link: "mocked url" });
 
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
+      renderWithMemoryRouter(<TeamPage />, {
+        pageUrl: TEAM_PAGE_URL,
+        route: TEAM_PAGE_ROUTE,
+      });
 
       const joinButton = await screen.findByText("create join link");
       await act(async () => await joinButton.click());
@@ -242,19 +193,18 @@ describe("Team page should", () => {
     });
 
     test("does not render modal when button has not been clicked", async () => {
-      jest.spyOn(teamService, GET_TEAM_METHOD).mockResolvedValue({ team });
+      jest
+        .spyOn(teamService, GET_TEAM_METHOD)
+        .mockResolvedValue({ team: aTeamWithMembers });
 
       jest
         .spyOn(teamService, GENERATE_JOIN_LINK)
         .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
 
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
+      renderWithMemoryRouter(<TeamPage />, {
+        pageUrl: TEAM_PAGE_URL,
+        route: TEAM_PAGE_ROUTE,
+      });
 
       const modal = screen.queryByText("http://localhost:3000/join/123456");
 
@@ -262,39 +212,57 @@ describe("Team page should", () => {
     });
   });
 
-  describe("Team page activity display should", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue({ team: teamWithActivity });
+  test("not display activities box of the team when they dont exist", async () => {
+    jest
+      .spyOn(teamService, GET_TEAM_METHOD)
+      .mockResolvedValue({ team: teamWithoutActivity });
 
-      jest
-        .spyOn(teamService, GENERATE_JOIN_LINK)
-        .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+    render(
+      <MemoryRouter initialEntries={["/team/1"]}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    const activityBox = await waitFor(() =>
+      screen.queryAllByTestId("activity-box")
+    );
+    expect(activityBox.length).toEqual(0);
+  });
+
+  describe("Team page activity display should", () => {
+    let mockedTeamServiceGetTeam: jest.Mocked<any>;
+    let mockedTeamServiceCreateActivity: jest.Mocked<any>;
+
+    beforeEach(async () => {
+      await act(async () => {
+        mockedTeamServiceGetTeam = jest
+          .spyOn(teamService, GET_TEAM_METHOD)
+          .mockResolvedValue({ team: teamWithActivity });
+
+        jest
+          .spyOn(teamService, GENERATE_JOIN_LINK)
+          .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+        mockedTeamServiceCreateActivity = jest.spyOn(
+          teamService,
+          CREATE_ACTIVITY
+        );
+
+        renderWithMemoryRouter(<TeamPage />, {
+          pageUrl: TEAM_PAGE_URL,
+          route: TEAM_PAGE_ROUTE,
+        });
+      });
     });
 
     test("display the create activity button", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
       expect(activityButton).toBeInTheDocument();
     });
 
     test("display the create activity modal when you click create activity button", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
 
       await act(async () => activityButton.click());
@@ -304,14 +272,6 @@ describe("Team page should", () => {
     });
 
     test("display the header text at modal when you click create activity button", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
 
       await act(async () => activityButton.click());
@@ -321,14 +281,6 @@ describe("Team page should", () => {
     });
 
     test("display the activity name field at modal when you click create activity button", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
 
       await act(async () => activityButton.click());
@@ -337,14 +289,6 @@ describe("Team page should", () => {
       expect(nameFieldElement).toBeInTheDocument();
     });
     test("display the submit button at modal when you click create activity button", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
 
       await act(async () => activityButton.click());
@@ -354,20 +298,6 @@ describe("Team page should", () => {
     });
 
     test("call team service when activity name is filled and submit button clicked and the page is refreshed", async () => {
-      const mockedTeamServiceCreateActivity = jest.spyOn(
-        teamService,
-        CREATE_ACTIVITY
-      );
-      const mockedTeamServiceGetTeam = jest.spyOn(teamService, GET_TEAM_METHOD);
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
 
       await act(async () => activityButton.click());
@@ -380,48 +310,13 @@ describe("Team page should", () => {
     });
 
     test("display activities box of the team when they exist", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityBox = await waitFor(() =>
         screen.getByTestId("activity-box")
       );
       expect(activityBox).toBeInTheDocument();
     });
 
-    test("not display activities box of the team when they dont exist", async () => {
-      jest
-        .spyOn(teamService, GET_TEAM_METHOD)
-        .mockResolvedValue({ team: teamWithoutActivity });
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
-      const activityBox = await waitFor(() =>
-        screen.queryAllByTestId("activity-box")
-      );
-      expect(activityBox.length).toEqual(0);
-    });
-
     test("display activity name inside activity box of the team when it exists", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityNameText = await waitFor(() =>
         screen.getByTestId("activity-name-text")
       );
@@ -430,14 +325,6 @@ describe("Team page should", () => {
     });
 
     test("display member inside activity box of the team when it exists", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityMemberText = await waitFor(() =>
         screen.getAllByTestId("activity-member-text")
       );
@@ -445,14 +332,6 @@ describe("Team page should", () => {
     });
 
     test("display multiple members inside activity box of the team when it exists", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityMemberText = await waitFor(() =>
         screen.getAllByTestId("activity-member-text")
       );
@@ -461,14 +340,6 @@ describe("Team page should", () => {
     });
 
     test("display multiple groups with multiple members inside activity box of the team when it exists", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityMemberText = await waitFor(() =>
         screen.getAllByTestId("activity-member-text")
       );
@@ -479,13 +350,6 @@ describe("Team page should", () => {
     });
 
     test("display multiple box groups containing multiple members inside activity box of the team when it exists", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
       const activityMemberBox = await waitFor(() =>
         screen.getAllByTestId("activity-member-box")
       );
@@ -496,14 +360,6 @@ describe("Team page should", () => {
     });
 
     test("display selector when multiple activities exist on team", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activitySelector = await waitFor(() =>
         screen.getAllByTestId("activity-selector")
       );
@@ -512,14 +368,6 @@ describe("Team page should", () => {
     });
 
     test("change activity that is displayed with select", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const originalActivityName = await waitFor(() =>
         screen.getByTestId("activity-name-text")
       );
@@ -535,14 +383,6 @@ describe("Team page should", () => {
       );
     });
     test("show input where you modify number of groups", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
       await act(async () => activityButton.click());
 
@@ -553,16 +393,6 @@ describe("Team page should", () => {
     });
 
     test("send 4 groups where you modify number of input groups", async () => {
-      const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
 
       await act(async () => activityButton.click());
@@ -576,46 +406,28 @@ describe("Team page should", () => {
       fireEvent.change(activityNameText, { target: { value: "My Activity" } });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
       await act(async () => activitySubmitButton.click());
-      expect(mockedTeamService).toBeCalledWith({
+      expect(mockedTeamServiceCreateActivity).toBeCalledWith({
         activityName: "My Activity",
         numberOfGroups: 4,
+        teamId: "1",
         members: [
           { fullName: "Peter Parker", id: "1" },
           { fullName: "Anna Hello", id: "2" },
+          { fullName: "Brian Hello", id: "3" },
         ],
       });
     });
     test("show list of users inside activity modal when create new activity", async () => {
-      const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
 
       await act(async () => activityButton.click());
 
       const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
 
-      expect(listOfUserCheckboxes.length).toEqual(2);
+      expect(listOfUserCheckboxes.length).toEqual(3);
     });
 
     test("display included members heading", async () => {
-      const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
       await act(async () => activityButton.click());
 
@@ -626,16 +438,6 @@ describe("Team page should", () => {
     });
 
     test("send second user of 2 users inside activity modal when create new activity", async () => {
-      const mockedTeamService = jest.spyOn(teamService, CREATE_ACTIVITY);
-
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
-
       const activityButton = await screen.findByText("create new activity");
       await act(async () => activityButton.click());
       const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
@@ -649,10 +451,70 @@ describe("Team page should", () => {
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
       await act(async () => activitySubmitButton.click());
 
-      expect(mockedTeamService).toBeCalledWith({
+      expect(mockedTeamServiceCreateActivity).toBeCalledWith({
         activityName: "My Activity",
         numberOfGroups: 2,
-        members: [{ fullName: "Anna Hello", id: "2" }],
+        teamId: "1",
+        members: [
+          { fullName: "Anna Hello", id: "2" },
+          { fullName: "Brian Hello", id: "3" },
+        ],
+      });
+    });
+
+    test("should not show tooltip over the button when can create activity", async () => {
+      const activityButton = screen.getByText("create new activity");
+      fireEvent.mouseOver(activityButton);
+
+      const tooltip = await screen.queryByText(
+        "You need at least 3 team members to create an activity"
+      );
+
+      expect(tooltip).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Team page should not create activities when you have less than 3 members", () => {
+    let mockedTeamServiceGetTeam: jest.Mocked<any>;
+    let mockedTeamServiceCreateActivity: jest.Mocked<any>;
+
+    beforeEach(async () => {
+      await act(async () => {
+        mockedTeamServiceGetTeam = jest
+          .spyOn(teamService, GET_TEAM_METHOD)
+          .mockResolvedValue({ team: aTeamWithMembers });
+
+        jest
+          .spyOn(teamService, GENERATE_JOIN_LINK)
+          .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+        mockedTeamServiceCreateActivity = jest.spyOn(
+          teamService,
+          CREATE_ACTIVITY
+        );
+
+        renderWithMemoryRouter(<TeamPage />, {
+          pageUrl: TEAM_PAGE_URL,
+          route: TEAM_PAGE_ROUTE,
+        });
+      });
+    });
+
+    test("Should not display create activity button if you have less than 3 members", () => {
+      const activityButton = screen.getByText("create new activity");
+
+      expect(activityButton).toBeDisabled();
+    });
+
+    test("should show tooltip over the button when can't create activity", async () => {
+      const activityButton = screen.getByText("create new activity");
+      fireEvent.mouseOver(activityButton);
+      await waitFor(() => {
+        const tooltip = screen.getByText(
+          "You need at least 3 team members to create an activity"
+        );
+
+        expect(tooltip).toBeInTheDocument();
       });
     });
 

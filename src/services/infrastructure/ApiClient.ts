@@ -33,8 +33,11 @@ class ApiClient {
     const response: AxiosResponse<T> = await axios.post(
       url.toString(),
       request.body,
-      { headers: { Authorization: `${token}` } }
+      {
+        headers: { Authorization: `${token}` },
+      }
     );
+
     return response.data;
   }
 
@@ -82,6 +85,7 @@ export enum API_ENDPOINT {
   GENERATE_JOIN_LINK = "/generate-join-link",
   GET_TEAM = "/get-team",
   GET_TEAMS = "/teams",
+  JOIN_TEAM = "/join-team",
   CREATE_ACTIVITY = "/create-activity",
   REMOVE_USER = "/remove-user",
 }

@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./error.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
+import { PageRoutes } from "../pageRoutes";
 
 export enum ERRORS {
   PAGE_NOT_FOUND = "Page not found",
@@ -19,7 +20,7 @@ const ErrorPage = ({ error }: { error: ERRORS }) => {
       <PageHeading aria-label="title">Error</PageHeading>
       <img className="sad-cowboy" src={sadcowboy} alt="sad cowboy" />
       <p>{error}</p>
-      <Button variant="outlined" onClick={() => navigate("/")}>
+      <Button variant="outlined" onClick={() => navigate(PageRoutes.HOME)}>
         Return to homepage
       </Button>
     </PageTemplate>

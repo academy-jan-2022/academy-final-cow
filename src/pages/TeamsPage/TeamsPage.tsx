@@ -7,6 +7,7 @@ import { TeamByUser } from "../../services/team/Team";
 import TeamCard from "../../components/Team/TeamCard";
 import "./teams.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
+import { PageRoutes } from "../pageRoutes";
 
 const TeamsPage = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const TeamsPage = () => {
       setTeams(fetchedTeams);
       toggleLoading(false);
     } catch (e) {
-      navigate("/error");
+      navigate(PageRoutes.ERROR);
     }
   };
 
@@ -41,7 +42,7 @@ const TeamsPage = () => {
       <Button
         variant="outlined"
         className="create-team-btn"
-        onClick={() => navigate("/create-team")}
+        onClick={() => navigate(PageRoutes.CREATE_TEAM)}
       >
         Create New Team
       </Button>

@@ -5,9 +5,9 @@ import {
 import { storageHandler } from "../infrastructure/StorageHandler";
 import createUser from "../domain/createUser";
 
-export const loginService = async (
+const loginService = async (
   response: GoogleLoginResponse | GoogleLoginResponseOffline
-): Promise<string> => {
+): Promise<boolean> => {
   const googleUserExists = "profileObj" in response;
 
   if (googleUserExists) {
@@ -20,10 +20,12 @@ export const loginService = async (
         idToken: response.tokenObj.id_token,
       });
 
-      return "/teams";
+      return true;
     } catch (e) {
-      return "/error";
+      return false;
     }
   }
-  return "/error";
+  return false;
 };
+
+export default loginService;

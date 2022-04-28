@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import ErrorPage, { ERRORS } from "./ErrorPage";
+import { PageRoutes } from "../pageRoutes";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -37,6 +38,6 @@ describe("Error page should", () => {
     const btn = screen.getByText("Return to homepage");
     expect(btn).toBeInTheDocument();
     btn.click();
-    expect(mockedUsedNavigate).toHaveBeenCalledWith("/");
+    expect(mockedUsedNavigate).toHaveBeenCalledWith(PageRoutes.HOME);
   });
 });

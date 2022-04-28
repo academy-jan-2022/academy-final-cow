@@ -33,6 +33,7 @@ export type GetTeamsResponse = {
 export type ActivityRequest = {
   activityName: string;
   numberOfGroups: number;
+  teamId: string;
   members: TeamMember[];
 };
 

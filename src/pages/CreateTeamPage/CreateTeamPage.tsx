@@ -2,10 +2,12 @@ import { Button, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "../TemplatePage/PageTemplate";
-import "./create-page.css";
 import teamService from "../../services/team/teamService";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import { CreateTeamRequest } from "../../services/team/Team";
+import { PageRoutes } from "../pageRoutes";
+
+import "./create-page.css";
 
 const CreateTeamPage = () => {
   const navigate = useNavigate();
@@ -33,10 +35,10 @@ const CreateTeamPage = () => {
       try {
         toggleLoading(true);
         const createTeamResponse = await teamService.createTeam(team);
-        const route = "/team/" + createTeamResponse.teamId;
+        const route = PageRoutes.TEAM.replace(":id", createTeamResponse.teamId);
         navigate(route);
       } catch (e) {
-        navigate("/error");
+        navigate(PageRoutes.ERROR);
       }
     }
   };
@@ -81,7 +83,7 @@ const CreateTeamPage = () => {
           variant="contained"
           id="cancel-team-btn"
           data-testid="cancel-team-btn"
-          onClick={() => navigate("/teams")}
+          onClick={() => navigate(PageRoutes.TEAMS)}
         >
           Cancel
         </Button>

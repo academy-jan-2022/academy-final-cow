@@ -15,6 +15,7 @@ describe("team service should", () => {
 
   const activity: ActivityRequest = {
     activityName: "new activity",
+    teamId: "1",
     numberOfGroups: 2,
     members,
   };

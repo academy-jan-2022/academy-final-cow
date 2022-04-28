@@ -18,12 +18,14 @@ const ActivityModal = ({
   handleClose,
   open,
   fetchedMembers,
+  teamId,
   getTeam,
   toggleLoading,
 }: {
   handleClose: () => void;
   open: boolean;
   fetchedMembers: TeamMember[];
+  teamId: string | undefined;
   getTeam: () => void;
   toggleLoading: (loading: boolean) => void;
 }) => {
@@ -48,10 +50,11 @@ const ActivityModal = ({
   const navigate = useNavigate();
 
   const submitActivity = async () => {
-    if (activityName) {
+    if (activityName && teamId) {
       const newActivity: ActivityRequest = {
         activityName,
         numberOfGroups,
+        teamId,
         members,
       };
 
@@ -111,10 +114,12 @@ const ActivityModal = ({
               onChange={(e) => {
                 setNumberOfGroups(parseInt(e.target.value));
               }}
+              label={"number of groups"}
               InputProps={{
                 inputProps: {
+                  label: "number of groups",
                   min: 2,
-                  max: fetchedMembers.length,
+                  max: fetchedMembers.length - 1,
                   "data-testid": "activity-input-amount-groups",
                 },
               }}

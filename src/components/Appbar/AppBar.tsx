@@ -13,6 +13,7 @@ import logo from "../../images/teaminator_logo_white.png";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import "./appbar.css";
 import { useNavigate } from "react-router-dom";
+import { PageRoutes } from "../../pages/pageRoutes";
 
 const AppBar = () => {
   const [anchorElUser, setAnchorElUser] = useState<HTMLAnchorElement | null>();
@@ -46,7 +47,7 @@ const AppBar = () => {
             src={logo}
             alt="logo"
             data-testid="logo"
-            onClick={() => navigate("/teams")}
+            onClick={() => navigate(PageRoutes.TEAMS)}
           />
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open menu">
