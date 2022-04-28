@@ -68,6 +68,7 @@ const TeamPage = () => {
     try {
       if (id) {
         await teamService.removeUser(id);
+        navigate("/teams");
       }
     } catch (e) {
       navigate("/error");

@@ -89,6 +89,12 @@ const teamWithoutActivity: TeamWithMembers = {
   activities: [],
 };
 
+const mockedUsedNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+  ...(jest.requireActual("react-router-dom") as any),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
 describe("Team page should", () => {
   beforeEach(() => {
     jest.spyOn(teamService, CREATE_ACTIVITY);
@@ -661,7 +667,6 @@ describe("Team page should", () => {
 
       const leaveTeamButton = await screen.findByTestId("leave-team-button");
       expect(leaveTeamButton).toBeInTheDocument();
-      expect(leaveTeamButton);
     });
 
     test("display double check modal when leave team button is clicked", async () => {
@@ -682,14 +687,9 @@ describe("Team page should", () => {
     });
 
     test("call team service on double check modal confirmation", async () => {
-      const mockedTeamServiceRemoveUser = jest.spyOn(teamService, REMOVE_USER);
-
-      const mockedUsedNavigate = jest.fn();
-      jest.mock("react-router-dom", () => ({
-        ...(jest.requireActual("react-router-dom") as any),
-        useNavigate: () => mockedUsedNavigate,
-      }));
-
+      const mockedTeamServiceRemoveUser = jest
+        .spyOn(teamService, REMOVE_USER)
+        .mockResolvedValue();
       render(
         <MemoryRouter initialEntries={["/team/1"]}>
           <Routes>
@@ -706,7 +706,7 @@ describe("Team page should", () => {
       );
       await act(async () => confirmationButton.click());
       expect(mockedTeamServiceRemoveUser).toBeCalled();
-      expect(mockedUsedNavigate).toBeCalledWith("/teams");
+      await waitFor(() => expect(mockedUsedNavigate).toBeCalledWith("/teams"));
     });
   });
 });
