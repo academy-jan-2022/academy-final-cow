@@ -64,6 +64,16 @@ const TeamPage = () => {
     return <></>;
   };
 
+  const handleRemoveUser = async () => {
+    try {
+      if (id) {
+        await teamService.removeUser(id);
+      }
+    } catch (e) {
+      navigate("/error");
+    }
+  };
+
   return (
     <PageTemplate isLoading={isLoading}>
       <Container sx={{ display: "flex", marginTop: "25px", height: "100%" }}>
@@ -120,7 +130,7 @@ const TeamPage = () => {
       />
       <DoubleCheckModal
         open={showDoubleCheckModal}
-        handleConfirmButton={teamService.removeUser}
+        handleConfirmButton={handleRemoveUser}
       />
     </PageTemplate>
   );

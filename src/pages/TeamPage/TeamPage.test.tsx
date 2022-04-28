@@ -684,6 +684,12 @@ describe("Team page should", () => {
     test("call team service on double check modal confirmation", async () => {
       const mockedTeamServiceRemoveUser = jest.spyOn(teamService, REMOVE_USER);
 
+      const mockedUsedNavigate = jest.fn();
+      jest.mock("react-router-dom", () => ({
+        ...(jest.requireActual("react-router-dom") as any),
+        useNavigate: () => mockedUsedNavigate,
+      }));
+
       render(
         <MemoryRouter initialEntries={["/team/1"]}>
           <Routes>
@@ -695,14 +701,12 @@ describe("Team page should", () => {
       const leaveTeamButton = await screen.findByTestId("leave-team-button");
 
       await act(async () => leaveTeamButton.click());
-
-      const doubleCheckModal = screen.getByTestId("double-check-modal");
       const confirmationButton = screen.getByTestId(
         "double-check-confirmation-button"
       );
       await act(async () => confirmationButton.click());
       expect(mockedTeamServiceRemoveUser).toBeCalled();
-      expect(doubleCheckModal).not.toBeInTheDocument();
+      expect(mockedUsedNavigate).toBeCalledWith("/teams");
     });
   });
 });

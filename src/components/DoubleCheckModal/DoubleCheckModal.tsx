@@ -6,7 +6,7 @@ const DoubleCheckModal = ({
   handleConfirmButton,
 }: {
   open: boolean;
-  handleConfirmButton: () => void;
+  handleConfirmButton: (teamId: string) => Promise<void>;
 }) => {
   return (
     <Modal open={open} data-testid="double-check-modal">
