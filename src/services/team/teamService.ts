@@ -53,6 +53,8 @@ class TeamService {
       body: activity,
     });
   }
+
+  async removeUser() {}
 }
 
 const teamService = new TeamService();
