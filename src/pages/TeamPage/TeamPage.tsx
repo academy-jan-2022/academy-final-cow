@@ -106,6 +106,7 @@ const TeamPage = () => {
           <Tooltip
             disableFocusListener
             disableTouchListener
+            disableHoverListener={canCreateActivity()}
             title={"You need at least 3 team members to create an activity"}
           >
             <span>
