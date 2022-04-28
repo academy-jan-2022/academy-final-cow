@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, ListItem } from "@mui/material";
 import avatarGenerator from "../../services/infrastructure/AvatarGenerator";
+import "./teammember.css";
 
 const TeamMember = ({ fullName }: { fullName: string }) => {
   const getAvatar = () => {
@@ -8,10 +9,14 @@ const TeamMember = ({ fullName }: { fullName: string }) => {
   };
 
   return (
-    <Box data-testid="member-container">
+    <Box
+      data-testid="member-container"
+      sx={{ display: "flex", marginTop: "10px" }}
+    >
       <img
+        className="team-member-avatar"
         src={getAvatar()}
-        alt="memmber profile image"
+        alt="avatar"
         data-testid="team-member-avatar"
       />
       <ListItem>{fullName}</ListItem>

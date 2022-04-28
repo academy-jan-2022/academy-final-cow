@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate, useParams } from "react-router-dom";
-import { TeamWithMembers } from "../../services/team/Team";
+import { ActivityResponse, TeamWithMembers } from "../../services/team/Team";
 import "./team.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import { Button, List, Typography, Container, Tooltip } from "@mui/material";
@@ -96,7 +96,7 @@ const TeamPage = () => {
             alt="team logo"
             data-testid="team-image"
           />
-          <List>
+          <List sx={{ marginBottom: "20px" }}>
             <Typography variant="h4">Members:</Typography>
             {team?.members.map((member, index) => (
               <TeamMember
