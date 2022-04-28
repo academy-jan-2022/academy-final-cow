@@ -22,7 +22,7 @@ function JoinTeamPage() {
       return;
     }
 
-    setErrorMessage(error.response?.data.message);
+    setErrorMessage("Token is invalid");
   }
 
   function addMemberWhenLoggedIn() {
