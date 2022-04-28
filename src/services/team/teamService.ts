@@ -15,6 +15,8 @@ type GenerateJoinLinkResponse = {
   link: string;
 };
 
+type AddMemberResponse = CreateTeamResponse
+
 class TeamService {
   async getTeamsByUser(): Promise<TeamByUser[]> {
     const response: GetTeamsResponse = await client.get({
@@ -51,6 +53,13 @@ class TeamService {
     await client.post({
       route: API_ENDPOINT.CREATE_ACTIVITY,
       body: activity,
+    });
+  }
+
+  async addMember(joinTokenId: string | undefined): Promise<AddMemberResponse> {
+    return await client.post({
+      route: API_ENDPOINT.JOIN_TEAM,
+      body: { joinTokenId },
     });
   }
 }

@@ -11,6 +11,7 @@ import ActivityModal from "../../components/ActivityModal/ActivityModal";
 import ActivitiesContainer from "../../components/ActivitiesContainer/ActivitiesContainer";
 
 import sadcowboy from "../../images/sadcowboy.png";
+import { PageRoutes } from "../pageRoutes";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const TeamPage = () => {
           setTeam(response.team);
           toggleLoading(false);
         })
-        .catch(() => navigate("/error"));
+        .catch(() => navigate(PageRoutes.ERROR));
     }
   };
 

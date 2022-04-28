@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import AppBar from "./AppBar";
+import { PageRoutes } from "../../pages/pageRoutes";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -38,6 +39,6 @@ describe("appbar should", () => {
     const logo = screen.getByTestId("logo");
     logo.click();
 
-    expect(mockedUsedNavigate).toBeCalledWith("/teams");
+    expect(mockedUsedNavigate).toBeCalledWith(PageRoutes.TEAMS);
   });
 });

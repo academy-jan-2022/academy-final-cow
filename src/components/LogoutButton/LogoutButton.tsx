@@ -3,17 +3,18 @@ import React from "react";
 import { useGoogleLogout } from "react-google-login";
 import { useNavigate } from "react-router-dom";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
+import { PageRoutes } from "../../pages/pageRoutes";
 
 const LogoutButton = () => {
   const navigate = useNavigate();
 
   const handleSuccess = () => {
     storageHandler.removeItem("tokenObject");
-    navigate("/");
+    navigate(PageRoutes.HOME);
   };
 
   const handleFailure = () => {
-    navigate("/error");
+    navigate(PageRoutes.ERROR);
   };
 
   const { signOut } = useGoogleLogout({
