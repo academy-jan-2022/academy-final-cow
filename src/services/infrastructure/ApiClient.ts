@@ -33,8 +33,11 @@ class ApiClient {
     const response: AxiosResponse<T> = await axios.post(
       url.toString(),
       request.body,
-      { headers: { Authorization: `${token}` } }
+      {
+        headers: { Authorization: `${token}` },
+      }
     );
+
     return response.data;
   }
 

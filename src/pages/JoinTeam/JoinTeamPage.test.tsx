@@ -99,7 +99,9 @@ describe("join teams page should", () => {
         .fn()
         .mockReturnValue(TOKEN_OBJECT);
 
-      mockedTeamService.addMember = jest.fn().mockResolvedValue(TEAM_ID);
+      mockedTeamService.addMember = jest
+        .fn()
+        .mockResolvedValue({ teamId: TEAM_ID });
       await act(async () => {
         renderWithMemoryRouter(<JoinTeamPage />, {
           pageUrl: JOIN_TEAM_URL_PATH,
@@ -156,7 +158,9 @@ describe("join teams page should", () => {
           route: JOIN_TEAM_ROUTE,
         });
       });
-      const errorMessage = screen.getByText(errorResponse.message);
+      const errorMessage = screen.getByText(
+        errorResponse?.response?.data.message
+      );
       expect(errorMessage).toBeInTheDocument();
     });
 

@@ -21,7 +21,8 @@ function JoinTeamPage() {
       navigate(PageRoutes.ERROR);
       return;
     }
-    setErrorMessage(error.message);
+
+    setErrorMessage(error.response?.data.message);
   }
 
   function addMemberWhenLoggedIn() {
