@@ -10,6 +10,7 @@ describe("double check modal should", () => {
       <DoubleCheckModal
         open={true}
         handleConfirmButton={handleButton}
+        handleClose={handleClose}
         heading={"Are you sure bro?"}
       />
     );
@@ -23,6 +24,7 @@ describe("double check modal should", () => {
       <DoubleCheckModal
         open={true}
         handleConfirmButton={handleButton}
+        handleClose={handleClose}
         heading={"Are you sure bro?"}
       />
     );

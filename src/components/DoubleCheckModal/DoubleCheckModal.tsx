@@ -1,6 +1,16 @@
 import React from "react";
-import { Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "white",
+  borderRadius: "5px",
+  p: 4,
+};
 const DoubleCheckModal = ({
   open,
   handleConfirmButton,
@@ -14,7 +24,7 @@ const DoubleCheckModal = ({
 }) => {
   return (
     <Modal open={open} data-testid="double-check-modal">
-      <div>
+      <Box sx={style}>
         <Typography>{heading}</Typography>
         <Button
           variant={"outlined"}
@@ -30,7 +40,7 @@ const DoubleCheckModal = ({
         >
           Cancel
         </Button>
-      </div>
+      </Box>
     </Modal>
   );
 };

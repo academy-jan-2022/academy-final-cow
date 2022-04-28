@@ -12,6 +12,7 @@ import ActivitiesContainer from "../../components/ActivitiesContainer/Activities
 
 import sadcowboy from "../../images/sadcowboy.png";
 import DoubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
+import doubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -132,7 +133,9 @@ const TeamPage = () => {
       />
       <DoubleCheckModal
         open={showDoubleCheckModal}
+        handleClose={() => toggleDoubleCheckModal(false)}
         handleConfirmButton={handleRemoveUser}
+        heading={"Are you sure you want to leave?"}
       />
     </PageTemplate>
   );
