@@ -161,6 +161,9 @@ describe("Team page should", () => {
       expect(teamMembers).toHaveTextContent(USER_ONE_FULL_NAME);
       expect(teamMembers).toHaveTextContent(USER_TWO_FULL_NAME);
 
+      const memberComponent = screen.getAllByTestId("member-container");
+      expect(memberComponent.length).toBe(2);
+
       mockedTeamService.mockRestore();
     });
 
