@@ -23,6 +23,7 @@ const USER_TWO_FULL_NAME = "Anna Hello";
 const GET_TEAM_METHOD = "getTeamById";
 const GENERATE_JOIN_LINK = "generateJoinLink";
 const CREATE_ACTIVITY = "createActivity";
+const REMOVE_USER = "removeUser";
 
 const team: TeamWithMembers = {
   id: TEAM_ID,
@@ -647,6 +648,61 @@ describe("Team page should", () => {
         numberOfGroups: 2,
         members: [{ fullName: "Anna Hello", id: "2" }],
       });
+    });
+
+    test("render leave team button", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const leaveTeamButton = await screen.findByTestId("leave-team-button");
+      expect(leaveTeamButton).toBeInTheDocument();
+      expect(leaveTeamButton);
+    });
+
+    test("display double check modal when leave team button is clicked", async () => {
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const leaveTeamButton = await screen.findByTestId("leave-team-button");
+
+      await act(async () => leaveTeamButton.click());
+
+      const doubleCheckModal = screen.getByTestId("double-check-modal");
+      expect(doubleCheckModal).toBeInTheDocument();
+    });
+
+    test("call team service on double check modal confirmation", async () => {
+      const mockedTeamServiceRemoveUser = jest.spyOn(teamService, REMOVE_USER);
+
+      render(
+        <MemoryRouter initialEntries={["/team/1"]}>
+          <Routes>
+            <Route path="/team/:id" element={<TeamPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const leaveTeamButton = await screen.findByTestId("leave-team-button");
+
+      await act(async () => leaveTeamButton.click());
+
+      const doubleCheckModal = screen.getByTestId("double-check-modal");
+      const confirmationButton = screen.getByTestId(
+        "double-check-confirmation-button"
+      );
+      await act(async () => confirmationButton.click());
+      expect(mockedTeamServiceRemoveUser).toBeCalled();
+      expect(doubleCheckModal).not.toBeInTheDocument();
     });
   });
 });

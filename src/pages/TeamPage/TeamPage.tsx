@@ -4,13 +4,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { TeamWithMembers } from "../../services/team/Team";
 import "./team.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
-import { Button, List, ListItem, Typography, Container } from "@mui/material";
+import { Button, Container, List, ListItem, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 import ActivityModal from "../../components/ActivityModal/ActivityModal";
 import ActivitiesContainer from "../../components/ActivitiesContainer/ActivitiesContainer";
 
 import sadcowboy from "../../images/sadcowboy.png";
+import DoubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ const TeamPage = () => {
   const [isLoading, toggleLoading] = useState(true);
 
   const [showActivityModal, toggleActivityModal] = useState(false);
+  const [showDoubleCheckModal, toggleDoubleCheckModal] = useState(false);
 
   const handleOpen = () => setShowJoinLinkModal(true);
   const handleClose = () => setShowJoinLinkModal(false);
@@ -83,6 +85,14 @@ const TeamPage = () => {
           <Button variant={"outlined"} onClick={generateLink}>
             create join link
           </Button>
+
+          <Button
+            variant={"outlined"}
+            data-testid={"leave-team-button"}
+            onClick={() => toggleDoubleCheckModal(true)}
+          >
+            leave team
+          </Button>
         </Container>
         <Container sx={{ flex: 2 }}>
           <PageHeading>{team?.name}</PageHeading>
@@ -108,6 +118,7 @@ const TeamPage = () => {
         open={showJoinLinkModal}
         handleClose={handleClose}
       />
+      <DoubleCheckModal open={showDoubleCheckModal} />
     </PageTemplate>
   );
 };
