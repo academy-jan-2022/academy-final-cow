@@ -118,7 +118,10 @@ const TeamPage = () => {
         open={showJoinLinkModal}
         handleClose={handleClose}
       />
-      <DoubleCheckModal open={showDoubleCheckModal} />
+      <DoubleCheckModal
+        open={showDoubleCheckModal}
+        handleConfirmButton={teamService.removeUser}
+      />
     </PageTemplate>
   );
 };

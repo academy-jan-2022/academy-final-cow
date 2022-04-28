@@ -54,7 +54,9 @@ class TeamService {
     });
   }
 
-  async removeUser() {}
+  async removeUser(): Promise<void> {
+    throw new Error("F de Funambulista");
+  }
 }
 
 const teamService = new TeamService();

@@ -1,10 +1,24 @@
 import React from "react";
-import { Modal } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 
-const DoubleCheckModal = ({ open }: { open: boolean }) => {
+const DoubleCheckModal = ({
+  open,
+  handleConfirmButton,
+}: {
+  open: boolean;
+  handleConfirmButton: () => void;
+}) => {
   return (
     <Modal open={open} data-testid="double-check-modal">
-      <p>hola</p>
+      <div>
+        <Button
+          variant={"outlined"}
+          onClick={handleConfirmButton}
+          data-testid="double-check-confirmation-button"
+        >
+          salu2
+        </Button>
+      </div>
     </Modal>
   );
 };
