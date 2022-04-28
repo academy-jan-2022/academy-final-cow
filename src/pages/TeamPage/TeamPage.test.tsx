@@ -458,8 +458,8 @@ describe("Team page should", () => {
     test("should not show tooltip over the button when can create activity", async () => {
       const activityButton = screen.getByText("create new activity");
       fireEvent.mouseOver(activityButton);
-      await waitFor(() => {
-        const tooltip = screen.queryAllByText(
+      await waitFor(async () => {
+        const tooltip = await screen.findAllByText(
           "You need at least 3 team members to create an activity"
         );
 
