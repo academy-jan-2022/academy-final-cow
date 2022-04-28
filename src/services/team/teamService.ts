@@ -54,8 +54,11 @@ class TeamService {
     });
   }
 
-  async removeUser(): Promise<void> {
-    throw new Error("F de Funambulista");
+  async removeUser(teamId: string) {
+    await client.delete({
+      route: API_ENDPOINT.REMOVE_USER,
+      queryParams: { teamId },
+    });
   }
 }
 

@@ -682,7 +682,8 @@ describe("Team page should", () => {
     });
 
     test("call team service on double check modal confirmation", async () => {
-      const moco = jest.mock("../../services/team/teamService");
+      const mockedTeamServiceRemoveUser = jest.spyOn(teamService, REMOVE_USER);
+
       render(
         <MemoryRouter initialEntries={["/team/1"]}>
           <Routes>
@@ -700,7 +701,7 @@ describe("Team page should", () => {
         "double-check-confirmation-button"
       );
       await act(async () => confirmationButton.click());
-      expect(moco).toBeCalled();
+      expect(mockedTeamServiceRemoveUser).toBeCalled();
       expect(doubleCheckModal).not.toBeInTheDocument();
     });
   });
