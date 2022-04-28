@@ -31,7 +31,7 @@ function JoinTeamPage() {
 
       teamService
         .addMember(joinTokenId)
-        .then((teamId) => {
+        .then(({ teamId }) => {
           setIsLoading(false);
           return teamId;
         })
