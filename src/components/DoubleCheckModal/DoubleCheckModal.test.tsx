@@ -15,6 +15,6 @@ describe("double check modal should", () => {
     );
 
     const heading = screen.getByText("Are you sure bro?");
-    expect(heading).toBeInDocument();
+    expect(heading).toBeInTheDocument();
   });
 });
