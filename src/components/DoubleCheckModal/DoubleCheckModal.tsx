@@ -1,16 +1,7 @@
 import React from "react";
 import { Box, Button, Modal, Typography } from "@mui/material";
+import "./doubleCheckModal.css";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "white",
-  borderRadius: "5px",
-  p: 4,
-};
 const DoubleCheckModal = ({
   open,
   handleConfirmButton,
@@ -24,22 +15,26 @@ const DoubleCheckModal = ({
 }) => {
   return (
     <Modal open={open} data-testid="double-check-modal">
-      <Box sx={style}>
+      <Box className="modal-container">
         <Typography>{heading}</Typography>
-        <Button
-          variant={"outlined"}
-          data-testid="double-check-confirmation-button"
-          onClick={handleConfirmButton}
-        >
-          Yes
-        </Button>
-        <Button
-          variant={"outlined"}
-          data-testid="double-check-cancel-button"
-          onClick={handleClose}
-        >
-          Cancel
-        </Button>
+        <div className={"button-container"}>
+          <Button
+            variant={"outlined"}
+            data-testid="double-check-cancel-button"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            variant={"outlined"}
+            data-testid="double-check-confirmation-button"
+            onClick={handleConfirmButton}
+            className={"button-container-confirm"}
+          >
+            Yes
+          </Button>
+        </div>
       </Box>
     </Modal>
   );
