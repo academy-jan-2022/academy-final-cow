@@ -452,4 +452,37 @@ describe("Team page should", () => {
       });
     });
   });
+
+  describe("Team page should not create activities when you have less than 3 members",() => {
+    let mockedTeamServiceGetTeam: jest.Mocked<any>;
+    let mockedTeamServiceCreateActivity: jest.Mocked<any>;
+
+    beforeEach(async () => {
+      await act(async () => {
+        mockedTeamServiceGetTeam = jest
+            .spyOn(teamService, GET_TEAM_METHOD)
+            .mockResolvedValue({ team: aTeamWithMembers });
+
+        jest
+            .spyOn(teamService, GENERATE_JOIN_LINK)
+            .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+        mockedTeamServiceCreateActivity = jest.spyOn(
+            teamService,
+            CREATE_ACTIVITY
+        );
+
+        renderWithMemoryRouter(<TeamPage />, {
+          pageUrl: TEAM_PAGE_URL,
+          route: TEAM_PAGE_ROUTE,
+        });
+      });
+    });
+
+    test("Should not display create activity button if you have less than 3 members", () => {
+      const activityButton = screen.queryAllByText("create new activity");
+
+      expect(activityButton.length).toEqual(0);
+    })
+  })
 });
