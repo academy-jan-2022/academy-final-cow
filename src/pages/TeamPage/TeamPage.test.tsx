@@ -572,6 +572,7 @@ describe("Team page should", () => {
       expect(mockedTeamService).toBeCalledWith({
         activityName: "My Activity",
         numberOfGroups: 4,
+        teamId: "1",
         members: [
           { fullName: "Peter Parker", id: "1" },
           { fullName: "Anna Hello", id: "2" },
@@ -645,6 +646,7 @@ describe("Team page should", () => {
       expect(mockedTeamService).toBeCalledWith({
         activityName: "My Activity",
         numberOfGroups: 2,
+        teamId: "1",
         members: [{ fullName: "Anna Hello", id: "2" }],
       });
     });

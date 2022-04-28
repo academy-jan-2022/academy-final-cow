@@ -100,6 +100,7 @@ const TeamPage = () => {
         open={showActivityModal}
         handleClose={() => toggleActivityModal(false)}
         fetchedMembers={team?.members || []}
+        teamId={id}
         toggleLoading={toggleLoading}
         getTeam={getTeam}
       />
