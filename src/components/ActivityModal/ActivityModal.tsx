@@ -114,10 +114,12 @@ const ActivityModal = ({
               onChange={(e) => {
                 setNumberOfGroups(parseInt(e.target.value));
               }}
+              label={"number of groups"}
               InputProps={{
                 inputProps: {
+                  label: "number of groups",
                   min: 2,
-                  max: fetchedMembers.length,
+                  max: fetchedMembers.length - 1,
                   "data-testid": "activity-input-amount-groups",
                 },
               }}

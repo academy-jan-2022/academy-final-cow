@@ -4,7 +4,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { TeamWithMembers } from "../../services/team/Team";
 import "./team.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
-import { Button, List, ListItem, Typography, Container } from "@mui/material";
+import {
+  Button,
+  List,
+  ListItem,
+  Typography,
+  Container,
+  Tooltip,
+} from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 import ActivityModal from "../../components/ActivityModal/ActivityModal";
@@ -63,6 +70,13 @@ const TeamPage = () => {
     return <></>;
   };
 
+  const canCreateActivity = (): boolean => {
+    if (team) {
+      return team.members.length >= 3;
+    }
+    return false;
+  };
+
   return (
     <PageTemplate isLoading={isLoading}>
       <Container sx={{ display: "flex", marginTop: "25px", height: "100%" }}>
@@ -89,12 +103,22 @@ const TeamPage = () => {
           <PageHeading>{team?.name}</PageHeading>
           <Typography component="p">{team?.description}</Typography>
           {renderActivityBox()}
-          <Button
-            variant={"outlined"}
-            onClick={() => toggleActivityModal(true)}
+          <Tooltip
+            disableFocusListener
+            disableTouchListener
+            disableHoverListener={canCreateActivity()}
+            title={"You need at least 3 team members to create an activity"}
           >
-            create new activity
-          </Button>
+            <span>
+              <Button
+                variant={"outlined"}
+                onClick={() => toggleActivityModal(true)}
+                disabled={!canCreateActivity()}
+              >
+                create new activity
+              </Button>
+            </span>
+          </Tooltip>
         </Container>
       </Container>
       <ActivityModal

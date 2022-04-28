@@ -21,6 +21,8 @@ const USER_ONE_ID = "1";
 const USER_ONE_FULL_NAME = "Peter Parker";
 const USER_TWO_ID = "2";
 const USER_TWO_FULL_NAME = "Anna Hello";
+const USER_THREE_ID = "3";
+const USER_THREE_FULL_NAME = "Brian Hello";
 
 const GET_TEAM_METHOD = "getTeamById";
 const GENERATE_JOIN_LINK = "generateJoinLink";
@@ -53,6 +55,10 @@ const teamWithActivity: TeamWithMembers = {
     {
       id: USER_TWO_ID,
       fullName: USER_TWO_FULL_NAME,
+    },
+    {
+      id: USER_THREE_ID,
+      fullName: USER_THREE_FULL_NAME,
     },
   ],
   activities: [
@@ -400,6 +406,7 @@ describe("Team page should", () => {
         members: [
           { fullName: "Peter Parker", id: "1" },
           { fullName: "Anna Hello", id: "2" },
+          { fullName: "Brian Hello", id: "3" },
         ],
       });
     });
@@ -410,7 +417,7 @@ describe("Team page should", () => {
 
       const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
 
-      expect(listOfUserCheckboxes.length).toEqual(2);
+      expect(listOfUserCheckboxes.length).toEqual(3);
     });
 
     test("display included members heading", async () => {
@@ -441,7 +448,66 @@ describe("Team page should", () => {
         activityName: "My Activity",
         numberOfGroups: 2,
         teamId: "1",
-        members: [{ fullName: "Anna Hello", id: "2" }],
+        members: [
+          { fullName: "Anna Hello", id: "2" },
+          { fullName: "Brian Hello", id: "3" },
+        ],
+      });
+    });
+
+    test("should not show tooltip over the button when can create activity", async () => {
+      const activityButton = screen.getByText("create new activity");
+      fireEvent.mouseOver(activityButton);
+
+      const tooltip = await screen.queryByText(
+        "You need at least 3 team members to create an activity"
+      );
+
+      expect(tooltip).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Team page should not create activities when you have less than 3 members", () => {
+    let mockedTeamServiceGetTeam: jest.Mocked<any>;
+    let mockedTeamServiceCreateActivity: jest.Mocked<any>;
+
+    beforeEach(async () => {
+      await act(async () => {
+        mockedTeamServiceGetTeam = jest
+          .spyOn(teamService, GET_TEAM_METHOD)
+          .mockResolvedValue({ team: aTeamWithMembers });
+
+        jest
+          .spyOn(teamService, GENERATE_JOIN_LINK)
+          .mockResolvedValue({ link: "http://localhost:3000/join/123456" });
+
+        mockedTeamServiceCreateActivity = jest.spyOn(
+          teamService,
+          CREATE_ACTIVITY
+        );
+
+        renderWithMemoryRouter(<TeamPage />, {
+          pageUrl: TEAM_PAGE_URL,
+          route: TEAM_PAGE_ROUTE,
+        });
+      });
+    });
+
+    test("Should not display create activity button if you have less than 3 members", () => {
+      const activityButton = screen.getByText("create new activity");
+
+      expect(activityButton).toBeDisabled();
+    });
+
+    test("should show tooltip over the button when can't create activity", async () => {
+      const activityButton = screen.getByText("create new activity");
+      fireEvent.mouseOver(activityButton);
+      await waitFor(() => {
+        const tooltip = screen.getByText(
+          "You need at least 3 team members to create an activity"
+        );
+
+        expect(tooltip).toBeInTheDocument();
       });
     });
   });
