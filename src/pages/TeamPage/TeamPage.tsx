@@ -4,22 +4,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { TeamWithMembers } from "../../services/team/Team";
 import "./team.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
-import {
-  Button,
-  List,
-  ListItem,
-  Typography,
-  Container,
-  Tooltip,
-} from "@mui/material";
+import { Button, List, Typography, Container, Tooltip } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 import ActivityModal from "../../components/ActivityModal/ActivityModal";
 import ActivitiesContainer from "../../components/ActivitiesContainer/ActivitiesContainer";
 
+import TeamMember from "../../components/TeamMember/TeamMember";
+
 import sadcowboy from "../../images/sadcowboy.png";
 import DoubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
-import doubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
 import { PageRoutes } from "../pageRoutes";
 
 const TeamPage = () => {
@@ -105,9 +99,10 @@ const TeamPage = () => {
           <List>
             <Typography variant="h4">Members:</Typography>
             {team?.members.map((member, index) => (
-              <ListItem key={member.id + "_" + index}>
-                {member.fullName}
-              </ListItem>
+              <TeamMember
+                key={member.id + "_" + index}
+                fullName={member.fullName}
+              />
             ))}
           </List>
           <Button variant={"outlined"} onClick={generateLink}>
