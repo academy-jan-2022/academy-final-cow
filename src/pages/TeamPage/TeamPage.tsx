@@ -78,10 +78,10 @@ const TeamPage = () => {
       if (id) {
         toggleLoading(true);
         await teamService.removeUser(id);
-        navigate("/teams");
+        navigate(PageRoutes.TEAMS);
       }
     } catch (e) {
-      navigate("/error");
+      navigate(PageRoutes.ERROR);
     }
   };
 

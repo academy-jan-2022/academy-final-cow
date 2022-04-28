@@ -513,32 +513,25 @@ describe("Team page should", () => {
         const tooltip = screen.getByText(
           "You need at least 3 team members to create an activity"
         );
-
         expect(tooltip).toBeInTheDocument();
       });
     });
 
     test("render leave team button", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
+      renderWithMemoryRouter(<TeamPage />, {
+        pageUrl: TEAM_PAGE_URL,
+        route: TEAM_PAGE_ROUTE,
+      });
 
       const leaveTeamButton = await screen.findByTestId("leave-team-button");
       expect(leaveTeamButton).toBeInTheDocument();
     });
 
     test("display double check modal when leave team button is clicked", async () => {
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
+      renderWithMemoryRouter(<TeamPage />, {
+        pageUrl: TEAM_PAGE_URL,
+        route: TEAM_PAGE_ROUTE,
+      });
 
       const leaveTeamButton = await screen.findByTestId("leave-team-button");
 
@@ -552,13 +545,10 @@ describe("Team page should", () => {
       const mockedTeamServiceRemoveUser = jest
         .spyOn(teamService, REMOVE_USER)
         .mockResolvedValue();
-      render(
-        <MemoryRouter initialEntries={["/team/1"]}>
-          <Routes>
-            <Route path="/team/:id" element={<TeamPage />} />
-          </Routes>
-        </MemoryRouter>
-      );
+      renderWithMemoryRouter(<TeamPage />, {
+        pageUrl: TEAM_PAGE_URL,
+        route: TEAM_PAGE_ROUTE,
+      });
 
       const leaveTeamButton = await screen.findByTestId("leave-team-button");
 
@@ -568,7 +558,9 @@ describe("Team page should", () => {
       );
       await act(async () => confirmationButton.click());
       expect(mockedTeamServiceRemoveUser).toBeCalled();
-      await waitFor(() => expect(mockedUsedNavigate).toBeCalledWith("/teams"));
+      await waitFor(() =>
+        expect(mockedUsedNavigate).toBeCalledWith(PageRoutes.TEAMS)
+      );
     });
   });
 });
