@@ -4,10 +4,12 @@ import { Button, Modal, Typography } from "@mui/material";
 const DoubleCheckModal = ({
   open,
   handleConfirmButton,
+  handleClose,
   heading,
 }: {
   open: boolean;
   handleConfirmButton: () => void;
+  handleClose: () => void;
   heading: string;
 }) => {
   return (
@@ -20,6 +22,13 @@ const DoubleCheckModal = ({
           onClick={handleConfirmButton}
         >
           Yes
+        </Button>
+        <Button
+          variant={"outlined"}
+          data-testid="double-check-cancel-button"
+          onClick={handleClose}
+        >
+          Cancel
         </Button>
       </div>
     </Modal>
