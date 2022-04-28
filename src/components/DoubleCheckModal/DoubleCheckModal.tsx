@@ -22,6 +22,7 @@ const DoubleCheckModal = ({
             variant={"outlined"}
             data-testid="double-check-cancel-button"
             onClick={handleClose}
+            color="inherit"
           >
             Cancel
           </Button>
