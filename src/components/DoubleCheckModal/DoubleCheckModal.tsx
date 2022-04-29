@@ -16,7 +16,7 @@ const DoubleCheckModal = ({
   return (
     <Modal open={open} data-testid="double-check-modal">
       <Box className="modal-container">
-        <Typography>{heading}</Typography>
+        <Typography className="modal-container-header">{heading}</Typography>
         <div className={"button-container"}>
           <Button
             variant={"outlined"}
