@@ -41,7 +41,7 @@ const ActivitiesContainer = ({
           inputProps={{ "data-testid": "activity-selector" }}
           value={currentActivityIndex.toString()}
         >
-          {activities.map((activity, index) => (
+          {activities.reverse().map((activity, index) => (
             <MenuItem key={activity.name} value={index}>
               {activity.name}
             </MenuItem>

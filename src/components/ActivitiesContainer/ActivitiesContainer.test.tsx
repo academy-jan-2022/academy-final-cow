@@ -3,7 +3,7 @@ import ActivitiesContainer from "./ActivitiesContainer";
 import { render, screen } from "@testing-library/react";
 
 describe("activites container should", () => {
-  test("show the activities in reverse order", () => {
+  test("show the most recent activity", () => {
     const activityResponse = [
       {
         name: "First Activity",
@@ -30,11 +30,8 @@ describe("activites container should", () => {
 
     render(<ActivitiesContainer activities={activityResponse} />);
 
-    const selectElement = screen.getByTestId("activity-selector-container");
-    const topItem = selectElement.firstElementChild;
-    const bottomItem = selectElement.lastElementChild;
+    const currentActivity = screen.getByTestId("activity-name-text");
 
-    expect(topItem).toHaveTextContent("Third Activity");
-    expect(bottomItem).toHaveTextContent("First Activity");
+    expect(currentActivity).toHaveTextContent("Third Activity");
   });
 });
