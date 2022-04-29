@@ -48,8 +48,7 @@ export class AvatarGenerator {
         link,
         bgColor,
       };
-
-      avatarArray.push(avatar);
+      avatarArray.push(avatar)
     }
     return avatarArray;
   }

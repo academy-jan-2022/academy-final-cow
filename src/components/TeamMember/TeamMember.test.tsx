@@ -11,7 +11,6 @@ describe("team member component should", () => {
         avatar={{ link: "avatar", bgColor: "#333" }}
       />
     );
-  });
 
   test("have the full name", () => {
     const name = screen.getByText("Bob Johnson");
