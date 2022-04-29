@@ -5,22 +5,18 @@ import { TeamWithMembers } from "../../services/team/Team";
 import "./team.css";
 import "../../index.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
-import {
-  Button,
-  List,
-  ListItem,
-  Typography,
-  Container,
-  Tooltip,
-} from "@mui/material";
+import { Button, Container, List, Tooltip, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 import ActivityModal from "../../components/ActivityModal/ActivityModal";
 import ActivitiesContainer from "../../components/ActivitiesContainer/ActivitiesContainer";
 
+import TeamMember from "../../components/TeamMember/TeamMember";
+
 import sadcowboy from "../../images/sadcowboy.png";
 import DoubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
 import { PageRoutes } from "../pageRoutes";
+import avatarGenerator from "../../services/infrastructure/AvatarGenerator";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -28,6 +24,7 @@ const TeamPage = () => {
   const [showJoinLinkModal, setShowJoinLinkModal] = React.useState(false);
   const [joinLink, setJoinLink] = React.useState("");
   const [isLoading, toggleLoading] = useState(true);
+  const [avatarList, setAvatarList] = useState<string[]>([]);
 
   const [showActivityModal, toggleActivityModal] = useState(false);
   const [showDoubleCheckModal, toggleDoubleCheckModal] = useState(false);
@@ -43,6 +40,9 @@ const TeamPage = () => {
         .getTeamById(id)
         .then((response) => {
           setTeam(response.team);
+          setAvatarList(
+            avatarGenerator.generateAvatarList(response.team.members.length)
+          );
           toggleLoading(false);
         })
         .catch(() => navigate(PageRoutes.ERROR));
@@ -78,10 +78,11 @@ const TeamPage = () => {
       if (id) {
         toggleLoading(true);
         await teamService.removeUser(id);
-        navigate("/teams");
+
+        navigate(PageRoutes.TEAMS);
       }
     } catch (e) {
-      navigate("/error");
+      navigate(PageRoutes.ERROR);
     }
   };
 
@@ -102,14 +103,33 @@ const TeamPage = () => {
             alt="team logo"
             data-testid="team-image"
           />
-          <List>
+          <List sx={{ marginBottom: "20px" }}>
             <Typography variant="h4">Members:</Typography>
             {team?.members.map((member, index) => (
-              <ListItem key={member.id + "_" + index}>
-                {member.fullName}
-              </ListItem>
+              <TeamMember
+                key={member.id + "_" + index}
+                fullName={member.fullName}
+                avatar={avatarList[index]}
+              />
             ))}
           </List>
+
+          <Button variant={"outlined"} onClick={generateLink}>
+            create join link
+          </Button>
+
+          <Button
+            variant={"outlined"}
+            data-testid={"leave-team-button"}
+            onClick={() => toggleDoubleCheckModal(true)}
+          >
+            leave team
+          </Button>
+        </Container>
+        <Container sx={{ flex: 2 }}>
+          <PageHeading>{team?.name}</PageHeading>
+          <Typography component="p">{team?.description}</Typography>
+          {renderActivityBox()}
           <Tooltip
             disableFocusListener
             disableTouchListener
