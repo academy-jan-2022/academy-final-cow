@@ -12,7 +12,7 @@ import ActivitiesContainer from "../../components/ActivitiesContainer/Activities
 
 import TeamMember from "../../components/TeamMember/TeamMember";
 
-import sadcowboy from "../../images/sadcowboy.png";
+import teamlogo from "../../images/team-logo.png";
 import DoubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
 import { PageRoutes } from "../pageRoutes";
 import avatarGenerator, {
@@ -99,7 +99,7 @@ const TeamPage = () => {
         <Container sx={{ flex: 1 }}>
           <img
             className="team-logo"
-            src={sadcowboy}
+            src={teamlogo}
             alt="team logo"
             data-testid="team-image"
           />
