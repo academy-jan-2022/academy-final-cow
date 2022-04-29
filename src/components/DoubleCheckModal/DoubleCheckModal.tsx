@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import "./doubleCheckModal.css";
-import "../../index.css";
 
 const DoubleCheckModal = ({
   open,

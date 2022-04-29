@@ -3,7 +3,6 @@ import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate, useParams } from "react-router-dom";
 import { TeamWithMembers } from "../../services/team/Team";
 import "./team.css";
-import "../../index.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import { Button, Container, List, Tooltip, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";

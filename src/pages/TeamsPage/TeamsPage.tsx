@@ -6,7 +6,6 @@ import TeamService from "../../services/team/teamService";
 import { TeamByUser } from "../../services/team/Team";
 import TeamCard from "../../components/Team/TeamCard";
 import "./teams.css";
-import "../../index.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import { PageRoutes } from "../pageRoutes";
 
