@@ -31,6 +31,17 @@ const GENERATE_JOIN_LINK = "generateJoinLink";
 const CREATE_ACTIVITY = "createActivity";
 const REMOVE_USER = "removeUser";
 
+const LAST_ACTIVITY = "Mars Rover";
+const FIRST_ACTIVITY = "Bank kata";
+const LAST_ACTIVITY_MEMBER_ONE = "fishboy";
+const LAST_ACTIVITY_MEMBER_TWO = "fishgirl";
+const LAST_ACTIVITY_MEMBER_THREE = "chickenboy";
+const LAST_ACTIVITY_MEMBER_FOUR = "chickengirl";
+const FIRST_ACTIVITY_MEMBER_ONE = "cowboy";
+const FIRST_ACTIVITY_MEMBER_TWO = "cowgirl";
+const FIRST_ACTIVITY_MEMBER_THREE = "dogboy";
+const FIRST_ACTIVITY_MEMBER_FOUR = "doggirl";
+
 const aTeamWithMembers: TeamWithMembers = {
   id: TEAM_ID,
   name: TEAM_NAME,
@@ -46,7 +57,8 @@ const aTeamWithMembers: TeamWithMembers = {
     },
   ],
 };
-const teamWithActivity: TeamWithMembers = {
+
+const teamWithActivity = () => ({
   id: TEAM_ID,
   name: TEAM_NAME,
   description: TEAM_DESCRIPTION,
@@ -70,21 +82,21 @@ const teamWithActivity: TeamWithMembers = {
   ],
   activities: [
     {
-      name: "My activity",
+      name: LAST_ACTIVITY,
       groups: [
-        [{ name: "cowboy" }, { name: "cowgirl" }],
-        [{ name: "dogboy" }, { name: "doggirl" }],
+        [{ name: LAST_ACTIVITY_MEMBER_ONE }, { name: LAST_ACTIVITY_MEMBER_TWO }],
+        [{ name: LAST_ACTIVITY_MEMBER_THREE }, { name: LAST_ACTIVITY_MEMBER_FOUR }],
       ],
     },
     {
-      name: "My activity 2",
+      name: FIRST_ACTIVITY,
       groups: [
-        [{ name: "fishboy" }, { name: "fishgirl" }],
-        [{ name: "chickenboy" }, { name: "chickengirl" }],
+        [{ name: FIRST_ACTIVITY_MEMBER_ONE }, { name: FIRST_ACTIVITY_MEMBER_TWO }],
+        [{ name: FIRST_ACTIVITY_MEMBER_THREE }, { name: FIRST_ACTIVITY_MEMBER_FOUR }],
       ],
     },
   ],
-};
+});
 
 const teamWithoutActivity: TeamWithMembers = {
   id: TEAM_ID,
@@ -248,7 +260,7 @@ describe("Team page should", () => {
       await act(async () => {
         mockedTeamServiceGetTeam = jest
           .spyOn(teamService, GET_TEAM_METHOD)
-          .mockResolvedValue({ team: teamWithActivity });
+          .mockResolvedValue({ team: teamWithActivity() });
 
         jest
           .spyOn(teamService, GENERATE_JOIN_LINK)
@@ -311,7 +323,7 @@ describe("Team page should", () => {
 
       await act(async () => activityButton.click());
       const activityNameText = screen.getByTestId("activity-name-field");
-      fireEvent.change(activityNameText, { target: { value: "my activity" } });
+      fireEvent.change(activityNameText, { target: { value: FIRST_ACTIVITY } });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
       await act(async () => activitySubmitButton.click());
       expect(mockedTeamServiceCreateActivity).toBeCalled();
@@ -330,42 +342,42 @@ describe("Team page should", () => {
         screen.getByTestId("activity-name-text")
       );
       expect(activityNameText).toBeInTheDocument();
-      expect(activityNameText).toContainHTML("My activity");
+      expect(activityNameText).toContainHTML(FIRST_ACTIVITY);
     });
 
     test("display member inside activity box of the team when it exists", async () => {
       const activityMemberText = await waitFor(() =>
         screen.getAllByTestId("activity-member-text")
       );
-      expect(activityMemberText[0]).toContainHTML("cowboy");
+      expect(activityMemberText[0]).toContainHTML(FIRST_ACTIVITY_MEMBER_ONE);
     });
 
     test("display multiple members inside activity box of the team when it exists", async () => {
       const activityMemberText = await waitFor(() =>
         screen.getAllByTestId("activity-member-text")
       );
-      expect(activityMemberText[0]).toContainHTML("cowboy");
-      expect(activityMemberText[1]).toContainHTML("cowgirl");
+      expect(activityMemberText[0]).toContainHTML(FIRST_ACTIVITY_MEMBER_ONE);
+      expect(activityMemberText[1]).toContainHTML(FIRST_ACTIVITY_MEMBER_TWO);
     });
 
     test("display multiple groups with multiple members inside activity box of the team when it exists", async () => {
       const activityMemberText = await waitFor(() =>
         screen.getAllByTestId("activity-member-text")
       );
-      expect(activityMemberText[0]).toContainHTML("cowboy");
-      expect(activityMemberText[1]).toContainHTML("cowgirl");
-      expect(activityMemberText[2]).toContainHTML("dogboy");
-      expect(activityMemberText[3]).toContainHTML("doggirl");
+      expect(activityMemberText[0]).toContainHTML(FIRST_ACTIVITY_MEMBER_ONE);
+      expect(activityMemberText[1]).toContainHTML(FIRST_ACTIVITY_MEMBER_TWO);
+      expect(activityMemberText[2]).toContainHTML(FIRST_ACTIVITY_MEMBER_THREE);
+      expect(activityMemberText[3]).toContainHTML(FIRST_ACTIVITY_MEMBER_FOUR);
     });
 
     test("display multiple box groups containing multiple members inside activity box of the team when it exists", async () => {
       const activityMemberBox = await waitFor(() =>
         screen.getAllByTestId("activity-member-box")
       );
-      expect(activityMemberBox[0]).toContainHTML("cowboy");
-      expect(activityMemberBox[0]).toContainHTML("cowgirl");
-      expect(activityMemberBox[1]).toContainHTML("dogboy");
-      expect(activityMemberBox[1]).toContainHTML("doggirl");
+      expect(activityMemberBox[0]).toContainHTML(FIRST_ACTIVITY_MEMBER_ONE);
+      expect(activityMemberBox[0]).toContainHTML(FIRST_ACTIVITY_MEMBER_TWO);
+      expect(activityMemberBox[1]).toContainHTML(FIRST_ACTIVITY_MEMBER_THREE);
+      expect(activityMemberBox[1]).toContainHTML(FIRST_ACTIVITY_MEMBER_FOUR);
     });
 
     test("display selector when multiple activities exist on team", async () => {
@@ -381,14 +393,14 @@ describe("Team page should", () => {
         screen.getByTestId("activity-name-text")
       );
 
-      expect(originalActivityName).toHaveTextContent("My activity");
+      expect(originalActivityName).toHaveTextContent(FIRST_ACTIVITY);
 
       UserEvent.click(
         getByRole(screen.getByTestId("activity-selector-container"), "button")
       );
-      await waitFor(() => UserEvent.click(screen.getByText("My activity 2")));
+      await waitFor(() => UserEvent.click(screen.getByText(LAST_ACTIVITY)));
       expect(screen.getByTestId("activity-name-text")).toHaveTextContent(
-        "My activity 2"
+        LAST_ACTIVITY
       );
     });
     test("show input where you modify number of groups", async () => {
@@ -412,11 +424,11 @@ describe("Team page should", () => {
       fireEvent.change(activityInputAmountGroups, { target: { value: "4" } });
 
       const activityNameText = screen.getByTestId("activity-name-field");
-      fireEvent.change(activityNameText, { target: { value: "My Activity" } });
+      fireEvent.change(activityNameText, { target: { value: FIRST_ACTIVITY } });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
       await act(async () => activitySubmitButton.click());
       expect(mockedTeamServiceCreateActivity).toBeCalledWith({
-        activityName: "My Activity",
+        activityName: FIRST_ACTIVITY,
         numberOfGroups: 4,
         teamId: "1",
         members: [
@@ -456,13 +468,13 @@ describe("Team page should", () => {
 
       const activityNameText = screen.getByTestId("activity-name-field");
       fireEvent.change(activityNameText, {
-        target: { value: "My Activity" },
+        target: { value: FIRST_ACTIVITY },
       });
       const activitySubmitButton = screen.getByTestId("activity-submit-button");
       await act(async () => activitySubmitButton.click());
 
       expect(mockedTeamServiceCreateActivity).toBeCalledWith({
-        activityName: "My Activity",
+        activityName: FIRST_ACTIVITY,
         numberOfGroups: 2,
         teamId: "1",
         members: [

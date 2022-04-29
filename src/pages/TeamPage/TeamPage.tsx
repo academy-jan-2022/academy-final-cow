@@ -40,6 +40,7 @@ const TeamPage = () => {
       teamService
         .getTeamById(id)
         .then((response) => {
+          response.team.activities = response.team.activities?.reverse() || [];
           setTeam(response.team);
           setAvatarList(
             avatarGenerator.generateAvatarList(response.team.members)
