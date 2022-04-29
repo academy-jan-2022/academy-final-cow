@@ -16,16 +16,6 @@ flex-direction: row;
 justify-content: space-around;
 }
 
-.button-container-confirm {
-    background-color: red !important;
-    color: white !important;
-    border-color: transparent !important;
-}
-.button-container-confirm:hover {
-    background-color: white !important;
-    color: red !important;
-    border-color: red !important;
-}
 
 .modal-container-header{
     text-align: center;

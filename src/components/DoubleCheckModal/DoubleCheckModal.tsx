@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import "./doubleCheckModal.css";
+import "../../index.css";
 
 const DoubleCheckModal = ({
   open,
@@ -23,6 +24,7 @@ const DoubleCheckModal = ({
             data-testid="double-check-cancel-button"
             onClick={handleClose}
             color="inherit"
+            className={"blue-button"}
           >
             Cancel
           </Button>
@@ -31,7 +33,7 @@ const DoubleCheckModal = ({
             variant={"outlined"}
             data-testid="double-check-confirmation-button"
             onClick={handleConfirmButton}
-            className={"button-container-confirm"}
+            className={"red-button"}
           >
             Yes
           </Button>

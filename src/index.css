@@ -16,3 +16,28 @@ code {
 h1 {
     text-align: center;
 }
+
+.red-button{
+    background-color: red !important;
+    color: white !important;
+    border-color: transparent !important;
+}
+
+.blue-button{
+    background-color: blue !important;
+    color: white !important;
+    border-color: transparent !important;
+}
+
+.red-button:hover{
+    background-color: white !important;
+    color: red !important;
+    border-color: red !important;
+}
+
+.blue-button:hover{
+    background-color: white !important;
+    color: blue !important;
+    border-color: blue !important;
+}
+

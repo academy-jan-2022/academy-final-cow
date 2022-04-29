@@ -3,6 +3,7 @@ import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate, useParams } from "react-router-dom";
 import { TeamWithMembers } from "../../services/team/Team";
 import "./team.css";
+import "../../index.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import {
   Button,
@@ -19,7 +20,6 @@ import ActivitiesContainer from "../../components/ActivitiesContainer/Activities
 
 import sadcowboy from "../../images/sadcowboy.png";
 import DoubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
-import doubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
 import { PageRoutes } from "../pageRoutes";
 
 const TeamPage = () => {
@@ -110,22 +110,6 @@ const TeamPage = () => {
               </ListItem>
             ))}
           </List>
-          <Button variant={"outlined"} onClick={generateLink}>
-            create join link
-          </Button>
-
-          <Button
-            variant={"outlined"}
-            data-testid={"leave-team-button"}
-            onClick={() => toggleDoubleCheckModal(true)}
-          >
-            leave team
-          </Button>
-        </Container>
-        <Container sx={{ flex: 2 }}>
-          <PageHeading>{team?.name}</PageHeading>
-          <Typography component="p">{team?.description}</Typography>
-          {renderActivityBox()}
           <Tooltip
             disableFocusListener
             disableTouchListener
@@ -137,11 +121,37 @@ const TeamPage = () => {
                 variant={"outlined"}
                 onClick={() => toggleActivityModal(true)}
                 disabled={!canCreateActivity()}
+                className={canCreateActivity() ? "blue-button" : ""}
               >
                 create new activity
               </Button>
             </span>
           </Tooltip>
+        </Container>
+        <Container sx={{ flex: 2 }} className={"activity-container"}>
+          <div>
+            <PageHeading>{team?.name}</PageHeading>
+            <Typography component="p">{team?.description}</Typography>
+            {renderActivityBox()}
+          </div>
+          <div className={"activity-buttoncontainer"}>
+            <Button
+              variant={"outlined"}
+              onClick={generateLink}
+              className={"blue-button"}
+            >
+              create join link
+            </Button>
+
+            <Button
+              variant={"outlined"}
+              data-testid={"leave-team-button"}
+              onClick={() => toggleDoubleCheckModal(true)}
+              className={"red-button"}
+            >
+              leave team
+            </Button>
+          </div>
         </Container>
       </Container>
       <ActivityModal
