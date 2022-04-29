@@ -5,8 +5,9 @@ import avatar4 from "../../images/avatars/nr.png";
 import avatar5 from "../../images/avatars/sb.png";
 import avatar6 from "../../images/avatars/bh.png";
 import avatar7 from "../../images/avatars/lb.png";
+import { TeamMember } from "../team/Team";
 
-class AvatarGenerator {
+export class AvatarGenerator {
   originalAvatars = [
     avatar1,
     avatar2,
@@ -30,14 +31,34 @@ class AvatarGenerator {
     return randomAvatar;
   }
 
-  generateAvatarList(numberOfAvatars: number): string[] {
+  nameToColour(name: string) {
+    const stringArray = Array.from(name);
+    let stringUniqueHash = [...stringArray].reduce((acc, char) => {
+      return char.charCodeAt(0) + ((acc << 5) - acc);
+    }, 0);
+    return `hsl(${stringUniqueHash % 360}, 95%, 35%, 0.5)`;
+  }
+
+  generateAvatarList(members: TeamMember[]): Avatar[] {
     let avatarArray = [];
-    for (let i = 0; i < numberOfAvatars; i++) {
-      avatarArray.push(this.randomise());
+    for (let i = 0; i < members.length; i++) {
+      const link = this.randomise();
+      const bgColor = this.nameToColour(members[i].fullName);
+      const avatar: Avatar = {
+        link,
+        bgColor,
+      };
+
+      avatarArray.push(avatar);
     }
     return avatarArray;
   }
 }
+
+export type Avatar = {
+  link: string;
+  bgColor: string;
+};
 
 const avatarGenerator = new AvatarGenerator();
 
