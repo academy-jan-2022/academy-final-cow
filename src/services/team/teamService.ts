@@ -62,6 +62,13 @@ class TeamService {
       body: { joinTokenId },
     });
   }
+
+  async removeUser(teamId: string) {
+    await client.delete({
+      route: API_ENDPOINT.REMOVE_USER,
+      queryParams: { teamId },
+    });
+  }
 }
 
 const teamService = new TeamService();
