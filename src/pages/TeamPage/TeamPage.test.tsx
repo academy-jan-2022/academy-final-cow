@@ -23,6 +23,8 @@ const USER_TWO_ID = "2";
 const USER_TWO_FULL_NAME = "Anna Hello";
 const USER_THREE_ID = "3";
 const USER_THREE_FULL_NAME = "Brian Hello";
+const USER_FOUR_ID = "4";
+const USER_FOUR_FULL_NAME = "Mark Manson";
 
 const GET_TEAM_METHOD = "getTeamById";
 const GENERATE_JOIN_LINK = "generateJoinLink";
@@ -60,6 +62,10 @@ const teamWithActivity: TeamWithMembers = {
     {
       id: USER_THREE_ID,
       fullName: USER_THREE_FULL_NAME,
+    },
+    {
+      id: USER_FOUR_ID,
+      fullName: USER_FOUR_FULL_NAME,
     },
   ],
   activities: [
@@ -417,6 +423,7 @@ describe("Team page should", () => {
           { fullName: "Peter Parker", id: "1" },
           { fullName: "Anna Hello", id: "2" },
           { fullName: "Brian Hello", id: "3" },
+          { fullName: "Mark Manson", id: "4" },
         ],
       });
     });
@@ -427,7 +434,7 @@ describe("Team page should", () => {
 
       const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
 
-      expect(listOfUserCheckboxes.length).toEqual(3);
+      expect(listOfUserCheckboxes.length).toEqual(4);
     });
 
     test("display included members heading", async () => {
@@ -440,7 +447,7 @@ describe("Team page should", () => {
       expect(includedMembersHeading).toBeInTheDocument();
     });
 
-    test("send second user of 2 users inside activity modal when create new activity", async () => {
+    test("send second user of 3 users inside activity modal when create new activity", async () => {
       const activityButton = await screen.findByText("create new activity");
       await act(async () => activityButton.click());
       const listOfUserCheckboxes = screen.getAllByTestId("user-checkbox");
@@ -461,6 +468,7 @@ describe("Team page should", () => {
         members: [
           { fullName: "Anna Hello", id: "2" },
           { fullName: "Brian Hello", id: "3" },
+          { fullName: "Mark Manson", id: "4" },
         ],
       });
     });
