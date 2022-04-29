@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import {
   Box,
+  FormControl,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   Typography,
-  FormControl,
 } from "@mui/material";
 import { ActivityResponse } from "../../services/team/Team";
 
