@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, ListItem } from "@mui/material";
-import { Avatar } from "../../services/infrastructure/AvatarGenerator";
+import { Avatar } from "../../services/application/AvatarGenerator";
 import "./teammember.css";
 
 const TeamMember = ({

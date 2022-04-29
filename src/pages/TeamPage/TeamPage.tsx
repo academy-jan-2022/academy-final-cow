@@ -17,7 +17,7 @@ import DoubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal
 import { PageRoutes } from "../pageRoutes";
 import avatarGenerator, {
   Avatar,
-} from "../../services/infrastructure/AvatarGenerator";
+} from "../../services/application/AvatarGenerator";
 
 const TeamPage = () => {
   const { id } = useParams();

@@ -33,24 +33,21 @@ export class AvatarGenerator {
 
   nameToColour(name: string) {
     const stringArray = Array.from(name);
-    let stringUniqueHash = [...stringArray].reduce((acc, char) => {
+    const stringUniqueHash = [...stringArray].reduce((acc, char) => {
       return char.charCodeAt(0) + ((acc << 5) - acc);
     }, 0);
     return `hsl(${stringUniqueHash % 360}, 95%, 35%, 0.5)`;
   }
 
   generateAvatarList(members: TeamMember[]): Avatar[] {
-    let avatarArray = [];
-    for (let i = 0; i < members.length; i++) {
+    return members.map((member) => {
       const link = this.randomise();
-      const bgColor = this.nameToColour(members[i].fullName);
-      const avatar: Avatar = {
+      const bgColor = this.nameToColour(member.fullName);
+      return {
         link,
         bgColor,
       };
-      avatarArray.push(avatar)
-    }
-    return avatarArray;
+    });
   }
 }
 
