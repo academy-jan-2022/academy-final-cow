@@ -76,6 +76,7 @@ const CreateTeamPage = () => {
           id="save-team-btn"
           data-testid="save-team-btn"
           onClick={handleOnClick}
+          className={"blue-button"}
         >
           Save Team
         </Button>
@@ -84,6 +85,7 @@ const CreateTeamPage = () => {
           id="cancel-team-btn"
           data-testid="cancel-team-btn"
           onClick={() => navigate(PageRoutes.TEAMS)}
+          className={"red-button"}
         >
           Cancel
         </Button>

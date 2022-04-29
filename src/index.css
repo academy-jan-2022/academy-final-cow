@@ -24,7 +24,7 @@ h1 {
 }
 
 .blue-button{
-    background-color: blue !important;
+    background-color: #216894 !important;
     color: white !important;
     border-color: transparent !important;
 }
@@ -37,7 +37,7 @@ h1 {
 
 .blue-button:hover{
     background-color: white !important;
-    color: blue !important;
-    border-color: blue !important;
+    color: #216894 !important;
+    border-color: #216894 !important;
 }
 

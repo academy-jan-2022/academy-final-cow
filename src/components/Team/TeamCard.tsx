@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@mui/material";
+import "./teamCard.css";
 import { TeamByUser } from "../../services/team/Team";
 
 const TeamCard = (props: { team: TeamByUser }) => {
@@ -9,7 +10,11 @@ const TeamCard = (props: { team: TeamByUser }) => {
   const { name, id, description } = team;
 
   return (
-    <Card onClick={() => navigate(`/team/${id}`)} role="teamCard">
+    <Card
+      onClick={() => navigate(`/team/${id}`)}
+      role="teamCard"
+      className={"card-container"}
+    >
       <h2>{name} </h2>
       <p>{description}</p>
     </Card>
