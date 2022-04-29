@@ -44,7 +44,7 @@ const aTeamWithMembers: TeamWithMembers = {
     },
   ],
 };
-const teamWithActivity: TeamWithMembers = {
+const teamWithActivity = () => ({
   id: TEAM_ID,
   name: TEAM_NAME,
   description: TEAM_DESCRIPTION,
@@ -64,21 +64,21 @@ const teamWithActivity: TeamWithMembers = {
   ],
   activities: [
     {
-      name: "My activity",
-      groups: [
-        [{ name: "cowboy" }, { name: "cowgirl" }],
-        [{ name: "dogboy" }, { name: "doggirl" }],
-      ],
-    },
-    {
       name: "My activity 2",
       groups: [
         [{ name: "fishboy" }, { name: "fishgirl" }],
         [{ name: "chickenboy" }, { name: "chickengirl" }],
       ],
     },
+    {
+      name: "My activity",
+      groups: [
+        [{ name: "cowboy" }, { name: "cowgirl" }],
+        [{ name: "dogboy" }, { name: "doggirl" }],
+      ],
+    },
   ],
-};
+});
 
 const teamWithoutActivity: TeamWithMembers = {
   id: TEAM_ID,
@@ -242,7 +242,7 @@ describe("Team page should", () => {
       await act(async () => {
         mockedTeamServiceGetTeam = jest
           .spyOn(teamService, GET_TEAM_METHOD)
-          .mockResolvedValue({ team: teamWithActivity });
+          .mockResolvedValue({ team: teamWithActivity() });
 
         jest
           .spyOn(teamService, GENERATE_JOIN_LINK)
