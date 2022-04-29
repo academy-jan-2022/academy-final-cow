@@ -41,6 +41,17 @@ class ApiClient {
     return response.data;
   }
 
+  async delete(request: DeleteRequest): Promise<void> {
+    let url = this.buildUrl(request.route);
+    const token = this.getToken();
+    for (let key in request.queryParams) {
+      url.searchParams.append(key, request.queryParams[key]);
+    }
+    await axios.delete(url.toString(), {
+      headers: { Authorization: `${token}` },
+    });
+  }
+
   getToken(): string | null {
     const tokenObject: AuthResponse | null =
       storageHandler.getJSONItem("tokenObject");
@@ -53,6 +64,11 @@ class ApiClient {
 }
 
 export interface GetRequest {
+  route: API_ENDPOINT;
+  readonly queryParams?: { [name: string]: string };
+}
+
+export interface DeleteRequest {
   route: API_ENDPOINT;
   readonly queryParams?: { [name: string]: string };
 }
@@ -71,6 +87,7 @@ export enum API_ENDPOINT {
   GET_TEAMS = "/teams",
   JOIN_TEAM = "/join-team",
   CREATE_ACTIVITY = "/create-activity",
+  REMOVE_USER = "/remove-user",
 }
 
 const apiClient = new ApiClient();

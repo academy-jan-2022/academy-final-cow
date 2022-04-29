@@ -25,6 +25,7 @@ describe("ApiClient should", function () {
     const postList = { data: { name: POST_RESPONSE_BODY_PROP } };
     axios.get.mockImplementation(() => Promise.resolve(getList));
     axios.post.mockImplementation(() => Promise.resolve(postList));
+    axios.delete.mockImplementation(() => Promise.resolve());
     mockedStorageHandler.getJSONItem.mockReturnValue({ id_token: "works" });
   });
 
@@ -59,6 +60,21 @@ describe("ApiClient should", function () {
     expect(axios.post).toHaveBeenCalledWith(
       BASE_URL + API_ENDPOINT.CREATE_TEAM,
       body,
+      AUTHORIZATION_HEADER
+    );
+  });
+
+  test("delete is called", async () => {
+    await client.delete({
+      route: API_ENDPOINT.HEARTBEAT,
+      queryParams: {
+        foo: A_QUERY_PARAM,
+        baz: ANOTHER_QUERY_PARAM,
+      },
+    });
+
+    expect(axios.delete).toHaveBeenCalledWith(
+      `${BASE_URL}${API_ENDPOINT.HEARTBEAT}?foo=${A_QUERY_PARAM}&baz=${ANOTHER_QUERY_PARAM}`,
       AUTHORIZATION_HEADER
     );
   });

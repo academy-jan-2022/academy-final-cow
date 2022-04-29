@@ -27,6 +27,7 @@ const USER_THREE_FULL_NAME = "Brian Hello";
 const GET_TEAM_METHOD = "getTeamById";
 const GENERATE_JOIN_LINK = "generateJoinLink";
 const CREATE_ACTIVITY = "createActivity";
+const REMOVE_USER = "removeUser";
 
 const aTeamWithMembers: TeamWithMembers = {
   id: TEAM_ID,
@@ -100,6 +101,12 @@ const TEAM_PAGE_URL = PageRoutes.TEAM.replace(":id", TEAM_ID) as PageRoutes;
 const TEAM_PAGE_ROUTE = PageRoutes.TEAM;
 let mockedTeamService: jest.Mocked<any>;
 
+const mockedUsedNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+  ...(jest.requireActual("react-router-dom") as any),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
 describe("Team page should", () => {
   describe("on render", () => {
     beforeEach(async () => {
@@ -153,6 +160,9 @@ describe("Team page should", () => {
       const teamMembers = await screen.findByRole("list");
       expect(teamMembers).toHaveTextContent(USER_ONE_FULL_NAME);
       expect(teamMembers).toHaveTextContent(USER_TWO_FULL_NAME);
+
+      const memberComponent = screen.getAllByTestId("member-container");
+      expect(memberComponent.length).toBe(2);
 
       mockedTeamService.mockRestore();
     });
@@ -506,9 +516,54 @@ describe("Team page should", () => {
         const tooltip = screen.getByText(
           "You need at least 3 team members to create an activity"
         );
-
         expect(tooltip).toBeInTheDocument();
       });
+    });
+
+    test("render leave team button", async () => {
+      renderWithMemoryRouter(<TeamPage />, {
+        pageUrl: TEAM_PAGE_URL,
+        route: TEAM_PAGE_ROUTE,
+      });
+
+      const leaveTeamButton = await screen.findByTestId("leave-team-button");
+      expect(leaveTeamButton).toBeInTheDocument();
+    });
+
+    test("display double check modal when leave team button is clicked", async () => {
+      renderWithMemoryRouter(<TeamPage />, {
+        pageUrl: TEAM_PAGE_URL,
+        route: TEAM_PAGE_ROUTE,
+      });
+
+      const leaveTeamButton = await screen.findByTestId("leave-team-button");
+
+      await act(async () => leaveTeamButton.click());
+
+      const doubleCheckModal = screen.getByTestId("double-check-modal");
+      expect(doubleCheckModal).toBeInTheDocument();
+    });
+
+    test("call team service on double check modal confirmation", async () => {
+      const mockedTeamServiceRemoveUser = jest
+        .spyOn(teamService, REMOVE_USER)
+        .mockResolvedValue();
+      renderWithMemoryRouter(<TeamPage />, {
+        pageUrl: TEAM_PAGE_URL,
+        route: TEAM_PAGE_ROUTE,
+      });
+
+      const leaveTeamButton = await screen.findByTestId("leave-team-button");
+
+      await act(async () => leaveTeamButton.click());
+      const confirmationButton = screen.getByTestId(
+        "double-check-confirmation-button"
+      );
+      await act(async () => confirmationButton.click());
+      expect(mockedTeamServiceRemoveUser).toBeCalled();
+      await waitFor(() =>
+        expect(mockedUsedNavigate).toBeCalledWith(PageRoutes.TEAMS)
+      );
     });
   });
 });
