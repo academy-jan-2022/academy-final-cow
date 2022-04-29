@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import TeamMember from "./TeamMember";
-import avatarGenerator from "../../services/infrastructure/AvatarGenerator";
 
 describe("team member component should", () => {
   beforeEach(() => {
@@ -11,6 +10,7 @@ describe("team member component should", () => {
         avatar={{ link: "avatar", bgColor: "#333" }}
       />
     );
+  });
 
   test("have the full name", () => {
     const name = screen.getByText("Bob Johnson");
