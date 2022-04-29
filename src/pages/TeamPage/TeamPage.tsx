@@ -15,7 +15,9 @@ import TeamMember from "../../components/TeamMember/TeamMember";
 import sadcowboy from "../../images/sadcowboy.png";
 import DoubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
 import { PageRoutes } from "../pageRoutes";
-import avatarGenerator from "../../services/infrastructure/AvatarGenerator";
+import avatarGenerator, {
+  Avatar,
+} from "../../services/application/AvatarGenerator";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -23,7 +25,7 @@ const TeamPage = () => {
   const [showJoinLinkModal, setShowJoinLinkModal] = React.useState(false);
   const [joinLink, setJoinLink] = React.useState("");
   const [isLoading, toggleLoading] = useState(true);
-  const [avatarList, setAvatarList] = useState<string[]>([]);
+  const [avatarList, setAvatarList] = useState<Avatar[]>([]);
 
   const [showActivityModal, toggleActivityModal] = useState(false);
   const [showDoubleCheckModal, toggleDoubleCheckModal] = useState(false);
@@ -40,7 +42,7 @@ const TeamPage = () => {
         .then((response) => {
           setTeam(response.team);
           setAvatarList(
-            avatarGenerator.generateAvatarList(response.team.members.length)
+            avatarGenerator.generateAvatarList(response.team.members)
           );
           toggleLoading(false);
         })
