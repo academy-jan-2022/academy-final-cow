@@ -4,7 +4,7 @@ import { Settings } from "./Settings";
 
 const axios = require("axios");
 
-interface AuthResponse {
+export interface AuthResponse {
   readonly access_token: string;
   readonly id_token: string;
   readonly login_hint: string;

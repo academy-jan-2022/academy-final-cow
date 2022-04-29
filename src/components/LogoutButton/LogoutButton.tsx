@@ -4,6 +4,7 @@ import { useGoogleLogout } from "react-google-login";
 import { useNavigate } from "react-router-dom";
 import { storageHandler } from "../../services/infrastructure/StorageHandler";
 import { PageRoutes } from "../../pages/pageRoutes";
+import { Settings } from "../../services/infrastructure/Settings";
 
 const LogoutButton = () => {
   const navigate = useNavigate();
@@ -18,8 +19,7 @@ const LogoutButton = () => {
   };
 
   const { signOut } = useGoogleLogout({
-    clientId:
-      "671208548253-hrd5a4nvrk4ovsscfskprsbodn7ate8k.apps.googleusercontent.com",
+    clientId: Settings.getGoogleClientId(),
     onLogoutSuccess: handleSuccess,
     onFailure: handleFailure,
   });
