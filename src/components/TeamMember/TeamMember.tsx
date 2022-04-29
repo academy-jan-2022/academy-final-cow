@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, ListItem } from "@mui/material";
-import avatarGenerator from "../../services/infrastructure/AvatarGenerator";
+import { Avatar } from "../../services/application/AvatarGenerator";
 import "./teammember.css";
 
 const TeamMember = ({
@@ -8,7 +8,7 @@ const TeamMember = ({
   avatar,
 }: {
   fullName: string;
-  avatar: string;
+  avatar: Avatar;
 }) => {
   return (
     <Box
@@ -17,7 +17,8 @@ const TeamMember = ({
     >
       <img
         className="team-member-avatar"
-        src={avatar}
+        style={{ backgroundColor: avatar.bgColor }}
+        src={avatar.link}
         alt="avatar"
         data-testid="team-member-avatar"
       />
