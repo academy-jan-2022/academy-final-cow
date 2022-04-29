@@ -8,6 +8,7 @@ import {
   Modal,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import teamService from "../../services/team/teamService";
@@ -141,13 +142,23 @@ const ActivityModal = ({
                 />
               ))}
             </FormGroup>
-            <Button
-              variant={"outlined"}
-              onClick={submitActivity}
-              data-testid="activity-submit-button"
+            <Tooltip
+              disableFocusListener
+              disableTouchListener
+              disableHoverListener={members.length > 2}
+              title={"You need at least 3 team members to create an activity"}
             >
-              Submit
-            </Button>
+              <span>
+                <Button
+                  variant={"outlined"}
+                  onClick={submitActivity}
+                  data-testid="activity-submit-button"
+                  disabled={members.length < 3}
+                >
+                  Submit
+                </Button>
+              </span>
+            </Tooltip>
           </Stack>
         </Box>
       </div>
