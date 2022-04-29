@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../TemplatePage/PageTemplate";
 import { useNavigate, useParams } from "react-router-dom";
-import { ActivityResponse, TeamWithMembers } from "../../services/team/Team";
+import { TeamWithMembers } from "../../services/team/Team";
 import "./team.css";
 import PageHeading from "../../components/PageHeading/PageHeading";
-import { Button, List, Typography, Container, Tooltip } from "@mui/material";
+import { Button, Container, List, Tooltip, Typography } from "@mui/material";
 import teamService from "../../services/team/teamService";
 import JoinLinkModal from "../../components/JoinLinkModal/JoinLinkModal";
 import ActivityModal from "../../components/ActivityModal/ActivityModal";
@@ -15,6 +15,7 @@ import TeamMember from "../../components/TeamMember/TeamMember";
 import sadcowboy from "../../images/sadcowboy.png";
 import DoubleCheckModal from "../../components/DoubleCheckModal/DoubleCheckModal";
 import { PageRoutes } from "../pageRoutes";
+import avatarGenerator from "../../services/infrastructure/AvatarGenerator";
 
 const TeamPage = () => {
   const { id } = useParams();
@@ -22,6 +23,7 @@ const TeamPage = () => {
   const [showJoinLinkModal, setShowJoinLinkModal] = React.useState(false);
   const [joinLink, setJoinLink] = React.useState("");
   const [isLoading, toggleLoading] = useState(true);
+  const [avatarList, setAvatarList] = useState<string[]>([]);
 
   const [showActivityModal, toggleActivityModal] = useState(false);
   const [showDoubleCheckModal, toggleDoubleCheckModal] = useState(false);
@@ -37,6 +39,9 @@ const TeamPage = () => {
         .getTeamById(id)
         .then((response) => {
           setTeam(response.team);
+          setAvatarList(
+            avatarGenerator.generateAvatarList(response.team.members.length)
+          );
           toggleLoading(false);
         })
         .catch(() => navigate(PageRoutes.ERROR));
@@ -102,6 +107,7 @@ const TeamPage = () => {
               <TeamMember
                 key={member.id + "_" + index}
                 fullName={member.fullName}
+                avatar={avatarList[index]}
               />
             ))}
           </List>

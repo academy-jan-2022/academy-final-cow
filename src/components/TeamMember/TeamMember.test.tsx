@@ -3,14 +3,9 @@ import { render, screen } from "@testing-library/react";
 import TeamMember from "./TeamMember";
 import avatarGenerator from "../../services/infrastructure/AvatarGenerator";
 
-jest.mock("../../services/infrastructure/AvatarGenerator");
-const mockedAvatarGenerator = avatarGenerator as jest.Mocked<
-  typeof avatarGenerator
->;
-
 describe("team member component should", () => {
   beforeEach(() => {
-    render(<TeamMember fullName={"Bob Johnson"} />);
+    render(<TeamMember fullName={"Bob Johnson"} avatar={"avatar"} />);
   });
 
   test("have the full name", () => {
@@ -21,6 +16,5 @@ describe("team member component should", () => {
   test("have a random avatar", () => {
     const avatar = screen.getByTestId("team-member-avatar");
     expect(avatar).toBeInTheDocument();
-    expect(mockedAvatarGenerator.randomise).toHaveBeenCalled();
   });
 });
